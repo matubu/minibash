@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 16:57:37 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:09:45 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,18 @@ void	putint(int fd, int n)
 	write(fd, &n, 1);
 }
 
-int	err(char *err, char *info)
+int	error(char *name, char *err, char *info)
 {
-	putstr(2, NAME);
+	putstr(2, name);
 	write(2, ": ", 2);
 	putstr(2, err);
 	write(2, ": ", 2);
 	putstr(2, info);
 	write(2, "\n", 1);
 	return (-1);
+}
+
+int	err(char *err, char *info)
+{
+	return (error(NAME, err, info));
 }

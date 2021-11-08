@@ -47,8 +47,6 @@ int	runsearch(char *cmd, char **argv, char **env)
 
 	if (*cmd == '.' || *cmd == '/')
 	{
-		//if (stat(cmd, NULL) == -1)
-		//	return (err(strerror(errno), cmd));
 		if (runfrompath(cmd, argv, env) == -1)
 			return (err(strerror(errno), cmd));
 		return (0);
@@ -69,6 +67,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 	return (err("command not found", cmd));
 }
 
+//TODO return or set the exit code $?
 int	run(char *cmd, char **argv, char **env)
 {
 	if (!ft_strcmp(cmd, "echo"))
@@ -77,15 +76,14 @@ int	run(char *cmd, char **argv, char **env)
 		cd(argv);
 	else if (!ft_strcmp(cmd, "pwd"))
 		pwd(argv);
-	//export
-	//unset
+	//TODO export
+	//TODO unset
 	else if (!ft_strcmp(cmd, "env"))
 		while (*env)
 			println(1, *env++);
 	else if (!ft_strcmp(cmd, "exit"))
 		exit(0);
 	else
-		runsearch(cmd, argv, env);
-	//return or set the exit code $?
+		return (runsearch(cmd, argv, env));
 	return (0);
 }

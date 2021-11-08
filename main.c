@@ -13,12 +13,12 @@ int	main(int argc, char **argv, char **env)
 		line = readline(PS1);
 		if (line == NULL)
 			return (0);
-		//add_history(line);
+		add_history(line);
 		cargv = ft_split(line, ' ');
 		if (cargv == NULL)
 			return (1);
 		run(*cargv, cargv, env);
-		add_history(line);
+		ft_free_splits(cargv);
 		free(line);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 17:12:02 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:03:40 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char			**ft_split(const char *s, char c);
 void			putstr(int fd, char *s);
 void			println(int fd, char *s);
 void			putint(int fd, int n);
+int				error(char *name, char *err, char *info);
 int				err(char *err, char *info);
 
 char			*pathncat(char *path, int n, char *relative);

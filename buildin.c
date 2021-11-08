@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 17:13:41 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:15:26 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	cd(char **argv)
 	if (argv[0] && argv[1])
 	{
 		if (chdir(argv[1]) == -1)
-			err(strerror(errno), argv[1]);
+			error("cd", strerror(errno), argv[1]);
 	}
 	else if (chdir(getenv("HOME")) == -1)
-		err(strerror(errno), getenv("HOME"));
+		error("cd", strerror(errno), getenv("HOME"));
 }
 
 void	echo(char **argv)
@@ -30,7 +30,7 @@ void	echo(char **argv)
 	int	nl;
 
 	nl = 1;
-	if (!ft_strcmp(*argv, "-n") && argv++)
+	if (*argv && !ft_strcmp(*argv, "-n") && argv++)
 		nl = 0;
 	while (*argv)
 	{

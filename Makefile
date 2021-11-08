@@ -22,11 +22,11 @@ bin/%.o: %.c
 	@gcc $(FLAGS) $^ -c -o $@
 
 clean:
-	@echo "$(RED)● Removing /bin 📁$(EOC)"
+	@echo "$(RED)● Removing objects 📁$(EOC)"
 	@rm -rf bin
 
 fclean: clean
-	@echo "$(RED)● Removing objects ⚙️ $(EOC)"
+	@echo "$(RED)● Removing binary ⚙️ $(EOC)"
 	@rm -rf $(NAME)
 
 re: fclean all

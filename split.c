@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 12:16:50 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/08 18:11:51 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ static int	ft_malloc_splits(char ***splits, const char *s, char c)
 
 int	ft_free_splits(char **splits)
 {
-	while (*splits)
-		free(*splits++);
+	int	i;
+
+	i = 0;
+	while (splits[i])
+		free(splits[i++]);
 	free(splits);
 	return (1);
 }
