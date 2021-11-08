@@ -1,15 +1,4 @@
-#include <unistd.h>
-#include <stdlib.h>
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+#include "minishell.h"
 
 char	*pathncat(char *path, int n, char *relative)
 {
@@ -29,7 +18,27 @@ char	*pathncat(char *path, int n, char *relative)
 	return (start);
 }
 
-int	run(char *cmd, char **argv, char **env)
+int	runfrompath(char *cmd, char **argv, char **env)
+{
+	pid_t	pid;
+
+	if (access(cmd, X_OK) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == -1)
+		return (err("fork error", cmd));
+	if (pid == 0)
+	{
+		execve(cmd, argv, env);
+		exit(-1);
+	}
+	else
+		wait(NULL);
+	return (0);
+}
+
+//TODO permission denied for command too ?
+int	runsearch(char *cmd, char **argv, char **env)
 {
 	char	*path;
 	char	*file;
@@ -37,7 +46,13 @@ int	run(char *cmd, char **argv, char **env)
 	int		len;
 
 	if (*cmd == '.' || *cmd == '/')
-		return (execve(cmd, argv, env));
+	{
+		//if (stat(cmd, NULL) == -1)
+		//	return (err(strerror(errno), cmd));
+		if (runfrompath(cmd, argv, env) == -1)
+			return (err(strerror(errno), cmd));
+		return (0);
+	}
 	path = getenv("PATH");
 	while (*path)
 	{
@@ -45,18 +60,32 @@ int	run(char *cmd, char **argv, char **env)
 		while (path[len] && path[len] != ':')
 			len++;
 		file = pathncat(path, len, cmd);
-		ret = execve(file, argv, env);
+		ret = runfrompath(file, argv, env);
 		free(file);
 		if (ret != -1)
 			return (0);
 		path += len + (path[len] == ':');
 	}
-	return (execve(cmd, argv, env));
+	return (err("command not found", cmd));
 }
 
-int	main(int argc, char **argv, char **env)
+int	run(char *cmd, char **argv, char **env)
 {
-	if (argc < 2)
-		return (1);
-	run(argv[1], argv + 1, env);
+	if (!ft_strcmp(cmd, "echo"))
+		echo(argv + 1);
+	else if (!ft_strcmp(cmd, "cd"))
+		cd(argv);
+	else if (!ft_strcmp(cmd, "pwd"))
+		pwd(argv);
+	//export
+	//unset
+	else if (!ft_strcmp(cmd, "env"))
+		while (*env)
+			println(1, *env++);
+	else if (!ft_strcmp(cmd, "exit"))
+		exit(0);
+	else
+		runsearch(cmd, argv, env);
+	//return or set the exit code $?
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 10:46:25 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/08 16:57:37 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	putstr(int fd, char *s)
 		write(fd, s++, 1);
 }
 
-void	putchar(int fd, char c)
+void	println(int fd, char *s)
 {
-	write(fd, &c, 1);
+	putstr(fd, s);
+	write(fd, "\n", 1);
 }
 
 void	putint(int fd, int n)
@@ -35,27 +36,13 @@ void	putint(int fd, int n)
 	write(fd, &n, 1);
 }
 
-static void	handle(int fd, char c, va_list args)
+int	err(char *err, char *info)
 {
-	if (c == 's')
-		putstr(fd, va_arg(args, char *)); 
-	else if (c == 'c')
-		putchar(fd, va_arg(args, int)); 
-	else if (c == 'd' || c == 'i')
-		putint(fd, va_arg(args, int)); 
-	else
-		write(fd, &c, 1);
-}
-
-void	mprintf(int fd, char *s, ...)
-{
-	va_list	args;
-
-	va_start(args, s);
-	while (*s)
-		if (*s == '%' && s++)
-			handle(fd, *s++, args);
-		else
-			write(fd, s++, 1);
-	va_end(args);
+	putstr(2, NAME);
+	write(2, ": ", 2);
+	putstr(2, err);
+	write(2, ": ", 2);
+	putstr(2, info);
+	write(2, "\n", 1);
+	return (-1);
 }

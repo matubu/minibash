@@ -1,26 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/07 17:55:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/07 18:28:56 by mberger-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include <unistd.h>
-
+//TODO fix: ./test.sh should not throw an error
 int	main(int argc, char **argv, char **env)
 {
-	char	*args;
+	char	*line;
+	char	**cargv;
 
 	(void)argc;
 	(void)argv;
-	args = NULL;
-	*env = "PS1=minishell$ ";
-	if (execve("/bin/bash", &args, env) == -1)
-		return (1);
+	while (1)
+	{
+		line = readline(PS1);
+		if (line == NULL)
+			return (0);
+		//add_history(line);
+		cargv = ft_split(line, ' ');
+		if (cargv == NULL)
+			return (1);
+		run(*cargv, cargv, env);
+		add_history(line);
+		free(line);
+	}
 	return (0);
 }

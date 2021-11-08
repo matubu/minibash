@@ -1,20 +1,33 @@
 NAME = minishell
-OBJ = run.o print.o
+SRC = print str split run main buildin
+OBJ = $(foreach src,$(SRC),bin/$(src).o)
 FLAGS = -Wall -Wextra -Werror
+LFLAGS = -lreadline
+
+RED = \033[31m
+GRE = \033[32m
+GRA = \033[37m
+BLU = \033[34m
+EOC = \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(OBJ) -o $(NAME)
+	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
+	@gcc $(OBJ) -o $(NAME) $(LFLAGS)
 
-%.o: %.c
-	gcc $(FLAGS) $^ -c -o $@
+bin/%.o: %.c
+	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"
+	@mkdir -p bin
+	@gcc $(FLAGS) $^ -c -o $@
 
 clean:
-	rm -rf $(OBJ)
+	@echo "$(RED)● Removing /bin 📁$(EOC)"
+	@rm -rf bin
 
-fclean:
-	rm -rf $(NAME)
+fclean: clean
+	@echo "$(RED)● Removing objects ⚙️ $(EOC)"
+	@rm -rf $(NAME)
 
 re: fclean all
 
