@@ -31,7 +31,10 @@ void	handle_sigint(int signum)
 {
 	(void)signum;
 	if (g_process)
+	{
+		write(1, "^C\n", 3);
 		kill(g_process, SIGINT);
+	}
 	else
 	{
 		write(1, "\n", 1);
@@ -52,9 +55,9 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	hide_ctl();
 	signal(SIGQUIT, handle_sigquit);
 	signal(SIGINT, handle_sigint);
-	hide_ctl();
 	while (1)
 	{
 		line = readline(PS1);
