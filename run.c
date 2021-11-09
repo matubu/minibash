@@ -33,7 +33,10 @@ int	runfrompath(char *cmd, char **argv, char **env)
 		exit(-1);
 	}
 	else
+	{
+		g_process = pid;
 		wait(NULL);
+	}
 	return (0);
 }
 

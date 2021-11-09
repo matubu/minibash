@@ -1,8 +1,9 @@
 NAME = minishell
 SRC = print str split run main buildin
 OBJ = $(foreach src,$(SRC),bin/$(src).o)
+
 FLAGS = -Wall -Wextra -Werror
-LFLAGS = -lreadline
+LINK = libreadline.a -lreadline -lncurses -fsanitize=address
 
 RED = \033[31m
 GRE = \033[32m
@@ -14,7 +15,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
-	@gcc $(OBJ) -o $(NAME) $(LFLAGS)
+	gcc $(OBJ) $(LINK) -o $(NAME)
 
 bin/%.o: %.c
 	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"
@@ -31,6 +32,9 @@ fclean: clean
 
 re: fclean all
 
+run: all
+	./minishell
+
 bonus: $(NAME)
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re run bonus

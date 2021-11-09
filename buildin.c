@@ -6,14 +6,12 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 18:15:26 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:08:19 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//TODO support path like ~/test
-//TODO test///test
 void	cd(char **argv)
 {
 	if (argv[0] && argv[1])

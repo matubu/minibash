@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 18:03:40 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/09 14:41:44 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@
 //readline
 # include <readline/readline.h>
 # include <readline/history.h>
+//kill
+#include <signal.h>
 
 # define NAME "minishell"
-# define PS1 "minishell% "
+# define PS1 "minishell$ "
 # define PATH_BUF 256
 
 int				ft_strlen(const char *s);
@@ -51,5 +53,10 @@ int				run(char *cmd, char **argv, char **env);
 void			cd(char **argv);
 void			echo(char **argv);
 void			pwd(char **argv);
+
+//readline
+void rl_replace_line (const char *text, int clear_undo);
+
+extern int	g_process;
 
 #endif
