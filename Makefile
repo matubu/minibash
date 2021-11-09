@@ -15,7 +15,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
-	gcc $(OBJ) $(LINK) -o $(NAME)
+	@gcc $(OBJ) $(LINK) -o $(NAME)
 
 bin/%.o: %.c
 	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"

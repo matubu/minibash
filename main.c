@@ -2,14 +2,32 @@
 
 int	g_process = 0;
 
-void	nothing(int signum)
+void	hide_ctl()
+{
+	struct termios new;
+
+	tcgetattr(0, &new);
+	new.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &new);
+}
+
+void	show_ctl()
+{
+	struct termios new;
+
+	tcgetattr(0, &new);
+	new.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &new);
+}
+
+void	handle_sigquit(int signum)
 {
 	(void)signum;
 	rl_on_new_line();
 	rl_redisplay();
 }
 
-void	kill_running(int signum)
+void	handle_sigint(int signum)
 {
 	(void)signum;
 	if (g_process)
@@ -34,8 +52,9 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	signal(SIGQUIT, nothing);
-	signal(SIGINT, kill_running);
+	signal(SIGQUIT, handle_sigquit);
+	signal(SIGINT, handle_sigint);
+	hide_ctl();
 	while (1)
 	{
 		line = readline(PS1);
@@ -50,5 +69,6 @@ int	main(int argc, char **argv, char **env)
 		ft_free_splits(cargv);
 		free(line);
 	}
+	show_ctl();
 	return (0);
 }

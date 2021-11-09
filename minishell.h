@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/09 14:41:44 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/09 16:44:34 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # include <readline/history.h>
 //kill
 #include <signal.h>
+//ioctl (hide ^C and ^\)
+//#include <sys/ioctl.h>
+//#include <sgtty.h>
+//tcgetattr tcsetattr
+#include <termios.h>
 
 # define NAME "minishell"
 # define PS1 "minishell$ "
