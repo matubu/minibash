@@ -2,21 +2,15 @@
 
 int	g_process = 0;
 
-void	hide_ctl()
+void	show_ctl(int b)
 {
 	struct termios new;
 
 	tcgetattr(0, &new);
-	new.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &new);
-}
-
-void	show_ctl()
-{
-	struct termios new;
-
-	tcgetattr(0, &new);
-	new.c_lflag |= ECHOCTL;
+	if (b)
+		new.c_lflag |= ECHOCTL;
+	else
+		new.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, &new);
 }
 
@@ -31,10 +25,7 @@ void	handle_sigint(int signum)
 {
 	(void)signum;
 	if (g_process)
-	{
-		write(1, "^C\n", 3);
 		kill(g_process, SIGINT);
-	}
 	else
 	{
 		write(1, "\n", 1);
@@ -55,11 +46,11 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	hide_ctl();
 	signal(SIGQUIT, handle_sigquit);
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
+		show_ctl(0);
 		line = readline(PS1);
 		if (line == NULL)
 			return (0);
@@ -67,11 +58,11 @@ int	main(int argc, char **argv, char **env)
 		cargv = ft_split(line, ' ');
 		if (cargv == NULL)
 			return (1);
+		show_ctl(1);
 		if (*cargv)
 			run(*cargv, cargv, env);
 		ft_free_splits(cargv);
 		free(line);
 	}
-	show_ctl();
 	return (0);
 }
