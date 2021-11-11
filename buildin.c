@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/**
+* @param {char **} argv including the command: "cd"
+* will change the cwd
+*/
 void	cd(char **argv)
 {
 	if (argv[0] && argv[1])
@@ -23,23 +27,31 @@ void	cd(char **argv)
 		error("cd", strerror(errno), getenv("HOME"));
 }
 
-void	echo(char **argv)
+/**
+* @param {char **} args not including the command: "echo"
+* will parse the flags and write to the stdout the other arguments
+*/
+void	echo(char **args)
 {
 	int	nl;
 
 	nl = 1;
-	if (*argv && !ft_strcmp(*argv, "-n") && argv++)
+	if (*args && !ft_strcmp(*args, "-n") && args++)
 		nl = 0;
-	while (*argv)
+	while (*args)
 	{
-		putstr(1, *argv);
-		if (*++argv)
+		putstr(1, *args);
+		if (*++args)
 			write(1, " ", 1);
 	}
 	if (nl)
 		write(1, "\n", 1);
 }
 
+/**
+* @parms argv including pwd
+* will write the cwd to the stdout except if their is two arguments
+*/
 void	pwd(char **argv)
 {
 	char	path[PATH_BUF];
