@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/09 16:44:34 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/11 13:08:21 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 #include <signal.h>
 //tcgetattr tcsetattr (hide ^C and ^\)
 #include <termios.h>
+//wait
+#include <sys/wait.h>
+
 
 # define NAME "minishell"
 # define PS1 "minishell$ "
