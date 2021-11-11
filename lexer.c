@@ -1,32 +1,33 @@
 #include "minishell.h"
 
-//TODO maybe use isspace istead of *s == ' '
 static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg)
 {
 	int	n;
+	int	m;
 
-	while (*s)
+	n = 0;
+	while (1)
 	{
-		if (*s == '"' || *s == '\'')
+		if (s[n] == '"' || s[n] == '\'')
 		{
-			n = 0;
-			while (s[++n] != *s)
+			m = n;
+			while (s[++n] != s[m])
 				if (s[n] == '\0')
-					return (err("syntax error near unexpected token", s));
-			token(s, n + 1, arg);
-			s += n + 1;
+					return (err("syntax error unclosed token", s));
+			n++;
 		}
-		else if (*s != ' ')
+		else if (s[n] != ' ')
+			while (s[++n] && s[n] != ' ')
+				;
+		if (s[n] == ' ' || s[n] == '\0')
 		{
-			n = 1;
-			while (*++s && *s != ' ' && *s != '"' && *s != '\'')
-				n++;
-			token(s - n, n, arg);
+			token(s, n, arg);
+			if (s[n] == '\0')
+				return (0);
+			s += n + 1;
+			n = 0;
 		}
-		else
-			s++;
 	}
-	return (0);
 }
 
 static void	inc(char *s, int n, void *arg)
@@ -38,12 +39,17 @@ static void	inc(char *s, int n, void *arg)
 
 static char	*substr(char *s, int n)
 {
-	char *str;
+	char	*str;
+	int		i;
 
 	str = malloc((n + 1) * sizeof(char));
-	str[n] = '\0';
+	i = 0;
 	while (n--)
-		str[n] = s[n];
+		if (*s != '"' && *s != '\'')
+			str[i++] = *s++;
+		else
+			s++;
+	str[i] = '\0';
 	return (str);
 }
 

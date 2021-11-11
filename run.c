@@ -35,8 +35,8 @@ int	runfrompath(char *cmd, char **argv, char **env)
 	if (access(cmd, X_OK) == -1)
 		return (-1);
 	pid = fork();
-	if (pid == -1)
-		return (err("fork error", cmd));
+	//if (pid == -1)
+	//	return (err("fork error", cmd));
 	if (pid == 0)
 	{
 		execve(cmd, argv, env);
