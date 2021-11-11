@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 13:08:21 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 14:23:17 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 int				ft_strcmp(const char *s1, const char *s2);
 
 int				ft_free_splits(char **splits);
-char			**ft_split(const char *s, char c);
+//char			**ft_split(const char *s, char c);
+
+char			**create_tokens(char *s);
 
 void			putstr(int fd, char *s);
 void			println(int fd, char *s);

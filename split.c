@@ -6,12 +6,12 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/08 18:11:51 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/11 14:23:47 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static int	ft_malloc_splits(char ***splits, const char *s, char c)
 {
 	int	size;
@@ -26,7 +26,7 @@ static int	ft_malloc_splits(char ***splits, const char *s, char c)
 	*splits = malloc(size * sizeof(char *));
 	return (*splits == NULL);
 }
-
+*/
 /**
 * passing a char ** of splits this function will free all of the splits
 */
@@ -45,7 +45,8 @@ int	ft_free_splits(char **splits)
 * @param {char *} string to split
 * @param {char} delimiter
 */
-char	**ft_split(const char *s, char c)
+/*
+char **ft_split(const char *s, char c)
 {
 	char			**out;
 	unsigned int	size;
@@ -70,3 +71,4 @@ char	**ft_split(const char *s, char c)
 	out[n] = NULL;
 	return (out);
 }
+*/

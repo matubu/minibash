@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			return (0);
 		add_history(line);
-		cargv = ft_split(line, ' ');
+		cargv = create_tokens(line);
 		if (cargv == NULL)
 			return (1);
 		show_ctl(1);
