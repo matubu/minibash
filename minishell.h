@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 14:23:17 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 15:32:22 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 
 # define NAME "minishell"
-# define PS1 "minishell$ "
+# define PS1 "\033[32mminishell$\033[0m "
 # define PATH_BUF 256
 
 int				ft_strlen(const char *s);
