@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/11 19:39:52 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:51:51 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ static void	env_search(t_token *tokens)
 	{
 		ptr = tokens->value;
 		i = 0;
-		while (*(ptr + i) && *(ptr + i) != '$')
+		while (ptr[i] && ptr[i] != '$')
 			i++;
-		if (!*(ptr + i) || !*(ptr + i + 1))
+		if (!ptr[i] || !ptr[i + 1])
 			break;
-		if (*(ptr + i + 1) == '$')
+		if (ptr[i + 1] == '$')
 			tokens->value += i + 2; // Afficher le PID du Shell
 		else
 		{
 			j = i + 1;
-			while (*(ptr + j) && *(ptr + j) != ' ' && *(ptr + j) != '$')
+			while (ptr[j] && ptr[j] != ' ' && ptr[j] != '$')
 				j++;
 			tokens->value = env_split(tokens->value, i, j);
 			tokens->value += j;
