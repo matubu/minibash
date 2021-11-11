@@ -10,6 +10,22 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
+char	*ft_strcat(char *dest, const char *src)
+{
+	size_t	i;
+	size_t	j;
+
+	i = ft_strlen(dest);
+	j = 0;
+	while (src[j] != 0)
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = 0;
+	return (dest);
+}
+
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
 {
 	unsigned int	i;
