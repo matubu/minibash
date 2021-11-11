@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 17:32:58 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:27:32 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 struct s_token
 {
-	char	**value;
+	char	*value;
 	int		expendable;
 };
 typedef struct s_token	t_token;
@@ -47,6 +47,7 @@ typedef struct s_token	t_token;
 int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 int				ft_strcmp(const char *s1, const char *s2);
+char	*ft_strcat(char *dest, const char *src);
 
 int				ft_free_splits(char **splits);
 //char			**ft_split(const char *s, char c);
