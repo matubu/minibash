@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 15:32:22 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 17:32:58 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@
 //wait
 #include <sys/wait.h>
 
-
 # define NAME "minishell"
 # define PS1 "\033[32mminishell$\033[0m "
 # define PATH_BUF 256
+
+struct s_token
+{
+	char	**value;
+	int		expendable;
+};
+typedef struct s_token	t_token;
 
 int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
