@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 19:29:52 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 20:28:39 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	echo(char **args)
 	int	nl;
 
 	nl = 1;
-	if (**args == '-' && ft_strisonly(*args + 1, 'n') && args++)
+	if (*args && **args == '-' && ft_strisonly(*args + 1, 'n') && args++)
 		nl = 0;
 	while (*args)
 	{

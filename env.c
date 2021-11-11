@@ -6,85 +6,65 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/11 19:51:51 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 21:00:35 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	env_validate(t_token *tokens)
+static char	*env_join(char *s, char *value, int *i, int len)
 {
-	while (*(tokens->value))
-	{
-		if (*(tokens->value) == '$')
-			return (1);
-		tokens->value++;
-	}
-	return (0);
+	char	*out;
+	int		value_len;
+
+	if (value == NULL)
+		return (s);
+	value_len = ft_strlen(value);
+	out = malloc(sizeof(char) * (ft_strlen(s) + value_len - len + 1));
+	ft_strlcpy(out, s, *i);
+	ft_strcat(out, value);
+	ft_strcat(out, s + *i + len);
+	*i += len + 1;
+	free(s);
+	return (out);
 }
 
-static char	*env_replace(char *value, char *env_value, int i, int j)
+static char *env_var(char *s, int *i)
 {
-	char	*nvalue;
-	int		nvalue_l;
-
-	nvalue_l = ft_strlen(value) - (j - i + 1) + ft_strlen(env_value);
-	nvalue = (char *) malloc(sizeof(char) * nvalue_l);
-
-	ft_strlcpy(nvalue, value, i);
-	ft_strcat(nvalue, env_value);
-	ft_strcat(nvalue, value + j);
-
-	//free(value);
-	return (nvalue);
-}
-
-static char	*env_split(char *value, int i, int j)
-{
+	int		len;
 	char	*env_name;
-	char	*env;
 
-	env_name = (char *) malloc((j - i + 1) * sizeof(char));
-	ft_strlcpy(env_name, value + i, j);
-	env = getenv(env_name);
-	if (env == NULL)
-		return (env_replace(value, "", i, j));
-	return (env_replace(value, env, i, j));
+	len = 0;
+	while (s[*i + len] && s[*i + len] != ' ' && s[*i + len++] != '$')
+		;
+	env_name = malloc((len + 1) * sizeof(char));
+	ft_strlcpy(env_name, s + *i, len + 1);
+	s = env_join(s, getenv(env_name), i, len);
+	free(env_name);
+	return (s);
 }
 
-static void	env_search(t_token *tokens)
+static char	*env_replace(char *s)
 {
-	char	*ptr;
 	int		i;
-	int		j;
 
-	while (tokens->value)
-	{
-		ptr = tokens->value;
-		i = 0;
-		while (ptr[i] && ptr[i] != '$')
-			i++;
-		if (!ptr[i] || !ptr[i + 1])
-			break;
-		if (ptr[i + 1] == '$')
-			tokens->value += i + 2; // Afficher le PID du Shell
-		else
+	i = -1;
+	while (s[++i])
+		if (s[i] == '$')
 		{
-			j = i + 1;
-			while (ptr[j] && ptr[j] != ' ' && ptr[j] != '$')
-				j++;
-			tokens->value = env_split(tokens->value, i, j);
-			tokens->value += j;
+			if (s[++i] == '\0' || s[i] == ' ')
+				continue ;
+			s = env_var(s, &i);
 		}
-	}
+	return (s);
 }
 
 void	env_expend(t_token *tokens)
 {
 	while (tokens->value)
 	{
-		if (env_validate(tokens))
-			env_search(tokens);
+		if (tokens->expendable)
+			tokens->value = env_replace(tokens->value);
 		tokens++;
 	}
 }
