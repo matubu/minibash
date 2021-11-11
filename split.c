@@ -27,6 +27,9 @@ static int	ft_malloc_splits(char ***splits, const char *s, char c)
 	return (*splits == NULL);
 }
 
+/**
+* passing a char ** of splits this function will free all of the splits
+*/
 int	ft_free_splits(char **splits)
 {
 	int	i;
@@ -38,6 +41,10 @@ int	ft_free_splits(char **splits)
 	return (1);
 }
 
+/**
+* @param {char *} string to split
+* @param {char} delimiter
+*/
 char	**ft_split(const char *s, char c)
 {
 	char			**out;
