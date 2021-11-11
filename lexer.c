@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+//TODO fix last empty string if end by space
 static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg)
 {
 	int	n;
@@ -57,10 +58,13 @@ static char *token_substr(char *s, int n)
 	return (str);
 }
 
+#include <stdio.h>
+
 static void	fill(char *s, int n, t_token *arg)
 {
 	if (!n)
 		return ;
+	printf("fill:%d:%.*s\n", n, n, s);
 	while (arg->value)
 		arg++;
 	arg->expendable = *s != '\'';

@@ -61,6 +61,7 @@ int	main(int argc, char **argv, char **env)
 		free(line);
 		if (tokens == NULL)
 			continue ;
+		env_expend(tokens);
 		show_ctl(1);
 		if (tokens->value)
 			run(tokens->value, token_to_argv(tokens), env);

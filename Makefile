@@ -1,5 +1,5 @@
 NAME = minishell
-SRC = print str run main buildin lexer token
+SRC = print str run main buildin lexer token env
 OBJ = $(foreach src,$(SRC),bin/$(src).o)
 
 FLAGS = -Wall -Wextra -Werror

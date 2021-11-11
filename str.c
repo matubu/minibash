@@ -41,6 +41,14 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
 	return (i);
 }
 
+int	ft_strisonly(const char *s, char c)
+{
+	while (*s)
+		if (*s++ != c)
+			return (0);
+	return (1);
+}
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	while ((*s1 || *s2))

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 19:42:21 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/11 19:45:46 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ typedef struct s_token
 
 int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
+int				ft_strisonly(const char *s, char c);
 int				ft_strcmp(const char *s1, const char *s2);
-char	*ft_strcat(char *dest, const char *src);
+char			*ft_strcat(char *dest, const char *src);
 
 t_token			*create_tokens(char *s);
 int				free_tokens(t_token *tokens);
 char			**token_to_argv(t_token *tokens);
+
+void			env_expend(t_token *tokens);
 
 void			putstr(int fd, char *s);
 void			println(int fd, char *s);
