@@ -12,18 +12,33 @@
 
 #include "minishell.h"
 
+/**
+* simply write a string in fd
+* @param {int} fd
+* @param {char *} s
+*/
 void	putstr(int fd, char *s)
 {
 	while (*s)
 		write(fd, s++, 1);
 }
 
+/**
+* put a string to fd followed by a newline
+* @param {int} fd
+* @param {char *} s
+*/
 void	println(int fd, char *s)
 {
 	putstr(fd, s);
 	write(fd, "\n", 1);
 }
 
+/**
+* write a signed int to fd
+* @param {int} fd
+* @param {int} n
+*/
 void	putint(int fd, int n)
 {
 	if (n >= 0)
@@ -36,6 +51,10 @@ void	putint(int fd, int n)
 	write(fd, &n, 1);
 }
 
+/**
+* function that write error in a coherent way
+* name: error: file
+*/
 int	error(char *name, char *err, char *info)
 {
 	putstr(2, name);
@@ -47,6 +66,10 @@ int	error(char *name, char *err, char *info)
 	return (-1);
 }
 
+/**
+* function that write minishell error in a coherent way
+* minishell: error: file
+*/
 int	err(char *err, char *info)
 {
 	return (error(NAME, err, info));
