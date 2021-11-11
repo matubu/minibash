@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/11 21:00:35 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 21:17:44 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,26 @@ static char	*env_join(char *s, char *value, int *i, int len)
 	return (out);
 }
 
-static char *env_var(char *s, int *i)
+static int	ispartofenv(char c)
+{
+	if ((c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'a')
+		|| (c == '_'))
+		return (1);
+	return (0);
+}
+
+//TODO fix ex: $PATH+$HOME: any char can separete
+static char	*env_var(char *s, int *i)
 {
 	int		len;
 	char	*env_name;
 
 	len = 0;
-	while (s[*i + len] && s[*i + len] != ' ' && s[*i + len++] != '$')
-		;
+	if (s[*i] == '$' || s[*i] == '*' || (s[*i] >= '0' && s[*i] <= '9'))//TODO find other one char variable case
+		return (env_join(s, "\"one char variable name special case\"", i, 1));
+	while (ispartofenv(s[*i + len]))
+		len++;
 	env_name = malloc((len + 1) * sizeof(char));
 	ft_strlcpy(env_name, s + *i, len + 1);
 	s = env_join(s, getenv(env_name), i, len);
