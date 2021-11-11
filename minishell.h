@@ -28,10 +28,7 @@
 # include <readline/history.h>
 //kill
 #include <signal.h>
-//ioctl (hide ^C and ^\)
-//#include <sys/ioctl.h>
-//#include <sgtty.h>
-//tcgetattr tcsetattr
+//tcgetattr tcsetattr (hide ^C and ^\)
 #include <termios.h>
 
 # define NAME "minishell"
