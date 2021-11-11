@@ -12,7 +12,7 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg
 			n = 0;
 			while (s[++n] != *s)
 				if (s[n] == '\0')
-					return (-1);
+					return (err("syntax error near unexpected token", s));
 			token(s, n + 1, arg);
 			s += n + 1;
 		}
@@ -64,10 +64,7 @@ char	**create_tokens(char *s)
 
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
-	{
-		err("not terminated string", s);
 		return (NULL);
-	}
 	tokens = malloc(len * sizeof(char *));
 	if (tokens == NULL)
 		return (NULL);

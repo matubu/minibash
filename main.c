@@ -58,13 +58,13 @@ int	main(int argc, char **argv, char **env)
 			return (0);
 		add_history(line);
 		cargv = create_tokens(line);
+		free(line);
 		if (cargv == NULL)
-			return (1);
+			continue ;
 		show_ctl(1);
 		if (*cargv)
 			run(*cargv, cargv, env);
 		ft_free_splits(cargv);
-		free(line);
 	}
 	return (0);
 }
