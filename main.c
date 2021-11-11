@@ -2,6 +2,9 @@
 
 int	g_process = 0;
 
+/**
+* @param {Bool} b if true (1) the terminal will show ^C or ^\ else this will hide them
+*/
 void	show_ctl(int b)
 {
 	struct termios new;
@@ -37,7 +40,6 @@ void	handle_sigint(int signum)
 }
 
 //TODO echo a"b"c -> abc
-//TODO echo -nnn test -> test
 //TODO ctrl \ on cat
 int	main(int argc, char **argv, char **env)
 {
