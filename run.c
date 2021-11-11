@@ -81,29 +81,35 @@ int	runsearch(char *cmd, char **argv, char **env)
 	return (err("command not found", cmd));
 }
 
+#include <stdio.h>
+
 /**
 * will execute custom function if one of the buildin
 * else it will call runsearch
 */
 //TODO return or set the exit code $?
-void	run(char *cmd, char **argv, char **env)
+void	run(char *cmd, char **argv, char ***env)
 {
 	if (argv == NULL)
 		return ;
-	if (!ft_strcmp(cmd, "echo"))
-		echo(argv + 1);
+	if (!argv[1] && isenvdefine(cmd))
+	{
+		printf("envdefine\n");
+		envdefine(env, cmd);
+	}
+	else if (!ft_strcmp(cmd, "echo"))
+		echo_buildin(argv + 1);
 	else if (!ft_strcmp(cmd, "cd"))
-		cd(argv);
+		cd_buildin(argv);
 	else if (!ft_strcmp(cmd, "pwd"))
-		pwd(argv);
+		pwd_buildin(argv);
 	//TODO export
 	//TODO unset
 	else if (!ft_strcmp(cmd, "env"))
-		while (*env)
-			println(1, *(env++));
+		env_buildin(*env);
 	else if (!ft_strcmp(cmd, "exit"))
 		exit(0);
 	else
-		runsearch(cmd, argv, env);
+		runsearch(cmd, argv, *env);
 	free(argv);
 }

@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 20:28:39 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 22:17:50 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 * @param {char **} argv including the command: "cd"
 * will change the cwd
 */
-void	cd(char **argv)
+void	cd_buildin(char **argv)
 {
 	if (argv[0] && argv[1])
 	{
@@ -31,7 +31,7 @@ void	cd(char **argv)
 * @param {char **} args not including the command: "echo"
 * will parse the flags and write to the stdout the other arguments
 */
-void	echo(char **args)
+void	echo_buildin(char **args)
 {
 	int	nl;
 
@@ -52,7 +52,7 @@ void	echo(char **args)
 * @parms argv including pwd
 * will write the cwd to the stdout except if their is two arguments
 */
-void	pwd(char **argv)
+void	pwd_buildin(char **argv)
 {
 	char	path[PATH_BUF];
 
@@ -68,4 +68,10 @@ void	pwd(char **argv)
 		else
 			println(1, path);
 	}
+}
+
+void	env_buildin(char **env)
+{
+	while (*env)
+		println(1, *env++);
 }

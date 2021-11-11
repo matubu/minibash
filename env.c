@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/11 21:17:44 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 22:14:08 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,23 @@ static char	*env_join(char *s, char *value, int *i, int len)
 static int	ispartofenv(char c)
 {
 	if ((c >= 'A' && c <= 'Z')
-		|| (c >= 'a' && c <= 'a')
+		|| (c >= 'a' && c <= 'z')
 		|| (c == '_'))
 		return (1);
 	return (0);
 }
 
-//TODO fix ex: $PATH+$HOME: any char can separete
+int	isenvdefine(char *s)
+{
+	if (!ispartofenv(*s++))
+		return (0);
+	while (ispartofenv(*s))
+		s++;
+	if (*s == '=')
+		return (1);
+	return (0);
+}
+
 static char	*env_var(char *s, int *i)
 {
 	int		len;

@@ -39,8 +39,9 @@ void	handle_sigint(int signum)
 	g_process = 0;
 }
 
-//TODO echo a"b"c -> abc
 //TODO ctrl \ on cat
+//TODO value=test echo hellowolrd => will only display helloworld
+//TODO =test echo hellowolrd => error
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -61,10 +62,12 @@ int	main(int argc, char **argv, char **env)
 		free(line);
 		if (tokens == NULL)
 			continue ;
+		//TODO check before variable expansion if is a=b
+		//TODO if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
 		env_expend(tokens);
 		show_ctl(1);
 		if (tokens->value)
-			run(tokens->value, token_to_argv(tokens), env);
+			run(tokens->value, token_to_argv(tokens), &env);
 		free_tokens(tokens);
 	}
 	return (0);

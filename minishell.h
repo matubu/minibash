@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 19:45:46 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/11 22:17:30 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_token			*create_tokens(char *s);
 int				free_tokens(t_token *tokens);
 char			**token_to_argv(t_token *tokens);
 
+int				isenvdefine(char *s);
+void			envdefine(char ***env, char *cmd);
 void			env_expend(t_token *tokens);
 
 void			putstr(int fd, char *s);
@@ -62,12 +64,13 @@ int				error(char *name, char *err, char *info);
 int				err(char *err, char *info);
 
 char			*pathncat(char *path, int n, char *relative);
-void			run(char *cmd, char **argv, char **env);
+void			run(char *cmd, char **argv, char ***env);
 
 //buildin
-void			cd(char **argv);
-void			echo(char **argv);
-void			pwd(char **argv);
+void			cd_buildin(char **argv);
+void			echo_buildin(char **argv);
+void			pwd_buildin(char **argv);
+void			env_buildin(char **env);
 
 //readline
 void			rl_replace_line (const char *text, int clear_undo);
