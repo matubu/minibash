@@ -2,7 +2,7 @@
 
 /**
 * will concatenate a path with a relative path
-* @param {char *} path the abslute path ex: /bin
+* @param {char *} path the absolute path
 * @param {int} the path string length
 * @param {char *} the path relative to path ex: cat
 */
@@ -35,8 +35,6 @@ int	runfrompath(char *cmd, char **argv, char **env)
 	if (access(cmd, X_OK) == -1)
 		return (-1);
 	pid = fork();
-	//if (pid == -1)
-	//	return (err("fork error", cmd));
 	if (pid == 0)
 	{
 		execve(cmd, argv, env);
@@ -88,8 +86,10 @@ int	runsearch(char *cmd, char **argv, char **env)
 * else it will call runsearch
 */
 //TODO return or set the exit code $?
-int	run(char *cmd, char **argv, char **env)
+void	run(char *cmd, char **argv, char **env)
 {
+	if (argv == NULL)
+		return ;
 	if (!ft_strcmp(cmd, "echo"))
 		echo(argv + 1);
 	else if (!ft_strcmp(cmd, "cd"))
@@ -100,10 +100,10 @@ int	run(char *cmd, char **argv, char **env)
 	//TODO unset
 	else if (!ft_strcmp(cmd, "env"))
 		while (*env)
-			println(1, *env++);
+			println(1, *(env++));
 	else if (!ft_strcmp(cmd, "exit"))
 		exit(0);
 	else
-		return (runsearch(cmd, argv, env));
-	return (0);
+		runsearch(cmd, argv, env);
+	free(argv);
 }

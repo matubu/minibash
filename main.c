@@ -44,7 +44,7 @@ void	handle_sigint(int signum)
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
-	char	**cargv;
+	t_token	*tokens;
 
 	(void)argc;
 	(void)argv;
@@ -57,14 +57,14 @@ int	main(int argc, char **argv, char **env)
 		if (line == NULL)
 			return (0);
 		add_history(line);
-		cargv = create_tokens(line);
+		tokens = create_tokens(line);
 		free(line);
-		if (cargv == NULL)
+		if (tokens == NULL)
 			continue ;
 		show_ctl(1);
-		if (*cargv)
-			run(*cargv, cargv, env);
-		ft_free_splits(cargv);
+		if (tokens->value)
+			run(tokens->value, token_to_argv(tokens), env);
+		free_tokens(tokens);
 	}
 	return (0);
 }

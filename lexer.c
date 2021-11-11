@@ -37,7 +37,7 @@ static void	inc(char *s, int n, void *arg)
 		(*(int *)arg)++;
 }
 
-static char	*substr(char *s, int n)
+static char *token_substr(char *s, int n)
 {
 	char	*str;
 	int		i;
@@ -53,28 +53,29 @@ static char	*substr(char *s, int n)
 	return (str);
 }
 
-static void	fill(char *s, int n, char **arg)
+static void	fill(char *s, int n, t_token *arg)
 {
 	if (!n)
 		return ;
-	while (*arg)
+	while (arg->value)
 		arg++;
-	*arg++ = substr(s, n);
-	*arg = NULL;
+	arg->expendable = *s != '\'';
+	arg->value = token_substr(s, n);
+	(++arg)->value = NULL;
 }
 
-char	**create_tokens(char *s)
+t_token	*create_tokens(char *s)
 {
 	int		len;
-	char	**tokens;
+	t_token	*tokens;
 
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
 		return (NULL);
-	tokens = malloc(len * sizeof(char *));
+	tokens = malloc(len * sizeof(t_token));
 	if (tokens == NULL)
 		return (NULL);
-	*tokens = NULL;
+	tokens->value = NULL;
 	tokenize(s, (void (*)(char *, int, void *))fill, tokens);
 	return (tokens);
 }
