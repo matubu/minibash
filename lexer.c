@@ -17,7 +17,7 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg
 					return (err("syntax error unclosed token", s));
 			n++;
 		}
-		else if (s[n] != ' ')
+		else if (s[n] && s[n] != ' ')
 			while (s[++n] && s[n] != ' ')
 				;
 		if (s[n] == ' ' || s[n] == '\0')
