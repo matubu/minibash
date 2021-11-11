@@ -5,34 +5,27 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg
 {
 	int	n;
 
-	n = 0;
 	while (*s)
 	{
-		if (*s == ' ' || *s == '"' || *s == '\'')
-		{
-			token(s - n, n, arg);
-			n = 0;
-		}
 		if (*s == '"' || *s == '\'')
 		{
-			while (s[++n] && s[n] != *s)
-				;
-			if (s[n] != *s)
-				return (-1);
+			n = 0;
+			while (s[++n] != *s)
+				if (s[n] == '\0')
+					return (-1);
 			token(s, n + 1, arg);
 			s += n + 1;
-			n = 0;
 		}
-		else if (*s == ' ')
-			while (*++s == ' ')
-				;
-		else
+		else if (*s != ' ')
 		{
-			n++;
-			s++;
+			n = 1;
+			while (*++s && *s != ' ' && *s != '"' && *s != '\'')
+				n++;
+			token(s - n, n, arg);
 		}
+		else
+			s++;
 	}
-	token(s - n, n, arg);
 	return (0);
 }
 
