@@ -44,11 +44,15 @@ static char *token_substr(char *s, int n)
 
 	str = malloc((n + 1) * sizeof(char));
 	i = 0;
-	while (n--)
-		if (*s != '"' && *s != '\'')
-			str[i++] = *s++;
+	while (n-- > 0)
+		if (*s == '\'' && s++)
+			while (n-- && *s != '\'')
+				str[i++] = *s++;
+		else if (*s == '"' && s++)
+			while (n-- && *s != '"')
+				str[i++] = *s++;
 		else
-			s++;
+			str[i++] = *s++;
 	str[i] = '\0';
 	return (str);
 }
