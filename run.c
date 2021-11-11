@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+/**
+* will concatenate a path with a relative path
+* @param {char *} path the abslute path ex: /bin
+* @param {int} the path string length
+* @param {char *} the path relative to path ex: cat
+*/
 char	*pathncat(char *path, int n, char *relative)
 {
 	char	*full;
@@ -18,6 +24,10 @@ char	*pathncat(char *path, int n, char *relative)
 	return (start);
 }
 
+/**
+* will try to run a command from is full path
+* @param {char *} path to executable
+*/
 int	runfrompath(char *cmd, char **argv, char **env)
 {
 	pid_t	pid;
@@ -40,7 +50,10 @@ int	runfrompath(char *cmd, char **argv, char **env)
 	return (0);
 }
 
-//TODO permission denied for command too ?
+/**
+* will search the command if not a relative or absulte path in the folders specified in then environment variable PATH
+*/
+//TODO permission denied error for command too ?
 int	runsearch(char *cmd, char **argv, char **env)
 {
 	char	*path;
@@ -70,6 +83,10 @@ int	runsearch(char *cmd, char **argv, char **env)
 	return (err("command not found", cmd));
 }
 
+/**
+* will execute custom function if one of the buildin
+* else it will call runsearch
+*/
 //TODO return or set the exit code $?
 int	run(char *cmd, char **argv, char **env)
 {
