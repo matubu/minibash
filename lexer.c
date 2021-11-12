@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
+/*   Updated: 2021/11/12 08:37:50 by mberger-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg)
@@ -68,6 +80,7 @@ static void	fill(char *s, int n, t_token *arg)
 	(++arg)->value = NULL;
 }
 
+//TODO a| b with no space
 t_token	*create_tokens(char *s)
 {
 	int		len;
@@ -75,10 +88,16 @@ t_token	*create_tokens(char *s)
 
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
+	{
+		g_process.code = 1;
 		return (NULL);
+	}
 	tokens = malloc(len * sizeof(t_token));
 	if (tokens == NULL)
+	{
+		g_process.code = 1;
 		return (NULL);
+	}
 	tokens->value = NULL;
 	tokenize(s, (void (*)(char *, int, void *))fill, tokens);
 	return (tokens);

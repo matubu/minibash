@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 22:17:50 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/12 11:32:55 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,34 @@ void	env_buildin(char **env)
 {
 	while (*env)
 		println(1, *env++);
+}
+
+void	exit_buildin(char **argv)
+{
+	int		v;
+	int		neg;
+	char	*nptr;
+
+	write(1, "exit\n", 5);
+	if (argv[0] && argv[1] && argv[2])
+		return ((void)err("exit", "too many arguments"));
+	if (argv[0] && argv[1])
+	{
+		v = 0;
+		nptr = argv[1];
+		neg = *nptr == '-';
+		while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
+			nptr++;
+		if (*nptr == '-' || *nptr == '+')
+			nptr++;
+		while (*nptr)
+			if (*nptr >= '0' && *nptr <= '9')
+				v = v * 10 - *nptr++ + '0';
+		else if (error("bash: exit", argv[1], "numeric argument required"))
+			exit(255);
+		if (!neg)
+			return (exit(-v));
+		exit(v);
+	}
+	exit(0);
 }

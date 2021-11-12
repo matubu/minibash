@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/11 16:59:18 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/12 08:28:27 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,29 @@ void	println(int fd, char *s)
 	write(fd, "\n", 1);
 }
 
-/**
-* write a signed int to fd
-* @param {int} fd
-* @param {int} n
-*/
-void	putint(int fd, int n)
+char	*itoa_buf(int n)
 {
-	if (n >= 0)
-		n = -n;
+	int			i;
+	static char	res[12];
+	int			neg;
+
+	i = 12;
+	res[--i] = '\0';
+	neg = 0;
+	if (n < 0)
+		neg = 1;
 	else
-		write(fd, "-", 1);
-	if (n <= -10)
-		putint(fd, n / 10);
-	n = '0' - n % 10;
-	write(fd, &n, 1);
+		n = -n;
+	while (1)
+	{
+		res[--i] = '0' - n % 10;
+		n /= 10;
+		if (!n)
+			break ;
+	}
+	if (neg)
+		res[--i] = '-';
+	return (res + i);
 }
 
 /**

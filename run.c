@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
+/*   Updated: 2021/11/12 12:11:42 by mberger-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
@@ -42,8 +54,8 @@ int	runfrompath(char *cmd, char **argv, char **env)
 	}
 	else
 	{
-		g_process = pid;
-		wait(NULL);
+		g_process.pid = pid;
+		wait(&g_process.code);
 	}
 	return (0);
 }
@@ -88,28 +100,28 @@ int	runsearch(char *cmd, char **argv, char **env)
 * else it will call runsearch
 */
 //TODO return or set the exit code $?
-void	run(char *cmd, char **argv, char ***env)
+//TODO parsing error = exit code 1
+void	run(char *cmd, char **argv, t_env *env)
 {
 	if (argv == NULL)
 		return ;
-	if (!argv[1] && isenvdefine(cmd))
-	{
-		printf("envdefine\n");
-		envdefine(env, cmd);
-	}
+	if (isenvdefine(cmd))
+		set_buildin(argv, env);
 	else if (!ft_strcmp(cmd, "echo"))
 		echo_buildin(argv + 1);
 	else if (!ft_strcmp(cmd, "cd"))
 		cd_buildin(argv);
 	else if (!ft_strcmp(cmd, "pwd"))
 		pwd_buildin(argv);
-	//TODO export
-	//TODO unset
+	else if (!ft_strcmp(cmd, "export"))
+		export_buildin(argv, env);
+	else if (!ft_strcmp(cmd, "unset"))
+		unset_buildin(argv, env);
 	else if (!ft_strcmp(cmd, "env"))
-		env_buildin(*env);
+		env_buildin(env->exported);
 	else if (!ft_strcmp(cmd, "exit"))
-		exit(0);
+		exit_buildin(argv);
 	else
-		runsearch(cmd, argv, *env);
+		runsearch(cmd, argv, env->exported);
 	free(argv);
 }
