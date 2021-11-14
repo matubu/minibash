@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 12:02:42 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/14 15:47:08 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	handle_sigquit(int signum)
 void	handle_sigint(int signum)
 {
 	(void)signum;
+	write(1, "\n", 1);
 	if (g_process.pid)
 		kill(g_process.pid, SIGINT);
 	else
 	{
-		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -65,6 +65,8 @@ void	handle_sigint(int signum)
 //TODO if PATH changed app do not work
 //TODO buildin return value
 //TODO a5=7
+//TODO echo hello'$PATH'
+//TODO ctrl d write exit on the prompt line
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
@@ -85,7 +87,7 @@ int	main(int argc, char **argv, char **envm)
 		show_ctl(0);
 		line = readline(PS1);
 		if (line == NULL)
-			return (0);
+			break ;
 		add_history(line);
 		tokens = create_tokens(line);
 		free(line);
@@ -101,5 +103,6 @@ int	main(int argc, char **argv, char **envm)
 			g_process.code = 0;
 		free_tokens(tokens);
 	}
+	write(1, "exit\n", 5);
 	return (0);
 }

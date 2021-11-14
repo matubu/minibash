@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 11:32:55 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/13 12:38:01 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	pwd_buildin(char **argv)
 void	env_buildin(char **env)
 {
 	while (*env)
-		println(1, *env++);
+		if (**env)
+			println(1, *env++);
+		else
+			env++;
 }
 
 void	exit_buildin(char **argv)

@@ -33,7 +33,7 @@ fclean: clean
 re: fclean all
 
 run: all
-	./minishell
+	./$(NAME)
 
 bonus: $(NAME)
 
