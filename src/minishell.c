@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 18:00:26 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:25:32 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ void	handle_sigint(int signum)
 
 //TODO value=test echo helloworld => will only display helloworld
 //TODO =test echo helloworld => error
-//TODO buildin return value
+//TODO buildin return value + parsing error
 //TODO a5=7
 //TODO echo hello'$PATH'
+//TODO export $?
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;

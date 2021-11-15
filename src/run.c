@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 18:02:33 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:25:53 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ int	runfrompath(char *cmd, char **argv, char **env)
 /**
 * will search in PATH folders the command if not a relative or absolute path
 */
-//TODO permission denied error for command too ?
-//TODO PATH=5 => ls => crash
 int	runsearch(char *cmd, char **argv, char **env)
 {
 	char	*path;
@@ -98,8 +96,6 @@ int	runsearch(char *cmd, char **argv, char **env)
 * will execute custom function if one of the buildin
 * else it will call runsearch
 */
-//TODO return or set the exit code $?
-//TODO parsing error = exit code 1
 void	run(char *cmd, char **argv, t_env *env)
 {
 	if (argv == NULL)
