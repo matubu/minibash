@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 16:33:40 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:58:10 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_process
 	int	pid;
 	int	code;
 }	t_process;
+
 extern t_process	g_process;
 
 typedef struct s_env
@@ -56,7 +57,7 @@ void			println(int fd, char *s);
 char			*itoa_buf(int n);
 int				error(char *name, char *err, char *info);
 int				err(char *err, char *info);
-void			rl_replace_line (const char *text, int clear_undo);
+void			rl_replace_line(const char *text, int clear_undo);
 
 /* ************************** STRINGS ************************* */
 int				ft_strlen(const char *s);

@@ -6,13 +6,14 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 08:37:50 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:55:29 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	tokenize(char *s, void (*token)(char *s, int n, void *arg), void *arg)
+static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
+		void *arg)
 {
 	int	n;
 	int	m;
@@ -49,7 +50,7 @@ static void	inc(char *s, int n, void *arg)
 		(*(int *)arg)++;
 }
 
-static char *token_substr(char *s, int n)
+static char	*token_substr(char *s, int n)
 {
 	char	*str;
 	int		i;
@@ -60,11 +61,11 @@ static char *token_substr(char *s, int n)
 		if (*s == '\'' && s++)
 			while (n-- && *s != '\'')
 				str[i++] = *s++;
-		else if (*s == '"' && s++)
-			while (n-- && *s != '"')
-				str[i++] = *s++;
-		else
+	else if (*s == '"' && s++)
+		while (n-- && *s != '"')
 			str[i++] = *s++;
+	else
+		str[i++] = *s++;
 	str[i] = '\0';
 	return (str);
 }

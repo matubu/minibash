@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:31 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 16:33:55 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:03:04 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
 	while (*src++)
 		i++;
 	return (i);
-}
-
-int	ft_strisonly(const char *s, char c)
-{
-	while (*s)
-		if (*s++ != c)
-			return (0);
-	return (1);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)

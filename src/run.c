@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 16:33:25 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:02:33 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	runfrompath(char *cmd, char **argv, char **env)
 }
 
 /**
-* will search the command if not a relative or absulte path in the folders specified in then environment variable PATH
+* will search in PATH folders the command if not a relative or absolute path
 */
 //TODO permission denied error for command too ?
 //TODO PATH=5 => ls => crash

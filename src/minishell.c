@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 16:27:51 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:00:26 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_process	g_process = { 0, 0 };
+t_process	g_process = {0, 0};
 
 /**
 * @param	{Bool}	b	if true (1) the terminal will show ^C or ^\ else
@@ -20,7 +20,7 @@ t_process	g_process = { 0, 0 };
 */
 void	show_ctl(int b)
 {
-	struct termios new;
+	struct termios	new;
 
 	tcgetattr(0, &new);
 	if (b)
