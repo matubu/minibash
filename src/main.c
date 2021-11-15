@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 09:48:15 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 13:53:00 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 t_process	g_process = { 0, 0 };
 
 /**
-* @param {Bool} b if true (1) the terminal will show ^C or ^\ else this will hide them
+* @param	{Bool}	b	if true (1) the terminal will show ^C or ^\ else
+						this will hide them.
 */
 void	show_ctl(int b)
 {
@@ -93,7 +94,7 @@ int	main(int argc, char **argv, char **envm)
 			continue ;
 		//TODO check before variable expansion if is a=b
 		//TODO if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
-		env_expend(env.local, tokens);
+		env_expand(env.local, tokens);
 		show_ctl(1);
 		if (tokens->value)
 			run(tokens->value, token_to_argv(tokens), &env);

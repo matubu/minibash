@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 12:10:46 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 13:54:23 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@
 //wait
 #include <sys/wait.h>
 
-# define NAME "minishell"
-# define PS1 "\033[32mminishell$\033[0m "
-# define PATH_BUF 256
+# define NAME		"minishell"
+# define PS1		"\033[32mminishell$\033[0m "
+# define PATH_BUF	256
 
 typedef struct s_token
 {
@@ -74,7 +74,7 @@ char			**token_to_argv(t_token *tokens);
 //env + expander
 int				ispartofenv(char c);
 int				isenvdefine(char *s);
-void			env_expend(char **env, t_token *tokens);
+void			env_expand(char **env, t_token *tokens);
 char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
 

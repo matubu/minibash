@@ -2,7 +2,7 @@ NAME = minishell
 SRC = print str run main buildin buildin_env lexer token env expander
 OBJ = $(foreach src,$(SRC),bin/$(src).o)
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Iincludes
 LINK = libreadline.a -lreadline -lncurses -fsanitize=address
 
 RED = \033[31m
@@ -17,7 +17,7 @@ $(NAME): $(OBJ)
 	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
 	@gcc $(OBJ) $(LINK) -o $(NAME)
 
-bin/%.o: %.c
+bin/%.o: src/%.c
 	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"
 	@mkdir -p bin
 	@gcc $(FLAGS) $^ -c -o $@

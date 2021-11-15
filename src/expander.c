@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/12 10:30:22 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 13:52:32 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*env_replace(char **env, char *s)
 	return (s);
 }
 
-void	env_expend(char **env, t_token *tokens)
+void	env_expand(char **env, t_token *tokens)
 {
 	while (tokens->value)
 	{
