@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/14 15:47:08 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:42:38 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	handle_sigint(int signum)
 
 //TODO value=test echo helloworld => will only display helloworld
 //TODO =test echo helloworld => error
-//TODO if PATH changed app do not work
 //TODO buildin return value
 //TODO a5=7
 //TODO echo hello'$PATH'

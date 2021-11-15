@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 12:11:42 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:42:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	runfrompath(char *cmd, char **argv, char **env)
 * will search the command if not a relative or absulte path in the folders specified in then environment variable PATH
 */
 //TODO permission denied error for command too ?
+//TODO PATH=5 => ls => crash
 int	runsearch(char *cmd, char **argv, char **env)
 {
 	char	*path;
@@ -77,7 +78,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 			return (err(strerror(errno), cmd));
 		return (0);
 	}
-	path = getenv("PATH");
+	path = *env_get(env, "PATH");//getenv("PATH");
 	while (*path)
 	{
 		len = 0;
@@ -92,8 +93,6 @@ int	runsearch(char *cmd, char **argv, char **env)
 	}
 	return (err("command not found", cmd));
 }
-
-#include <stdio.h>
 
 /**
 * will execute custom function if one of the buildin
