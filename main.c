@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 09:42:38 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:48:15 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	handle_sigint(int signum)
 //TODO buildin return value
 //TODO a5=7
 //TODO echo hello'$PATH'
-//TODO ctrl d write exit on the prompt line
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;

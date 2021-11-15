@@ -6,7 +6,7 @@
 /*   By: matubu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:47:13 by matubu            #+#    #+#             */
-/*   Updated: 2021/11/12 11:34:51 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:49:07 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	env_set(char ***env, char *kv)
 	new = env_get(*env, kv);
 	if (new)
 	{
-		*new = kv;
+		*new = ft_strdup(kv);
 		return ;
 	}
 	len = 1;

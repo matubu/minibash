@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:40:02 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 12:12:52 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:49:36 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	unset_buildin(char **argv, t_env *env)
 	}
 }
 
-//TODO a=5 command
+//TODO a=5 echo
 void	set_buildin(char **argv, t_env *env)
 {
 	while (*argv)
