@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildin.c                                          :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/13 12:38:01 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:29:27 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 * @param {char **} argv including the command: "cd"
 * will change the cwd
 */
-void	cd_buildin(char **argv)
+void	cd_builtin(char **argv)
 {
 	if (argv[0] && argv[1])
 	{
@@ -31,7 +31,7 @@ void	cd_buildin(char **argv)
 * @param {char **} args not including the command: "echo"
 * will parse the flags and write to the stdout the other arguments
 */
-void	echo_buildin(char **args)
+void	echo_builtin(char **args)
 {
 	int	nl;
 
@@ -52,7 +52,7 @@ void	echo_buildin(char **args)
 * @parms argv including pwd
 * will write the cwd to the stdout except if their is two arguments
 */
-void	pwd_buildin(char **argv)
+void	pwd_builtin(char **argv)
 {
 	char	path[PATH_BUF];
 
@@ -70,7 +70,7 @@ void	pwd_buildin(char **argv)
 	}
 }
 
-void	env_buildin(char **env)
+void	env_builtin(char **env)
 {
 	while (*env)
 		if (**env)
@@ -79,7 +79,7 @@ void	env_buildin(char **env)
 			env++;
 }
 
-void	exit_buildin(char **argv)
+void	exit_builtin(char **argv)
 {
 	int		v;
 	int		neg;

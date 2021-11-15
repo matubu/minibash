@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 13:53:00 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:27:51 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envm)
 			continue ;
 		//TODO check before variable expansion if is a=b
 		//TODO if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
+		wildcard_expand(tokens);
 		env_expand(env.local, tokens);
 		show_ctl(1);
 		if (tokens->value)

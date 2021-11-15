@@ -6,22 +6,24 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/15 15:50:25 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/15 16:28:10 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
 SRC		=	print \
-			str \
+			string_1 \
+			string_2 \
 			run \
-			main \
-			buildin \
-			buildin_env \
+			minishell \
+			builtin \
+			builtin_env \
 			lexer \
 			token \
 			env \
-			env_expand
+			env_expand \
+			wildcard
 
 OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
 

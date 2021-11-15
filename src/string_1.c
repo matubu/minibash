@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str.c                                              :+:      :+:    :+:   */
+/*   string_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:31 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 09:08:20 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:33:55 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,4 @@ char	*ft_strdup(char *str)
 	s = malloc(len * sizeof(char));
 	ft_strlcpy(s, str, len);
 	return (s);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (1)
-		if (*s == (char)c)
-			return ((char *)s);
-	else if (*s++ == '\0')
-		break ;
-	return (NULL);
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:40:02 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 13:57:20 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:29:03 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_buildin(char **argv, t_env *env)
+void	export_builtin(char **argv, t_env *env)
 {
 	char	**found;
 
@@ -30,7 +30,7 @@ void	export_buildin(char **argv, t_env *env)
 	}
 }
 
-void	unset_buildin(char **argv, t_env *env)
+void	unset_builtin(char **argv, t_env *env)
 {
 	char	**found;
 
@@ -46,7 +46,7 @@ void	unset_buildin(char **argv, t_env *env)
 }
 
 //TODO a=5 echo
-void	set_buildin(char **argv, t_env *env)
+void	set_builtin(char **argv, t_env *env)
 {
 	while (*argv)
 	{

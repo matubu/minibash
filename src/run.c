@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 15:35:05 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/15 16:33:25 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,21 @@ void	run(char *cmd, char **argv, t_env *env)
 	if (argv == NULL)
 		return ;
 	if (isenvdefine(cmd))
-		set_buildin(argv, env);
+		set_builtin(argv, env);
 	else if (!ft_strcmp(cmd, "echo"))
-		echo_buildin(argv + 1);
+		echo_builtin(argv + 1);
 	else if (!ft_strcmp(cmd, "cd"))
-		cd_buildin(argv);
+		cd_builtin(argv);
 	else if (!ft_strcmp(cmd, "pwd"))
-		pwd_buildin(argv);
+		pwd_builtin(argv);
 	else if (!ft_strcmp(cmd, "export"))
-		export_buildin(argv, env);
+		export_builtin(argv, env);
 	else if (!ft_strcmp(cmd, "unset"))
-		unset_buildin(argv, env);
+		unset_builtin(argv, env);
 	else if (!ft_strcmp(cmd, "env"))
-		env_buildin(env->exported);
+		env_builtin(env->exported);
 	else if (!ft_strcmp(cmd, "exit"))
-		exit_buildin(argv);
+		exit_builtin(argv);
 	else
 		runsearch(cmd, argv, env->exported);
 	free(argv);
