@@ -1,33 +1,56 @@
-NAME = minishell
-SRC = print str run main buildin buildin_env lexer token env expander
-OBJ = $(foreach src,$(SRC),bin/$(src).o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
+#    Updated: 2021/11/15 15:50:25 by acoezard         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-FLAGS = -Wall -Wextra -Werror -Iincludes
-LINK = libreadline.a -lreadline -lncurses -fsanitize=address
+NAME	=	minishell
 
-RED = \033[31m
-GRE = \033[32m
-GRA = \033[37m
-BLU = \033[34m
-EOC = \033[0m
+SRC		=	print \
+			str \
+			run \
+			main \
+			buildin \
+			buildin_env \
+			lexer \
+			token \
+			env \
+			env_expand
+
+OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
+
+FLAGS	=	-Wall -Wextra -Werror -Iincludes
+LINK	=	libreadline.a -lreadline -lncurses -fsanitize=address
+
+RED		=	\033[31m
+GRE		=	\033[32m
+GRA		=	\033[37m
+BLU		=	\033[34m
+EOC		=	\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
+	@echo "⚙️  $(GRE)Compilation de ${NAME}...$(EOC)"
 	@gcc $(OBJ) $(LINK) -o $(NAME)
 
 bin/%.o: src/%.c
-	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"
+	@echo "🔧 Compilation de $(BLU)${notdir $<}$(EOC)."
 	@mkdir -p bin
 	@gcc $(FLAGS) $^ -c -o $@
 
 clean:
-	@echo "$(RED)● Removing objects 📁$(EOC)"
+	@echo "$(RED)📁 Supression des fichiers binaires (.o)...$(EOC)"
 	@rm -rf bin
 
 fclean: clean
-	@echo "$(RED)● Removing binary ⚙️ $(EOC)"
+	@echo "$(RED)⚙️  Supression des executables et librairies...$(EOC)"
 	@rm -rf $(NAME)
 
 re: fclean all

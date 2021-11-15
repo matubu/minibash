@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 09:42:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:35:05 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 			return (err(strerror(errno), cmd));
 		return (0);
 	}
-	path = *env_get(env, "PATH");//getenv("PATH");
+	path = *env_get(env, "PATH");
 	while (*path)
 	{
 		len = 0;
