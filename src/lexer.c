@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 18:21:53 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 10:47:45 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,46 +46,79 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 static void	inc(char *s, int n, void *arg)
 {
 	(void)s;
-	if (n)
+	if (n > 0)
 		(*(int *)arg)++;
 }
 
-static char	*token_substr(char *s, int n)
+static void	sub_tokenize(char *s, void (*sub)(char *s, int n, void *arg),
+		void *arg)
 {
-	char	*str;
-	int		i;
+	int	n;
 
-	str = malloc((n + 1) * sizeof(char));
-	i = 0;
-	while (n-- > 0)
-		if (*s == '\'' && s++)
-			while (n-- && *s != '\'')
-				str[i++] = *s++;
-	else if (*s == '"' && s++)
-		while (n-- && *s != '"')
-			str[i++] = *s++;
-	else
-		str[i++] = *s++;
-	str[i] = '\0';
-	return (str);
+	while (*s)
+	{
+		if (*s == '"' || *s == '\'')
+		{
+			n = 0;
+			while (s[++n] != *s)
+				;
+			sub(s++, n - 1, arg);
+			s += n;
+		}
+		else
+		{
+			n = 0;
+			while (s[n] && s[n] != '"' && s[n] != '\'')
+				n++;
+			sub(s, n, arg);
+			s += n;
+		}
+	}
 }
 
-static void	fill(char *s, int n, t_token *arg)
+static void	sub_fill(char *s, int n, t_token *arg)
 {
-	if (!n)
+	if (n <= 0)
 		return ;
 	while (arg->value)
 		arg++;
-	arg->expendable = *s != '\'';
-	arg->value = token_substr(s, n);
+	arg->expendable = *s;
+	if (*s == '\'' || *s == '"')
+		s++;
+	arg->value = malloc((n + 1) * sizeof(char));
+	arg->value[n] = '\0';
+	while (n--)
+		arg->value[n] = s[n];
+	printf("\t->(%c)%s\n", arg->expendable, arg->value);
 	(++arg)->value = NULL;
 }
 
+static void	fill(char *s, int n, t_token **arg)
+{
+	int	len;
+
+	if (n <= 0)
+		return ;
+	printf("->%.*s\n", n, s);
+	while (*arg)
+		arg++;
+	len = 1;
+	sub_tokenize(s, inc, &len);
+	*arg = malloc(len * sizeof(t_token));
+	if (*arg == NULL)
+		return ;
+	(*arg)->value = NULL;
+	sub_tokenize(s, (void (*)(char *, int, void *))sub_fill, *arg);
+}
+
+// ./a.out      >    "test"  'hello'
+// [[./a.out], [>], ["test", 'hello']]
+
 //TODO a| b with no space
-t_token	*create_tokens(char *s)
+t_token	**create_tokens(char *s)
 {
 	int		len;
-	t_token	*tokens;
+	t_token	**tokens;
 
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
@@ -93,13 +126,13 @@ t_token	*create_tokens(char *s)
 		g_process.code = 1;
 		return (NULL);
 	}
-	tokens = malloc(len * sizeof(t_token));
+	tokens = malloc(len * sizeof(t_token *));
 	if (tokens == NULL)
 	{
 		g_process.code = 1;
 		return (NULL);
 	}
-	tokens->value = NULL;
+	*tokens = NULL;
 	tokenize(s, (void (*)(char *, int, void *))fill, tokens);
 	return (tokens);
 }
