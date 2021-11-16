@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 10:29:57 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 12:08:19 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	free_tokens(t_token **tokens)
 	int	j;
 
 	i = -1;
-	while (tokens[++i]) {
+	while (tokens[++i])
+	{
 		j = 0;
 		while (tokens[i][j].value)
 			free(tokens[i][j++].value);

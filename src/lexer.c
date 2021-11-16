@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 12:03:54 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/16 12:14:50 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ static void	fill(char *s, int n, t_token **arg)
 		return ;
 	(*arg)->value = NULL;
 	sub_tokenize(s, (void (*)(char *, int, void *))sub_fill, *arg);
+	*++arg = NULL;
 }
 
 // ./a.out      >    "test"  'hello'
