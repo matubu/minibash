@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 12:14:50 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:13:24 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,29 @@ static void	inc(char *s, int n, void *arg)
 		(*(int *)arg)++;
 }
 
-static void	sub_tokenize(char *s, void (*sub)(char *s, int n, void *arg),
+static void	sub_tokenize(char *s, int n, void (*sub)(char *s, int n, void *arg),
 		void *arg)
 {
-	int	n;
+	int	len;
 
-	while (*s)
+	while (n > 0)
 	{
 		if (*s == '"' || *s == '\'')
 		{
-			n = 0;
-			while (s[++n] != *s)
+			len = 0;
+			while (n-- > 0 && s[++len] != *s)
 				;
-			sub(s++, n - 1, arg);
-			s += n;
+			sub(s++, len - 1, arg);
+			s += len;
+			n--;
 		}
 		else
 		{
-			n = 0;
-			while (s[n] && s[n] != '"' && s[n] != '\'')
-				n++;
-			sub(s, n, arg);
-			s += n;
+			len = 0;
+			while (s[len] != '"' && s[len] != '\'' && n-- > 0)
+				len++;
+			sub(s, len, arg);
+			s += len;
 		}
 	}
 }
@@ -99,16 +100,16 @@ static void	fill(char *s, int n, t_token **arg)
 
 	if (n <= 0)
 		return ;
-	printf("->%.*s\n", n, s);
+	printf("->%d:%.*s\n", n, n, s);
 	while (*arg)
 		arg++;
 	len = 1;
-	sub_tokenize(s, inc, &len);
+	sub_tokenize(s, n, inc, &len);
 	*arg = malloc(len * sizeof(t_token));
 	if (*arg == NULL)
 		return ;
 	(*arg)->value = NULL;
-	sub_tokenize(s, (void (*)(char *, int, void *))sub_fill, *arg);
+	sub_tokenize(s, n, (void (*)(char *, int, void *))sub_fill, *arg);
 	*++arg = NULL;
 }
 
