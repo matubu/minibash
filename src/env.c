@@ -6,7 +6,7 @@
 /*   By: matubu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:47:13 by matubu            #+#    #+#             */
-/*   Updated: 2021/11/16 18:49:12 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:10:01 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ispartofenv(char c)
 {
 	if ((c >= 'A' && c <= 'Z')
 		|| (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9')
 		|| (c == '_'))
 		return (1);
 	return (0);
@@ -23,7 +24,7 @@ int	ispartofenv(char c)
 
 int	isenvdefine(char *s)
 {
-	if (!ispartofenv(*s++))
+	if ((*s >= '0' && *s <= '9') || !ispartofenv(*s++))
 		return (0);
 	while (ispartofenv(*s))
 		s++;
