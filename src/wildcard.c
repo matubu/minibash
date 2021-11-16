@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/16 20:47:21 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 21:21:35 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,37 @@ static int	check_pattern(char *pattern, char *file)
 	return (*file == '\0');
 }
 
-//TODO remove *.c
 static void	wildcard_replace(t_token ***tokens, int *i)
 {
 	DIR				*dir;
 	struct dirent	*file;
+	int				count;
+	char			*pattern;
 
 	printf("------------ wildcard\n");
 	dir = opendir(".");
+	pattern = (*tokens)[*i]->value;
 	if (dir == NULL)
 	{
 		printf("no dir put error ?\n");
 		return ;
 	}
+	count = 0;
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break ;
-		if (check_pattern((*tokens)[*i]->value, file->d_name))
-			*tokens = insert(*tokens, (*i)++, file->d_name);
+		if (check_pattern(pattern, file->d_name))
+		{
+			if (count++)
+				*tokens = insert(*tokens, (*i)++, file->d_name);
+			else
+				(*tokens)[*i]->value = ft_strdup(file->d_name);
+		}
 	}
+	if (count)
+		free(pattern);
 	closedir(dir);
 }
 
