@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 10:39:38 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 12:03:54 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,18 @@ void	handle_sigint(int signum)
 	g_process.pid = 0;
 }
 
-//TODO value=test echo helloworld => will only display helloworld
-//TODO =test echo helloworld => error
-//TODO buildin return value + parsing error
-//TODO a5=7
-//TODO echo hello'$PATH'
-//TODO export $?
+// TODO: #14 value=test echo helloworld => will only display helloworld
+// TODO: #15 =test echo helloworld => error
+// TODO: #16 buildin return value + parsing error
+// TODO: #17 a5=7
+// TODO: #18 echo hello'$PATH'
+// TODO: #19 export $?
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
 	t_token			**tokens;
 	static t_env	env = {NULL, NULL};
+	size_t			i;
 
 	while (*envm)
 	{
@@ -93,15 +94,20 @@ int	main(int argc, char **argv, char **envm)
 		free(line);
 		if (tokens == NULL)
 			continue ;
-		//TODO check before variable expansion if is a=b
-		//TODO if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
-		//wildcard_expand(tokens);
-		//env_expand(env.local, tokens);
-		show_ctl(1);
-		//if (tokens->value)
-		//	run(tokens->value, token_to_argv(tokens), &env);
-		//else
-		//	g_process.code = 0;
+		// TODO: #11 check before variable expansion if is a=b
+		// TODO: #12 if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
+		i = 0;
+		while (tokens[i] != NULL)
+		{
+			wildcard_expand(tokens[i]);
+			env_expand(env.local, tokens[i]);
+			show_ctl(1);
+			if (tokens[i]->value)
+				run(tokens[i]->value, token_to_argv(tokens[i]), &env);
+			else
+				g_process.code = 0;
+			i++;
+		}
 		//free_tokens(tokens);
 	}
 	write(1, "exit\n", 5);

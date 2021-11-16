@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 10:47:45 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 12:03:54 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void	fill(char *s, int n, t_token **arg)
 // ./a.out      >    "test"  'hello'
 // [[./a.out], [>], ["test", 'hello']]
 
-//TODO a| b with no space
+// TODO: #20 a| b with no space
 t_token	**create_tokens(char *s)
 {
 	int		len;
