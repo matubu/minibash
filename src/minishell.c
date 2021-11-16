@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 12:16:07 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:27:55 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ int	main(int argc, char **argv, char **envm)
 		// TODO: #11 check before variable expansion if is a=b
 		// TODO: #12 if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
 		//wildcard_expand(tokens);
-		//env_expand(env.local, tokens);
+		env_expand(env.local, tokens);
 		show_ctl(1);
 		//if (tokens[i]->value)
-		//	run(tokens[i]->value, token_to_argv(tokens[i]), &env);
+		run(tokens[0]->value, token_to_argv(tokens), &env);
 		//else
 		//	g_process.code = 0;
 		free_tokens(tokens);

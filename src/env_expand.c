@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/16 11:38:31 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:17:52 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ static char	*env_replace(char **env, char *s)
 	return (s);
 }
 
-void	env_expand(char **env, t_token *tokens)
+void	env_expand(char **env, t_token **tokens)
 {
-	while (tokens->value)
+	int	i;
+
+	while (*tokens)
 	{
-		if (tokens->expendable == '"')
-			tokens->value = env_replace(env, tokens->value);
+		i = -1;
+		while ((*tokens)[++i].value)
+			if ((*tokens)[i].expendable != '\'')
+				(*tokens)[i].value = env_replace(env, (*tokens)[i].value);
 		tokens++;
 	}
 }
