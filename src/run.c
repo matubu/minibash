@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 18:25:53 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 18:36:24 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,5 @@ void	run(char *cmd, char **argv, t_env *env)
 		exit_builtin(argv);
 	else
 		runsearch(cmd, argv, env->exported);
-	free(argv);
+	free_argv(argv);
 }

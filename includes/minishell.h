@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 13:26:05 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 18:36:06 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char			*ft_strchr(const char *s, int c);
 t_token			**create_tokens(char *s);
 int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);
+void			free_argv(char **argv);
 
 /* ******************** ENVIRONEMENT LOCALS ******************* */
 int				ispartofenv(char c);

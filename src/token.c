@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 13:30:36 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/16 18:35:52 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,14 @@ char	**token_to_argv(t_token **tokens)
 	while (len--)
 		argv[len] = token_join(tokens[len]);
 	return (argv);
+}
+
+void	free_argv(char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
 }
