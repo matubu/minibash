@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 20:18:50 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 21:48:12 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
 	t_token			**tokens;
+	char			**pargv;
 	static t_env	env = {NULL, NULL};
 
 	while (*envm)
@@ -96,10 +97,11 @@ int	main(int argc, char **argv, char **envm)
 		env_expand(env.local, tokens);
 		wildcard_expand(&tokens);
 		show_ctl(1);
-		//if (tokens[i]->value)
-		run(tokens[0]->value, token_to_argv(tokens), &env);
-		//else
-		//	g_process.code = 0;
+		pargv = token_to_argv(tokens);
+		if (tokens[0]->value)
+			run(pargv[0], pargv, &env);
+		else
+			g_process.code = 0;
 		free_tokens(tokens);
 	}
 	write(1, "exit\n", 5);
