@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 19:48:15 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 20:18:50 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void	handle_sigint(int signum)
 }
 
 // TODO: #14 value=test echo helloworld => will only display helloworld
-// TODO: #15 =test echo helloworld => error
 // TODO: #16 buildin return value + parsing error
 // TODO: #17 a5=7
-// TODO: #18 echo hello'$PATH'
 // TODO: #19 export $?
 int	main(int argc, char **argv, char **envm)
 {
@@ -96,7 +94,7 @@ int	main(int argc, char **argv, char **envm)
 		// TODO: #11 check before variable expansion if is a=b
 		// TODO: #12 if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
 		env_expand(env.local, tokens);
-		wildcard_expand(tokens);
+		wildcard_expand(&tokens);
 		show_ctl(1);
 		//if (tokens[i]->value)
 		run(tokens[0]->value, token_to_argv(tokens), &env);
