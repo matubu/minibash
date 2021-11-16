@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 20:18:28 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:31:52 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* ************************* RUNTIME ************************** */
-char			*pathncat(char *path, int n, char *relative);
-void			run(char *cmd, char **argv, t_env *env);
+void			exec_tokens(t_token **tokens, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(char **argv);

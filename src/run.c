@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 18:36:24 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:32:19 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,13 @@ void	run(char *cmd, char **argv, t_env *env)
 	else
 		runsearch(cmd, argv, env->exported);
 	free_argv(argv);
+}
+
+void	exec_tokens(t_token **tokens, t_env *env)
+{
+	char	**argv;
+
+	//TODO pipe thing here
+	argv = token_to_argv(tokens);
+	run(argv[0], argv, env);
 }

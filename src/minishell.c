@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 21:48:12 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:31:30 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,11 @@ void	handle_sigint(int signum)
 
 // TODO: #14 value=test echo helloworld => will only display helloworld
 // TODO: #16 buildin return value + parsing error
-// TODO: #17 a5=7
 // TODO: #19 export $?
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
 	t_token			**tokens;
-	char			**pargv;
 	static t_env	env = {NULL, NULL};
 
 	while (*envm)
@@ -97,9 +95,8 @@ int	main(int argc, char **argv, char **envm)
 		env_expand(env.local, tokens);
 		wildcard_expand(&tokens);
 		show_ctl(1);
-		pargv = token_to_argv(tokens);
 		if (tokens[0]->value)
-			run(pargv[0], pargv, &env);
+			exec_tokens(tokens, &env);
 		else
 			g_process.code = 0;
 		free_tokens(tokens);
