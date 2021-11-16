@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 18:36:06 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/16 19:38:48 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 /* ************************* DEFINES ************************** */
 # define NAME		"minishell"
@@ -82,7 +83,7 @@ char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
 
 /* ************************* WILDCARDS ************************ */
-void			wildcard_expand(t_token *tokens);
+void			wildcard_expand(t_token **tokens);
 
 /* ************************* RUNTIME ************************** */
 char			*pathncat(char *path, int n, char *relative);
