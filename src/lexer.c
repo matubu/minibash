@@ -6,11 +6,16 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 13:13:24 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/17 12:16:20 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	isoperator(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '&');
+}
 
 static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 		void *arg)
@@ -29,14 +34,16 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 					return (err("syntax error unclosed token", s));
 			n++;
 		}
-		else if (s[n] && s[n] != ' ')
-			while (s[++n] && s[n] != ' ')
+		else if (s[n] && s[n] != ' ' && !isoperator(s[n]))
+			while (s[++n] && s[n] != ' ' && !isoperator(s[n]))
 				;
-		if (s[n] == ' ' || s[n] == '\0')
+		if (isoperator(s[n]) || s[n] == ' ' || s[n] == '\0')
 		{
 			token(s, n, arg);
 			if (s[n] == '\0')
 				return (0);
+			if (isoperator(s[n]))
+				token(s + n, 1, arg);
 			s += n + 1;
 			n = 0;
 		}
