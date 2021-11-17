@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 22:31:52 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 12:57:33 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 
 /* *************************** LEXER ************************** */
+int				isoperator(char c);
 t_token			**create_tokens(char *s);
 int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);

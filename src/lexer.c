@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 12:16:20 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 12:40:47 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	isoperator(char c)
+int	isoperator(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }

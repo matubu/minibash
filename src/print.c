@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/12 08:28:27 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/17 13:57:01 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	println(int fd, char *s)
 char	*itoa_buf(int n)
 {
 	int			i;
-	static char	res[12];
+	static char	res[13];
 	int			neg;
 
-	i = 12;
+	i = 13;
 	res[--i] = '\0';
 	neg = 0;
 	if (n < 0)
@@ -71,6 +71,7 @@ int	error(char *name, char *err, char *info)
 	write(2, "\033[0m: ", 6);
 	putstr(2, info);
 	write(2, "\n", 1);
+	g_process.code = 1;
 	return (-1);
 }
 

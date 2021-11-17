@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/16 13:17:52 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/17 13:57:13 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static char	*env_var(char **env, char *s, int *i)
 	int		len;
 	char	**kv;
 
-	len = 0;
 	if (s[*i] == '?')
-		return (env_join(s, itoa_buf(g_process.code), i, 1));
+		return (env_join(s, itoa_buf(g_process.code) - 1, i, 1));
+	len = 0;
 	while (ispartofenv(s[*i + len]))
 		len++;
 	kv = env_get(env, s + *i);
