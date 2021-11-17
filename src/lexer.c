@@ -6,13 +6,18 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 12:40:47 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:14:26 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	isoperator(char c)
+int	is_space(char c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\f'));
+}
+
+int	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
@@ -34,15 +39,15 @@ static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 					return (err("syntax error unclosed token", s));
 			n++;
 		}
-		else if (s[n] && s[n] != ' ' && !isoperator(s[n]))
-			while (s[++n] && s[n] != ' ' && !isoperator(s[n]))
+		else if (s[n] && !is_space(s[n]) && !is_operator(s[n]))
+			while (s[++n] && !is_space(s[n]) && !is_operator(s[n]))
 				;
-		if (isoperator(s[n]) || s[n] == ' ' || s[n] == '\0')
+		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
 		{
 			token(s, n, arg);
 			if (s[n] == '\0')
 				return (0);
-			if (isoperator(s[n]))
+			if (is_operator(s[n]))
 				token(s + n, 1, arg);
 			s += n + 1;
 			n = 0;
