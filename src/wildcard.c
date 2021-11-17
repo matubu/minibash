@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/16 21:21:35 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 11:20:47 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ static int	check_pattern(char *pattern, char *file)
 	{
 		if (*pattern == '*')
 		{
-			if (pattern[1] == '\0')
+			if (*++pattern == '\0')
 				return (1);
-			while (*file && *file != pattern[1])
-				file++;
+			while (*file)
+				if (check_pattern(pattern, file++))
+					return (1);
+			return (0);
 		}
 		else if (*file++ != *pattern)
 			return (0);
