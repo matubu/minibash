@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matubu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:47:13 by matubu            #+#    #+#             */
-/*   Updated: 2021/11/17 12:12:36 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 14:53:00 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ int	isenvdefine(char *s)
 	if (*s == '=')
 		return (1);
 	return (0);
+}
+
+void	env_init(t_env *env, char **envm)
+{
+	while (*envm)
+	{
+		env_set(&(env->exported), *envm);
+		env_set(&(env->local), *envm++);
+	}
 }
 
 char	**env_get(char **env, char *kv)

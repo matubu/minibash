@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 22:31:30 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:24:41 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	show_ctl(int b)
 	tcsetattr(0, TCSANOW, &new);
 }
 
-void	handle_sigquit(int signum)
+static void	handle_sigquit(int signum)
 {
 	(void)signum;
 	if (g_process.pid)
@@ -46,7 +46,7 @@ void	handle_sigquit(int signum)
 	g_process.pid = 0;
 }
 
-void	handle_sigint(int signum)
+static void	handle_sigint(int signum)
 {
 	(void)signum;
 	write(1, "\n", 1);
@@ -67,16 +67,11 @@ void	handle_sigint(int signum)
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
-	t_token			**tokens;
 	static t_env	env = {NULL, NULL};
 
-	while (*envm)
-	{
-		env_set(&env.exported, *envm);
-		env_set(&env.local, *envm++);
-	}
 	(void)argc;
 	(void)argv;
+	env_init(&env, envm);
 	signal(SIGQUIT, handle_sigquit);
 	signal(SIGINT, handle_sigint);
 	while (1)
@@ -86,20 +81,9 @@ int	main(int argc, char **argv, char **envm)
 		if (line == NULL)
 			break ;
 		add_history(line);
-		tokens = create_tokens(line);
+		//pipe_execute(&env, line);
+		pipe_parse(&env, line);
 		free(line);
-		if (tokens == NULL)
-			continue ;
-		// TODO: #11 check before variable expansion if is a=b
-		// TODO: #12 if first follow the pattern [a-zA-Z_]+=[^]* expend only after =
-		env_expand(env.local, tokens);
-		wildcard_expand(&tokens);
-		show_ctl(1);
-		if (tokens[0]->value)
-			exec_tokens(tokens, &env);
-		else
-			g_process.code = 0;
-		free_tokens(tokens);
 	}
 	write(1, "exit\n", 5);
 	return (0);

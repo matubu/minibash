@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 12:57:33 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:21:27 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ char			*ft_strcat(char *dest, const char *src);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 
+/* *************************** PIPES ************************** */
+void			pipe_parse(t_env *env, char *cmd);
+char			*pipe_execute(t_env *env, char *subcmd);
+char			**pipe_split(const char *s);
+
 /* *************************** LEXER ************************** */
 int				isoperator(char c);
 t_token			**create_tokens(char *s);
@@ -79,6 +84,7 @@ void			free_argv(char **argv);
 /* ******************** ENVIRONEMENT LOCALS ******************* */
 int				ispartofenv(char c);
 int				isenvdefine(char *s);
+void			env_init(t_env *env, char **envm);
 void			env_expand(char **env, t_token **tokens);
 char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
@@ -87,6 +93,7 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* ************************* RUNTIME ************************** */
+void			show_ctl(int b);
 void			exec_tokens(t_token **tokens, t_env *env);
 
 /* ************************ BUILT-INS ************************* */

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 12:40:47 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:17:23 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ static void	sub_fill(char *s, int n, t_token *arg)
 	arg->value[n] = '\0';
 	while (n--)
 		arg->value[n] = s[n];
-	printf("\t->(%c)%s\n", arg->expendable, arg->value);
 	(++arg)->value = NULL;
 }
 
@@ -107,7 +106,6 @@ static void	fill(char *s, int n, t_token **arg)
 
 	if (n <= 0)
 		return ;
-	printf("->%d:%.*s\n", n, n, s);
 	while (*arg)
 		arg++;
 	len = 1;

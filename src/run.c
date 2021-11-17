@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 22:32:19 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:16:09 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	exec_tokens(t_token **tokens, t_env *env)
 {
 	char	**argv;
 
-	//TODO pipe thing here
 	argv = token_to_argv(tokens);
 	run(argv[0], argv, env);
 }

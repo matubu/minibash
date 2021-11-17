@@ -6,17 +6,19 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/15 17:34:18 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/17 15:12:04 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRC		=	print \
+SRC		=	minishell \
+			print \
+			pipe \
+			pipe_split \
 			string_1 \
 			string_2 \
 			run \
-			minishell \
 			builtin \
 			builtin_env \
 			lexer \
