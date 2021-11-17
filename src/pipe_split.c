@@ -51,10 +51,8 @@ static char	*pipe_split_copy(const char *s, int start, int size)
 	word = (char *) malloc((size + 1) * sizeof(char));
 	i = 0;
 	while (i < size)
-	{
-		word[i] = s[start + i];
-		i++;
-	}
+		word[i++] = s[start + i];
+	word[i] = '\0';
 	return (word);
 }
 
