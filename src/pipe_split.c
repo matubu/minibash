@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/17 15:35:56 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/17 17:29:32 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ static char	*pipe_split_copy(const char *s, int start, int size)
 	word = (char *) malloc((size + 1) * sizeof(char));
 	i = 0;
 	while (i < size)
-		word[i++] = s[start + i];
-	word[i] = '\0';
+	{
+		word[i] = s[start + i];
+		i++;
+	}
+	word[i] = 0;
 	return (word);
 }
 
@@ -74,7 +77,7 @@ char	**pipe_split(const char *s)
 			i++;
 		else
 		{
-			j = pipe_split_search(s + i) + 1;
+			j = pipe_split_search(s + i);
 			words[k++] = pipe_split_copy(s, i, j);
 			i += j;
 		}

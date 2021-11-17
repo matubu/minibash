@@ -1,51 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_2.c                                         :+:      :+:    :+:   */
+/*   char.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/15 16:10:31 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/17 17:28:44 by acoezard         ###   ########.fr       */
+/*   Created: 2021/11/17 17:22:00 by acoezard          #+#    #+#             */
+/*   Updated: 2021/11/17 17:29:05 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strchr(const char *s, int c)
-{
-	char	*str;
-	int		i;
-
-	str = (char *) s;
-	i = 0;
-	while (str[i] != (unsigned char) c)
-	{
-		if (str[i] == '\0')
-			return (NULL);
-		i++;
-	}
-	return (str + i);
-}
-
-int	ft_strisonly(const char *s, char c)
-{
-	while (*s)
-		if (*s++ != c)
-			return (0);
-	return (1);
-}
-
-char	*ft_strcpy(char *dest, const char *src)
+char	*char_cat(char *dest, const char src)
 {
 	size_t	i;
 
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
+	i = ft_strlen(dest);
+	dest[i] = src;
+	dest[i + 1] = 0;
 	return (dest);
+}
+
+char	*char_join(const char *s1, const char c)
+{
+	size_t	s1_len;
+	char	*sptr;
+
+	if (!s1 || !c)
+		return (NULL);
+	s1_len = ft_strlen(s1);
+	sptr = (char *) malloc(s1_len + 2);
+	if (!sptr)
+		return (NULL);
+	ft_strcpy(sptr, s1);
+	char_cat(sptr, c);
+	return (sptr);
 }

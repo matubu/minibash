@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 15:21:27 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/17 17:52:58 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,14 @@ int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 int				ft_strisonly(const char *s, char c);
 int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strcat(char *dest, const char *src);
+char			*ft_strjoin(const char *s1, const char c);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 
+char			*char_cat(char *dest, const char src);
+char			*char_join(const char *s1, const char c);
 /* *************************** PIPES ************************** */
 void			pipe_parse(t_env *env, char *cmd);
 char			*pipe_execute(t_env *env, char *subcmd);
@@ -80,6 +84,7 @@ t_token			**create_tokens(char *s);
 int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);
 void			free_argv(char **argv);
+int				exec_tokens(t_token **tokens, t_env *env);
 
 /* ******************** ENVIRONEMENT LOCALS ******************* */
 int				ispartofenv(char c);
@@ -94,7 +99,6 @@ void			wildcard_expand(t_token ***tokens);
 
 /* ************************* RUNTIME ************************** */
 void			show_ctl(int b);
-void			exec_tokens(t_token **tokens, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(char **argv);

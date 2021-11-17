@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 15:24:41 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:57:56 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int	main(int argc, char **argv, char **envm)
 		free(line);
 	}
 	write(1, "exit\n", 5);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
