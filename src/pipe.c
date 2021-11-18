@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 12:45:04 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 13:05:38 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,10 @@ static void	pipe_execute(t_env	*env, char **subcmds, int stdin)
 
 	if (*subcmds == NULL)
 	{
-		dup2(fd[0], 1);
-//		close(fd[0]);
 		while (read(stdin, &buf, 1))
 			write(1, &buf, 1);
-		//dup2(1, stdin);
 		return ;
 	}
-
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
@@ -46,18 +42,16 @@ static void	pipe_execute(t_env	*env, char **subcmds, int stdin)
 		free_tokens(tokens);
 		exit(-1);
 	}
-	else
-	{
-		close(fd[1]);
-//		if (subcmds[1])
-			pipe_execute(env, subcmds + 1, fd[0]);
-		close(fd[0]);
-		g_process.pid = pid;
-		wait(&g_process.code);
-	}
+	close(fd[1]);
+	pipe_execute(env, subcmds + 1, fd[0]);
+	close(fd[0]);
+	g_process.pid = pid;
+	wait(&g_process.code);
 }
 
-//TODO fix infinite loop with recursion ex: cat /dev/urandom | head -n 2
+//TODO fix infinite loop with recursion ex: cat /dev/urandom | head -n 2 or cat | unknown_command
+//TODO exit
+//TODO do not use read and write use dup2 instead
 void	pipe_parse(t_env *env, char *cmd)
 {
 	char	**subcmds;
