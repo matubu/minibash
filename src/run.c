@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 15:00:51 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:40:47 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,10 @@ char	*pathncat(char *path, int n, char *relative)
 */
 int	runfrompath(char *cmd, char **argv, char **env)
 {
-	//pid_t	pid;
 
 	if (access(cmd, X_OK) == -1)
 		return (-1);
-	//pid = fork();
-	//if (pid == 0)
-	//{
-		execve(cmd, argv, env);
-	//	exit(-1);
-	//}
-	//else
-	//{
-	//	g_process.pid = pid;
-	//	wait(&g_process.code);
-	//}
+	execve(cmd, argv, env);
 	return (0);
 }
 
@@ -126,8 +115,8 @@ int	exec_tokens(char *cmd, t_env *env)
 	t_token	**tokens;
 
 	tokens = create_tokens(cmd);
-	if (tokens == NULL)
-		return (g_process.code = 1);
+	if (tokens == NULL || *tokens == NULL || (*tokens)->value == '\0')
+		return (g_process.code = err("command not found", "(null)"));
 	env_expand(env->local, tokens);
 	wildcard_expand(&tokens);
 	if (tokens[0]->value == NULL)
