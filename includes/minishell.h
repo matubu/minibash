@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 09:01:19 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:51:39 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_token			**create_tokens(char *s);
 int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);
 void			free_argv(char **argv);
-int				exec_tokens(t_token **tokens, t_env *env);
 
 /* ******************** ENVIRONEMENT LOCALS ******************* */
 int				ispartofenv(char c);
@@ -98,7 +97,7 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* ************************* RUNTIME ************************** */
-void			show_ctl(int b);
+int				exec_tokens(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(char **argv);

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 12:06:37 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:50:59 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,16 +118,22 @@ void	run(char *cmd, char **argv, t_env *env)
 		exit_builtin(argv);
 	else
 		runsearch(cmd, argv, env->exported);
-	free_argv(argv);
 }
 
-int	exec_tokens(t_token **tokens, t_env *env)
+int	exec_tokens(char *cmd, t_env *env)
 {
 	char	**argv;
+	t_token	**tokens;
 
+	tokens = create_tokens(cmd);
+	env_expand(env->local, tokens);
+	wildcard_expand(&tokens);
+	if (tokens[0]->value == NULL)
+		return (g_process.code = 1);
 	argv = token_to_argv(tokens);
+	free_tokens(tokens);
 	run(argv[0], argv, env);
-	// TODO: #25 Retourner un filedesc du sdout
+	free_argv(argv);
 	return (0);
 }
 
