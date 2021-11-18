@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 18:14:04 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:07:49 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	fill(char *s, int n, char **arg)
 	}
 	if (*s == '\'' || *s == '"')
 		n++;
-	tmp = malloc(n + ft_strlen(*arg) + 2);
+	tmp = malloc((n + ft_strlen(*arg) + 2) * sizeof(char));
 	i = -1;
 	while ((*arg)[++i])
 		tmp[i] = (*arg)[i];
@@ -63,7 +63,7 @@ char	**pipe_split(char *s)
 		g_process.code = 1;
 		return (NULL);
 	}
-	pipes = malloc(len * sizeof(char));
+	pipes = malloc(len * sizeof(char *));
 	if (pipes == NULL)
 	{
 		g_process.code = 1;
@@ -76,5 +76,6 @@ char	**pipe_split(char *s)
 		free_argv(pipes);
 		return (NULL);
 	}
+	printf("no error\n");
 	return (pipes);
 }

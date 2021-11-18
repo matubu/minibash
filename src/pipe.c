@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 18:36:58 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:05:30 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	pipe_execute(t_env	*env, char **subcmds, int stdin)
 	wait(&g_process.code);
 }
 
-// TODO: #30 exit cd
+// TODO: #30 exit + cd
 void	pipe_parse(t_env *env, char *cmd)
 {
 	char	**subcmds;
