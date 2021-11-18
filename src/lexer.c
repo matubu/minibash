@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 15:17:23 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 16:40:33 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	isoperator(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
-static int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
+int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 		void *arg)
 {
 	int	n;

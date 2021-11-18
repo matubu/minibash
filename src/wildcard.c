@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 15:06:07 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 17:19:55 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,18 @@ static t_token	**insert(t_token **tokens, int i, char *filename)
 
 static int	check_pattern(char *pattern, char *file)
 {
-	while (*pattern)
+	while (*file && *pattern)
 	{
-		if (*pattern == '*')
+		if (*pattern == '*' && ++pattern)
 		{
-			if (*++pattern == '\0')
-				return (1);
 			while (*file)
 				if (check_pattern(pattern, file++))
 					return (1);
-			return (0);
 		}
-		else if (*file++ != *pattern)
+		else if (*file++ != *pattern++)
 			return (0);
-		pattern++;
 	}
-	return (*file == '\0');
+	return (*file == '\0' && *pattern == '\0');
 }
 
 static void	wildcard_replace(t_token ***tokens, int *i)
@@ -79,7 +75,7 @@ static void	wildcard_replace(t_token ***tokens, int *i)
 		file = readdir(dir);
 		if (file == NULL)
 			break ;
-		if (check_pattern(pattern, file->d_name))
+		if (!(*pattern == '*' && *file->d_name == '.') && check_pattern(pattern, file->d_name))
 		{
 			if (count++)
 				*tokens = insert(*tokens, (*i)++, file->d_name);

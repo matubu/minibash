@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 15:15:05 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 16:10:02 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	main(int argc, char **argv, char **envm)
 		line = readline(PS1);
 		if (line == NULL)
 			break ;
-		add_history(line);
+		if (*line)
+			add_history(line);
 		show_ctl(1);
 		pipe_parse(&env, line);
 		free(line);
