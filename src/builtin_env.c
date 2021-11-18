@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:40:02 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/15 16:29:03 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:20:01 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	unset_builtin(char **argv, t_env *env)
 //TODO a=5 echo
 void	set_builtin(char **argv, t_env *env)
 {
+	printf("set %s\n", argv[0]);
 	while (*argv)
 	{
 		env_set(&env->local, *argv);
