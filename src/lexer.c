@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 16:40:33 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:12:12 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	isoperator(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
-int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
+int	tokenize(char *s, int (*token)(char *s, int n, void *arg),
 		void *arg)
 {
 	int	n;
@@ -39,22 +39,25 @@ int	tokenize(char *s, void (*token)(char *s, int n, void *arg),
 				;
 		if (isoperator(s[n]) || s[n] == ' ' || s[n] == '\0')
 		{
-			token(s, n, arg);
+			if (token(s, n, arg))
+				return (1);
 			if (s[n] == '\0')
 				return (0);
 			if (isoperator(s[n]))
-				token(s + n, 1, arg);
+				if (token(s + n, 1, arg))
+					return (1);
 			s += n + 1;
 			n = 0;
 		}
 	}
 }
 
-static void	inc(char *s, int n, void *arg)
+static int	inc(char *s, int n, void *arg)
 {
 	(void)s;
 	if (n > 0)
 		(*(int *)arg)++;
+	return (0);
 }
 
 static void	sub_tokenize(char *s, int n, void (*sub)(char *s, int n, void *arg),
@@ -100,22 +103,23 @@ static void	sub_fill(char *s, int n, t_token *arg)
 	(++arg)->value = NULL;
 }
 
-static void	fill(char *s, int n, t_token **arg)
+static int	fill(char *s, int n, t_token **arg)
 {
 	int	len;
 
 	if (n <= 0)
-		return ;
+		return (0);
 	while (*arg)
 		arg++;
 	len = 1;
-	sub_tokenize(s, n, inc, &len);
+	sub_tokenize(s, n, (void (*)(char *, int, void *))inc, &len);
 	*arg = malloc(len * sizeof(t_token));
 	if (*arg == NULL)
-		return ;
+		return (0);
 	(*arg)->value = NULL;
 	sub_tokenize(s, n, (void (*)(char *, int, void *))sub_fill, *arg);
 	*++arg = NULL;
+	return (0);
 }
 
 // ./a.out      >    "test"  'hello'
@@ -140,6 +144,6 @@ t_token	**create_tokens(char *s)
 		return (NULL);
 	}
 	*tokens = NULL;
-	tokenize(s, (void (*)(char *, int, void *))fill, tokens);
+	tokenize(s, (int (*)(char *, int, void *))fill, tokens);
 	return (tokens);
 }

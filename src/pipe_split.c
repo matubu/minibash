@@ -6,147 +6,50 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 17:46:58 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:14:04 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-static int	pipe_split_sep(char c)
-{
-	return (c == '|' || c == '\0');
-}
 
-static int	pipe_split_search(const char *s)
-{
-	int		j;
-
-	j = 0;
-	while (!pipe_split_sep(s[j]))
-		j++;
-	return (j);
-}
-
-static int	pipe_split_size(const char *s)
-{
-	int		size;
-	int		i;
-
-	size = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (!pipe_split_sep(s[i]) && pipe_split_sep(s[i + 1]))
-			size++;
-		i++;
-	}
-	return (size);
-}
-
-static char	*pipe_split_copy(const char *s, int start, int size)
-{
-	char	*word;
-	int		i;
-
-	word = (char *) malloc((size + 1) * sizeof(char));
-	i = 0;
-	while (i < size)
-	{
-		word[i] = s[start + i];
-		i++;
-	}
-	word[i] = 0;
-	return (word);
-}
-
-char	**pipe_split(char *s)
-{
-	char	**words;
-	int		size;
-	int		inc[3];
-
-	size = pipe_split_size(s);
-	words = (char **) malloc(sizeof(char *) * (size + 1));
-	if (words == NULL)
-		return (NULL);
-	inc[0] = 0;
-	inc[2] = 0;
-	while (s[inc[0]] != '\0')
-	{
-		// TODO: #28 Gerer le cas des quotes pour les pipes
-		if (s[inc[0]] == '"' || s[inc[0]] == '\'')
-		{
-			inc[1] = inc[0];
-			while (s[++inc[0]] != s[inc[1]])
-			{
-				if (s[inc[0]] == '\0')
-				{
-					err("syntax error near unexpected token", s + inc[0]);
-					free(words);
-					return (NULL);
-				}
-			}
-			++inc[0];
-			continue ;
-		}
-		if (s[inc[0]] == '|')
-		{
-			if (inc[0]++ == 0 || s[inc[0]] == '\0' || s[inc[0]] == '|')
-			{
-				err("syntax error near unexpected token", "|");
-				free(words);
-				return (NULL);
-			}
-		}
-		else
-		{
-			inc[1] = pipe_split_search(s + inc[0]);
-			words[inc[2]++] = pipe_split_copy(s, inc[0], inc[1]);
-			inc[0] += inc[1];
-		}
-	}
-	words[size] = NULL;
-	return (words);
-}
-*/
-
-static void	inc(char *s, int n, void *arg)
+static int	inc(char *s, int n, void *arg)
 {
 	(void)s;
-	if (n > 0 && *s == '|' && s[1] == '\0')
+	if (n > 0 && *s == '|' && n == 1)
 		(*(int *)arg)++;
+	return (0);
 }
 
-static void	fill(char *s, int n, char **arg)
+static int	fill(char *s, int n, char **arg)
 {
 	char	*tmp;
 	int		i;
 
 	if (n <= 0)
-		return ;
+		return (0);
 	while (*arg && arg[1])
 		arg++;
-	if (*s == '|' && s[1] == '\0')
+	if (*s == '|' && n == 1)
 	{
 		if (**arg == '\0')
-		{
-			err("syntax error near unexpected token", "|");
-			return ;
-		}
+			return (err("syntax error near unexpected token", "|"));
 		*++arg = ft_strdup("");
 		*++arg = NULL;
-		return ;
+		return (0);
 	}
-	tmp = malloc(ft_strlen(s) + ft_strlen(*arg) + 2);
+	if (*s == '\'' || *s == '"')
+		n++;
+	tmp = malloc(n + ft_strlen(*arg) + 2);
 	i = -1;
 	while ((*arg)[++i])
 		tmp[i] = (*arg)[i];
 	tmp[i] = ' ';
 	while (n--)
 		tmp[++i] = *s++;
-	tmp[i] = '\0';
+	tmp[++i] = '\0';
 	free(*arg);
 	*arg = tmp;
+	return (0);
 }
 
 char	**pipe_split(char *s)
@@ -168,6 +71,10 @@ char	**pipe_split(char *s)
 	}
 	*pipes = ft_strdup("");
 	pipes[1] = NULL;
-	tokenize(s, (void (*)(char *, int, void *))fill, pipes);
+	if (tokenize(s, (int (*)(char *, int, void *))fill, pipes))
+	{
+		free_argv(pipes);
+		return (NULL);
+	}
 	return (pipes);
 }
