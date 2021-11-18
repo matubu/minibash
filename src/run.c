@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 17:49:44 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 12:06:37 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,21 @@ char	*pathncat(char *path, int n, char *relative)
 */
 int	runfrompath(char *cmd, char **argv, char **env)
 {
-	pid_t	pid;
+	//pid_t	pid;
 
 	if (access(cmd, X_OK) == -1)
 		return (-1);
-	pid = fork();
-	if (pid == 0)
-	{
+	//pid = fork();
+	//if (pid == 0)
+	//{
 		execve(cmd, argv, env);
-		exit(-1);
-	}
-	else
-	{
-		g_process.pid = pid;
-		wait(&g_process.code);
-	}
+	//	exit(-1);
+	//}
+	//else
+	//{
+	//	g_process.pid = pid;
+	//	wait(&g_process.code);
+	//}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 16:57:56 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 08:59:55 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	handle_sigint(int signum)
 
 // TODO: #14 value=test echo helloworld => will only display helloworld
 // TODO: #16 buildin return value + parsing error
-// TODO: #19 export $?
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
@@ -81,7 +80,7 @@ int	main(int argc, char **argv, char **envm)
 		if (line == NULL)
 			break ;
 		add_history(line);
-		//pipe_execute(&env, line);
+		show_ctl(1);
 		pipe_parse(&env, line);
 		free(line);
 	}
