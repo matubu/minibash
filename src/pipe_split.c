@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/17 17:29:32 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:23:40 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,23 @@ char	**pipe_split(const char *s)
 {
 	char	**words;
 	int		size;
-	int		i;
-	int		j;
-	int		k;
+	int		inc[3];
 
 	size = pipe_split_size(s);
 	words = (char **) malloc(sizeof(char *) * (size + 1));
-	i = 0;
-	k = 0;
-	while (s[i] != '\0')
+	inc[0] = 0;
+	inc[2] = 0;
+	while (s[inc[0]] != '\0')
 	{
-		if (s[i] == '|')
-			i++;
+		// TODO: #27 Rendre impossible la lecture de multiple |
+		// TODO: #28 Gerer le cas des quotes pour les pipes
+		if (s[inc[0]] == '|')
+			inc[0]++;
 		else
 		{
-			j = pipe_split_search(s + i);
-			words[k++] = pipe_split_copy(s, i, j);
-			i += j;
+			inc[1] = pipe_split_search(s + inc[0]);
+			words[inc[2]++] = pipe_split_copy(s, inc[0], inc[1]);
+			inc[0] += inc[1];
 		}
 	}
 	words[size] = NULL;
