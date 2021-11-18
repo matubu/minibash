@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 08:59:55 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 15:15:05 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int argc, char **argv, char **envm)
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
+		g_process.pid = 0;
 		show_ctl(0);
 		line = readline(PS1);
 		if (line == NULL)

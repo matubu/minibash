@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 14:50:59 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 15:00:51 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int	exec_tokens(char *cmd, t_env *env)
 	t_token	**tokens;
 
 	tokens = create_tokens(cmd);
+	if (tokens == NULL)
+		return (g_process.code = 1);
 	env_expand(env->local, tokens);
 	wildcard_expand(&tokens);
 	if (tokens[0]->value == NULL)
