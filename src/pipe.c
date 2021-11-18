@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 15:36:55 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/18 15:59:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ static void	pipe_execute(t_env	*env, char **subcmds, int stdin)
 		pipe_execute(env, subcmds + 1, fd[0]);
 	close(fd[0]);
 	g_process.pid = pid;
-	wait(&g_process.code);
+	if (subcmds[1])
+	{
+		kill(pid, SIGINT);
+		write(1, "\n", 1);
+	}
+	else
+		wait(&g_process.code);
 }
 
 //TODO fix infinite loop with recursion ex: cat /dev/urandom | head -n 2 or cat | unknown_command
