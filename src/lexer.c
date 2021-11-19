@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 18:12:12 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:26:20 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,10 @@ t_token	**create_tokens(char *s)
 
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
-	{
-		g_process.code = 1;
 		return (NULL);
-	}
 	tokens = malloc(len * sizeof(t_token *));
 	if (tokens == NULL)
-	{
-		g_process.code = 1;
 		return (NULL);
-	}
 	*tokens = NULL;
 	tokenize(s, (int (*)(char *, int, void *))fill, tokens);
 	return (tokens);

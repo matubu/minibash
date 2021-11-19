@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 19:07:49 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:26:39 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,10 @@ char	**pipe_split(char *s)
 
 	len = 2;
 	if (tokenize(s, inc, &len) == -1)
-	{
-		g_process.code = 1;
 		return (NULL);
-	}
 	pipes = malloc(len * sizeof(char *));
 	if (pipes == NULL)
-	{
-		g_process.code = 1;
 		return (NULL);
-	}
 	*pipes = ft_strdup("");
 	pipes[1] = NULL;
 	if (tokenize(s, (int (*)(char *, int, void *))fill, pipes))
