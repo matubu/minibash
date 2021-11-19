@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 17:19:55 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:02:10 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,18 @@ static void	wildcard_replace(t_token ***tokens, int *i)
 	int				count;
 	char			*pattern;
 
-	printf("------------ wildcard\n");
 	dir = opendir(".");
 	pattern = (*tokens)[*i]->value;
 	if (dir == NULL)
-	{
-		printf("no dir put error ?\n");
 		return ;
-	}
 	count = 0;
 	while (1)
 	{
 		file = readdir(dir);
 		if (file == NULL)
 			break ;
-		if (!(*pattern == '*' && *file->d_name == '.') && check_pattern(pattern, file->d_name))
+		if (!(*pattern == '*' && *file->d_name == '.')
+			&& check_pattern(pattern, file->d_name))
 		{
 			if (count++)
 				*tokens = insert(*tokens, (*i)++, file->d_name);

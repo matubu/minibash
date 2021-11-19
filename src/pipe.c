@@ -6,11 +6,18 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 12:03:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:41:56 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	get_fd(char *subcmds, int fd)
+{
+	if (subcmds)
+		return (fd);
+	return (1);
+}
 
 static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
@@ -18,7 +25,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	pid_t	pid;
 
 	pipe(fd);
-	pid = exec_builtin(*subcmds, env, subcmds[1] ? fd[1] : 1) || fork();
+	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1])) || fork();
 	if (pid == 0)
 	{
 		dup2(stdin, 0);
@@ -40,7 +47,6 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	wait(&g_process.code);
 }
 
-// TODO: #30 fix buildins
 void	pipe_parse(t_env *env, char *cmd)
 {
 	char	**subcmds;

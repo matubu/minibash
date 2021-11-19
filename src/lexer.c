@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 10:26:20 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:35:41 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int	tokenize(char *s, int (*token)(char *s, int n, void *arg),
 				return (1);
 			if (s[n] == '\0')
 				return (0);
-			if (isoperator(s[n]))
-				if (token(s + n, 1, arg))
-					return (1);
+			m = n;
+			while (isoperator(s[n]))
+				n++;
+			if (token(s + m, n - m, arg))
+				return (1);
 			s += n + 1;
 			n = 0;
 		}

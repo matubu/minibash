@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:05:54 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:18:21 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*pathncat(char *path, int n, char *relative)
 */
 int	runfrompath(char *cmd, char **argv, char **env)
 {
-
 	if (access(cmd, X_OK) == -1)
 		return (-1);
 	execve(cmd, argv, env);
@@ -106,7 +105,7 @@ char	**create_argv(char *cmd, t_env *env)
 	return (argv);
 }
 
-int	 exec_builtin(char *cmd, t_env *env, int stdout)
+int	exec_builtin(char *cmd, t_env *env, int stdout)
 {
 	char	**argv;
 
@@ -146,4 +145,3 @@ int	exec_tokens(char *cmd, t_env *env)
 	free_argv(argv);
 	return (0);
 }
-
