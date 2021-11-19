@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:15:42 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:51:17 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 void	cd_builtin(t_env *env, char **argv)
 {
 	char	*pwd;
-	char	status[PATH_BUF];
+	char	buf[PATH_BUF];
+	char	*status;
 
 	if (*argv)
-		status = getcwd(*argv, PATH_BUF);
+		status = *argv;
 	else
 		status = getenv("HOME");
 	if (chdir(status) == -1)
@@ -33,7 +34,7 @@ void	cd_builtin(t_env *env, char **argv)
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
-		pwd = ft_strjoin("PWD=", status);
+		pwd = ft_strjoin("PWD=", getcwd(buf, PATH_BUF));
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
