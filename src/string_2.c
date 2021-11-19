@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:10:31 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/15 18:03:08 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:52:21 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,35 @@ int	ft_strisonly(const char *s, char c)
 		if (*s++ != c)
 			return (0);
 	return (1);
+}
+
+char	*ft_strcpy(char *dest, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*out;
+	int		i;
+
+	out = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (out == NULL)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		out[i++] = *s1++;
+	while (*s2)
+		out[i++] = *s2++;
+	out[i] = '\0';
+	return (out);
 }

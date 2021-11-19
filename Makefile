@@ -6,17 +6,21 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/15 17:34:18 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/19 13:34:29 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRC		=	print \
+SRC		=	minishell \
+			print \
+			pipe \
+			pipe_split \
+			char \
+			redirection \
 			string_1 \
 			string_2 \
 			run \
-			minishell \
 			builtin \
 			builtin_env \
 			lexer \
@@ -28,7 +32,7 @@ SRC		=	print \
 OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
 
 FLAGS	=	-Wall -Wextra -Werror -Iincludes
-LINK	=	libreadline.a -lreadline -lncurses -fsanitize=address
+LINK	=	libreadline.a -lreadline -lncurses# -fsanitize=address
 
 RED		=	\033[31m
 GRE		=	\033[32m

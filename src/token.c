@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 18:35:52 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/19 14:15:41 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static char	*token_join(t_token *token)
 			len++;
 	}
 	res = malloc((len + 1) * sizeof(char));
-	res[len] = '\0';
 	if (res == NULL)
 		return (NULL);
+	res[len] = '\0';
 	len = 0;
 	i = -1;
 	while (token[++i].value)

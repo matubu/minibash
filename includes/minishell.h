@@ -65,11 +65,22 @@ int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 int				ft_strisonly(const char *s, char c);
 int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strcat(char *dest, const char *src);
+char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 
+char			*char_cat(char *dest, const char src);
+char			*char_join(const char *s1, const char c);
+
+/* *************************** PIPES ************************** */
+void			pipe_parse(t_env *env, char *cmd);
+char			**pipe_split(char *s);
+
 /* *************************** LEXER ************************** */
+int				tokenize(char *s, int (*token)(char *s, int n, void *arg),
+					void *arg);
 int				is_operator(char c);
 int				is_space(char c);
 t_token			**create_tokens(char *s);
@@ -80,6 +91,7 @@ void			free_argv(char **argv);
 /* ******************** ENVIRONEMENT LOCALS ******************* */
 int				ispartofenv(char c);
 int				isenvdefine(char *s);
+void			env_init(t_env *env, char **envm);
 void			env_expand(char **env, t_token **tokens);
 char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
@@ -87,15 +99,19 @@ void			env_set(char ***env, char *kv);
 /* ************************* WILDCARDS ************************ */
 void			wildcard_expand(t_token ***tokens);
 
+/* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
+char			**redir_split(char *s);
+
 /* ************************* RUNTIME ************************** */
-void			exec_tokens(t_token **tokens, t_env *env);
+int				exec_builtin(char *cmd, t_env *env, int stdout);
+int				exec_tokens(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
-void			cd_builtin(char **argv);
-void			echo_builtin(char **argv);
-void			pwd_builtin(char **argv);
-void			env_builtin(char **env);
-void			exit_builtin(char **argv);
+void			cd_builtin(t_env *env, char **argv);
+void			echo_builtin(int stdout, char **argv);
+void			pwd_builtin(int stdout, char **argv);
+void			env_builtin(int stdout, char **env);
+void			exit_builtin(int stdout, char **argv);
 void			unset_builtin(char **argv, t_env *env);
 void			export_builtin(char **argv, t_env *env);
 void			set_builtin(char **argv, t_env *env);
