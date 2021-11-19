@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/16 19:17:55 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/19 10:18:32 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 * @param {char **} argv including the command: "cd"
 * will change the cwd
 */
-//TODO change $PWD and $OLD_PWD ?
+// TODO: change $PWD and $OLD_PWD ?
 void	cd_builtin(char **argv)
 {
 	if (argv[0] && argv[1])
