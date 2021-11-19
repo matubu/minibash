@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 13:51:51 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 16:40:33 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ static int	redir_fill(char *s, int n, char **arg)
 		return (0);
 	while (*arg && arg[1])
 		arg++;
-	if ((n == 1 && (*s == '<' || *s == '>'))
-		|| (n == 2
-		&& ((*s == '<' && *(s + 1) == '<' )
-		|| (*s == '>' && *(s + 1) == '>'))))
+	if ((n == 1 && (*s == '<' || *s == '>')) || (n == 2
+		&& ((*s == '<' && *(s + 1) == '<' ) || (*s == '>' && *(s + 1) == '>'))))
 	{
-		if (**arg == '\0')
-			return (err("syntax error near unexpected token", "|"));
-		*(arg += n) = ft_strdup("");
-		*(arg += n) = NULL;
+		if (*(s + n) == '\0')
+			return (err("syntax error near redirection token", ""));
+		*(arg + n) = ft_strdup("");
+		*(arg + n + 1) = NULL;
+		printf("TOKEN TROUVE\n");
 		return (0);
 	}
 	if (*s == '\'' || *s == '"')
@@ -73,6 +72,7 @@ char	**redir_split(char *s)
 		free_argv(redirections);
 		return (NULL);
 	}
-	printf("no error\n");
+	while (*redirections)
+		printf("%s\n", *(redirections++));
 	return (redirections);
 }

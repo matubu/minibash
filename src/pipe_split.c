@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 14:39:38 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 16:30:37 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ char	**pipe_split(char *s)
 		free_argv(pipes);
 		return (NULL);
 	}
-	printf("no error\n");
 	return (pipes);
 }

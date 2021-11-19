@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 11:59:48 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:53:27 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ void			env_set(char ***env, char *kv);
 
 /* ************************* WILDCARDS ************************ */
 void			wildcard_expand(t_token ***tokens);
+
+/* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
+char			**redir_split(char *s);
 
 /* ************************* RUNTIME ************************** */
 int				exec_builtin(char *cmd, t_env *env, int stdout);
