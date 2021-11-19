@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/18 18:59:42 by mberger-         ###   ########.fr        #
+#    Updated: 2021/11/19 13:34:29 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC		=	minishell \
 			pipe \
 			pipe_split \
 			char \
+			redirection \
 			string_1 \
 			string_2 \
 			run \

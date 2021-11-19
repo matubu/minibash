@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 10:40:45 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 13:51:51 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static int	redir_fill(char *s, int n, char **arg)
 	{
 		if (**arg == '\0')
 			return (err("syntax error near unexpected token", "|"));
-		*++arg = ft_strdup("");
-		*++arg = NULL;
+		*(arg += n) = ft_strdup("");
+		*(arg += n) = NULL;
 		return (0);
 	}
 	if (*s == '\'' || *s == '"')
