@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 14:18:21 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:49:59 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 {
 	char	**argv;
 
+	g_process.code = 0;
 	argv = create_argv(cmd, env);
 	if (isenvdefine(*argv))
 		set_builtin(argv, env);

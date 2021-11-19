@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:51:17 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 14:48:47 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ void	pwd_builtin(int stdout, char **argv)
 	char	path[PATH_BUF];
 
 	if (*argv)
-		putstr(2, "usage: pwd\n");
+		err("usage", "pwd");
 	else
 	{
 		if (getcwd(path, PATH_BUF) == NULL)
 		{
 			if (errno == ERANGE)
-				putstr(2, "pwd: pathname length exceeds the buffer size\n");
+				err("pwd", "pathname length exceeds the buffer size");
 		}
 		else
 			println(stdout, path);
