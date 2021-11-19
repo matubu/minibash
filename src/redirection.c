@@ -5,63 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 15:10:21 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 17:48:16 by acoezard         ###   ########.fr       */
+/*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
+/*   Updated: 2021/11/19 10:40:45 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Format: [cmd et ses params] [< fichier_in] [> fichier_out ...]
-// Si plusieurs fichier_in, garder seulement le dernier
-// La redirection < met le stdin dans la cmd.
-// La redirection > met le stdout dans le fichier_out.
-// Le heredoc << indique le delimiteur a partir duquel la lecture du stdin
-// doit s'arreter.
-// => Prend seulement le dernier heredoc ou redirection < mais effectue
-// quand meme la lecture du stdin.
-// La redirection >> append le stdout dans le fichier_out.
-
 #include "minishell.h"
 
-#define	R_LEFT	0
-#define	R_RIGHT	1
-
-struct s_redirection
+static int	redir_inc(char *s, int n, void *arg)
 {
-	int		type;
-	char	*arg;
-}
-typedef struct s_redirection	t_redirection;
-
-int		r_is_char(char c)
-{
-	return (c == '<' || c == '>');
+	(void)s;
+	if (n > 0 && *s == '|' && n == 1)
+		(*(int *)arg)++;
+	return (0);
 }
 
-int		r_code(char c)
+static int	redir_fill(char *s, int n, char **arg)
 {
-	if (c == '<')
-		return (R_LEFT);
-	if (c == '>')
-		return (R_RIGHT);
-	return (-1);
-}
+	char	*tmp;
+	int		i;
 
-void	r_parse(t_env *env, char *cmd)
-{
-	size_t	i;
-	size_t	j;
-	size_t	count;
-
-
-	i = -1;
-	while (cmd[++i] && found != 3)
+	if (n <= 0)
+		return (0);
+	while (*arg && arg[1])
+		arg++;
+	if ((n == 1 && (*s == '<' || *s == '>'))
+		|| (n == 2
+		&& ((*s == '<' && *(s + 1) == '<' )
+		|| (*s == '>' && *(s + 1) == '>'))))
 	{
-		if (cmd[i] != '<' && cmd[i] != '>')
-			continue;
-		else
-		{
-			j = r_search(env, cmd);
-		}
+		if (**arg == '\0')
+			return (err("syntax error near unexpected token", "|"));
+		*++arg = ft_strdup("");
+		*++arg = NULL;
+		return (0);
 	}
+	if (*s == '\'' || *s == '"')
+		n++;
+	tmp = malloc((n + ft_strlen(*arg) + 2) * sizeof(char));
+	i = -1;
+	while ((*arg)[++i])
+		tmp[i] = (*arg)[i];
+	tmp[i] = ' ';
+	while (n--)
+		tmp[++i] = *s++;
+	tmp[++i] = '\0';
+	free(*arg);
+	*arg = tmp;
+	return (0);
+}
 
+char	**redir_split(char *s)
+{
+	int		len;
+	char	**redirections;
+
+	len = 2;
+	if (tokenize(s, redir_inc, &len) == -1)
+		return (NULL);
+	redirections = malloc(len * sizeof(char *));
+	if (redirections == NULL)
+		return (NULL);
+	*redirections = ft_strdup("");
+	redirections[1] = NULL;
+	if (tokenize(s, (int (*)(char *, int, void *)) redir_fill, redirections))
+	{
+		free_argv(redirections);
+		return (NULL);
+	}
+	printf("no error\n");
+	return (redirections);
 }
