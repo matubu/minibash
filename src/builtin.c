@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 11:44:54 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:01:07 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@
 void	cd_builtin(t_env *env, char **argv)
 {
 	char	*pwd;
-	int		status;
+	char	*status;
 
-	if (argv[0] && argv[1])
-		status = argv[1];
+	if (*argv)
+		status = *argv;
 	else
 		status = getenv("HOME");
 	if (chdir(status) == -1)
 		error("cd", strerror(errno), status);
 	else
 	{
-		pwd = ft_strjoin("OLD_", env_get(env->exported, "PWD"));
-		env_set(env->local, pwd);
-		env_set(env->exported, pwd);
+		pwd = ft_strjoin("OLD_", *env_get(env->exported, "PWD"));
+		env_set(&env->local, pwd);
+		env_set(&env->exported, pwd);
 		free(pwd);
 		pwd = ft_strjoin("PWD=", status);
-		env_set(env->local, pwd);
-		env_set(env->exported, pwd);
+		env_set(&env->local, pwd);
+		env_set(&env->exported, pwd);
 		free(pwd);
 	}
 }
@@ -44,7 +44,7 @@ void	cd_builtin(t_env *env, char **argv)
 * @param {char **} args not including the command: "echo"
 * will parse the flags and write to the stdout the other arguments
 */
-void	echo_builtin(char **args)
+void	echo_builtin(int stdout, char **args)
 {
 	int	nl;
 
@@ -55,23 +55,23 @@ void	echo_builtin(char **args)
 		args++;
 	while (*args)
 	{
-		putstr(1, *args);
+		putstr(stdout, *args);
 		if (*++args)
-			write(1, " ", 1);
+			write(stdout, " ", 1);
 	}
 	if (nl)
-		write(1, "\n", 1);
+		write(stdout, "\n", 1);
 }
 
 /**
 * @parms argv including pwd
 * will write the cwd to the stdout except if their is two arguments
 */
-void	pwd_builtin(char **argv)
+void	pwd_builtin(int stdout, char **argv)
 {
 	char	path[PATH_BUF];
 
-	if (argv[0] && argv[1])
+	if (*argv)
 		putstr(2, "usage: pwd\n");
 	else
 	{
@@ -81,32 +81,32 @@ void	pwd_builtin(char **argv)
 				putstr(2, "pwd: pathname length exceeds the buffer size\n");
 		}
 		else
-			println(1, path);
+			println(stdout, path);
 	}
 }
 
-void	env_builtin(char **env)
+void	env_builtin(int stdout, char **env)
 {
 	while (*env)
 		if (**env)
-			println(1, *env++);
+			println(stdout, *env++);
 	else
 		env++;
 }
 
-void	exit_builtin(char **argv)
+void	exit_builtin(int stdout, char **argv)
 {
 	int		v;
 	int		neg;
 	char	*nptr;
 
-	write(1, "exit\n", 5);
-	if (argv[0] && argv[1] && argv[2])
+	write(stdout, "exit\n", 5);
+	if (*argv && argv[1])
 		return ((void)err("exit", "too many arguments"));
-	if (!argv[0] || !argv[1])
+	if (!*argv)
 		exit(0);
 	v = 0;
-	nptr = argv[1];
+	nptr = *argv;
 	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
 		nptr++;
 	neg = *nptr == '-';
@@ -115,7 +115,7 @@ void	exit_builtin(char **argv)
 	while (*nptr)
 		if (*nptr >= '0' && *nptr <= '9')
 			v = v * 10 - *nptr++ + '0';
-	else if (error("bash: exit", argv[1], "numeric argument required"))
+	else if (error("bash: exit", argv[0], "numeric argument required"))
 		exit(255);
 	if (!neg)
 		return (exit(-v));

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 18:08:31 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:59:48 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				ft_strisonly(const char *s, char c);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strcat(char *dest, const char *src);
-char			*ft_strjoin(const char *s1, const char c);
+char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 
@@ -99,14 +99,15 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* ************************* RUNTIME ************************** */
+int				exec_builtin(char *cmd, t_env *env, int stdout);
 int				exec_tokens(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
-void			cd_builtin(char **argv);
-void			echo_builtin(char **argv);
-void			pwd_builtin(char **argv);
-void			env_builtin(char **env);
-void			exit_builtin(char **argv);
+void			cd_builtin(t_env *env, char **argv);
+void			echo_builtin(int stdout, char **argv);
+void			pwd_builtin(int stdout, char **argv);
+void			env_builtin(int stdout, char **env);
+void			exit_builtin(int stdout, char **argv);
 void			unset_builtin(char **argv, t_env *env);
 void			export_builtin(char **argv, t_env *env);
 void			set_builtin(char **argv, t_env *env);

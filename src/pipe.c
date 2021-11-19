@@ -6,19 +6,19 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/18 19:15:31 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:03:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	pipe_execute(t_env	*env, char **subcmds, int stdin)
+static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
 	int		fd[2];
 	pid_t	pid;
 
 	pipe(fd);
-	pid = fork();
+	pid = exec_builtin(*subcmds, env, subcmds[1] ? fd[1] : 1) || fork();
 	if (pid == 0)
 	{
 		dup2(stdin, 0);
