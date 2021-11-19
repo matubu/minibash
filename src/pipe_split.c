@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 16:30:37 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 17:29:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	inc(char *s, int n, void *arg)
 {
-	(void)s;
-	if (n > 0 && *s == '|' && n == 1)
+	if (n == 1 && *s == '|')
 		(*(int *)arg)++;
 	return (0);
 }
