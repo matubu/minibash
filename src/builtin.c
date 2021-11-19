@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:01:07 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:15:42 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 void	cd_builtin(t_env *env, char **argv)
 {
 	char	*pwd;
-	char	*status;
+	char	status[PATH_BUF];
 
 	if (*argv)
-		status = *argv;
+		status = getcwd(*argv, PATH_BUF);
 	else
 		status = getenv("HOME");
 	if (chdir(status) == -1)
