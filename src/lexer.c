@@ -12,7 +12,12 @@
 
 #include "minishell.h"
 
-int	isoperator(char c)
+int	is_space(char c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\f'));
+}
+
+int	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
@@ -34,17 +39,17 @@ int	tokenize(char *s, int (*token)(char *s, int n, void *arg),
 					return (err("syntax error unclosed token", s));
 			n++;
 		}
-		else if (s[n] && s[n] != ' ' && !isoperator(s[n]))
-			while (s[++n] && s[n] != ' ' && !isoperator(s[n]))
+		else if (s[n] && !is_space(s[n]) && !is_operator(s[n]))
+			while (s[++n] && !is_space(s[n]) && !is_operator(s[n]))
 				;
-		if (isoperator(s[n]) || s[n] == ' ' || s[n] == '\0')
+		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
 		{
 			if (token(s, n, arg))
 				return (1);
 			if (s[n] == '\0')
 				return (0);
 			m = n;
-			while (isoperator(s[n]))
+			while (is_operator(s[n]))
 				n++;
 			if (token(s + m, n - m, arg))
 				return (1);
