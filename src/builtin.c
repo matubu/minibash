@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 10:27:01 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:44:54 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,28 @@
 * @param {char **} argv including the command: "cd"
 * will change the cwd
 */
-// TODO: #31 change $PWD and $OLD_PWD ?
-void	cd_builtin(char **argv)
+void	cd_builtin(t_env *env, char **argv)
 {
+	char	*pwd;
+	int		status;
+
 	if (argv[0] && argv[1])
+		status = argv[1];
+	else
+		status = getenv("HOME");
+	if (chdir(status) == -1)
+		error("cd", strerror(errno), status);
+	else
 	{
-		if (chdir(argv[1]) == -1)
-			error("cd", strerror(errno), argv[1]);
+		pwd = ft_strjoin("OLD_", env_get(env->exported, "PWD"));
+		env_set(env->local, pwd);
+		env_set(env->exported, pwd);
+		free(pwd);
+		pwd = ft_strjoin("PWD=", status);
+		env_set(env->local, pwd);
+		env_set(env->exported, pwd);
+		free(pwd);
 	}
-	else if (chdir(getenv("HOME")) == -1)
-		error("cd", strerror(errno), getenv("HOME"));
 }
 
 /**
