@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 15:15:10 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/22 10:41:52 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			pipe_parse(t_env *env, char *cmd);
 char			**pipe_split(char *s);
 
 /* *************************** LEXER ************************** */
-int				tokenize(char *s, int (*token)(char *s, int n, void *arg),
+int				tokenize(char *s, int (*token)(),
 					void *arg);
 int				is_operator(char c);
 int				is_space(char c);

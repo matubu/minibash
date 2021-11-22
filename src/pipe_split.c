@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 08:27:45 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:43:25 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ static int	inc(char *s, int n, void *arg)
 {
 	if (n == 1 && *s == '|')
 		(*(int *)arg)++;
+	return (0);
+}
+
+static int	check_error(char **arg, int n)
+{
+	if (n != 1 || **arg == '\0')
+		return (err("syntax error near unexpected token", "|"));
+	*++arg = ft_strdup("");
+	*++arg = NULL;
 	return (0);
 }
 
@@ -29,13 +38,7 @@ static int	fill(char *s, int n, char **arg)
 	while (*arg && arg[1])
 		arg++;
 	if (*s == '|')
-	{
-		if (n != 1 || **arg == '\0')
-			return (err("syntax error near unexpected token", "|"));
-		*++arg = ft_strdup("");
-		*++arg = NULL;
-		return (0);
-	}
+		return (check_error(arg, n));
 	if (*s == '\'' || *s == '"')
 		n++;
 	tmp = malloc((n + ft_strlen(*arg) + 2) * sizeof(char));
@@ -64,7 +67,7 @@ char	**pipe_split(char *s)
 		return (NULL);
 	*pipes = ft_strdup("");
 	pipes[1] = NULL;
-	if (tokenize(s, (int (*)(char *, int, void *))fill, pipes))
+	if (tokenize(s, (int (*)()) fill, pipes))
 	{
 		free_argv(pipes);
 		return (NULL);
