@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 17:29:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 08:19:38 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	fill(char *s, int n, char **arg)
 	if (*s == '|')
 	{
 		if (n != 1)
-			return (err("n syntax error near unexpected token", "|"));
+			return (err("syntax error near unexpected token", "|"));
 		*++arg = ft_strdup("");
 		*++arg = NULL;
 		return (0);
