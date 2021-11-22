@@ -6,11 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/22 12:55:38 by acoezard         ###   ########.fr       */
-=======
-/*   Updated: 2021/11/22 11:54:27 by mberger-         ###   ########.fr       */
->>>>>>> 52dbe24aa66c824f8f3a0bd5f2028cbb9c0d693c
+/*   Updated: 2021/11/22 14:02:59 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +35,9 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		dup2(stdin, 0);
 		if (subcmds[1])
 			dup2(fd[1], 1);
-<<<<<<< HEAD
-		exec_tokens(*subcmds, env);
-		close(fd[1]);
-=======
 		close(fd[1]);
 		if (exec_tokens(*subcmds, env))
 			exit(127);
->>>>>>> 52dbe24aa66c824f8f3a0bd5f2028cbb9c0d693c
 		exit(0);
 	}
 	close(fd[1]);
