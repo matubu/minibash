@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 11:47:37 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:55:22 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ void	orand(t_env *env, char *s)
 		}
 		pipe_parse(env, substr(s, n));
 		s += n;
-		//if (*s == '(')
-		//	err("");
-		/*else */
+		if (*s == '(')
+			return ((void)err("parse error near", ")"));
 		if ((*s == '&' && s[1] == '&')
 			|| (*s == '|' && s[1] == '|'))
 		{
