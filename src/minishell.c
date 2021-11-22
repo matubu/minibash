@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/18 19:17:34 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 09:05:12 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	handle_sigint(int signum)
 }
 
 // TODO: #14 value=test echo helloworld => will only display helloworld
-// TODO: #16 buildin return value + parsing error
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
