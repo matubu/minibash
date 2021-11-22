@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 18:36:48 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:10:05 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	t_redirection	*start;
 	int				i;
 
-	(void)arg;
 	if (n <= 0)
 		return (0);
 	start = arg;
@@ -73,7 +72,6 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	free(arg->value);
 	arg->value = tmp;
 	arg->expanded = 1;
-	printf("Value: %s | Type: %x\n\n", arg->value, arg->type);
 	return (0);
 }
 
