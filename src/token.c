@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 10:47:16 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:54:31 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**token_to_argv(t_token **tokens)
 	return (argv);
 }
 
-void	free_argv(char **argv)
+int	free_argv(char **argv)
 {
 	int	i;
 
@@ -82,4 +82,16 @@ void	free_argv(char **argv)
 	while (argv[++i])
 		free(argv[i]);
 	free(argv);
+	return (0);
+}
+
+int	exec_tokens(char *cmd, t_env *env)
+{
+	char	**argv;
+
+	argv = create_argv(cmd, env);
+	if (argv)
+		runsearch(argv[0], argv, env->exported);
+	free_argv(argv);
+	return (0);
 }

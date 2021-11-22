@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 14:49:59 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:54:41 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,21 +128,7 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 	else if (!ft_strcmp(*argv, "exit"))
 		exit_builtin(stdout, argv + 1);
 	else
-	{
-		free_argv(argv);
-		return (0);
-	}
+		return (free_argv(argv));
 	free_argv(argv);
 	return (1);
-}
-
-int	exec_tokens(char *cmd, t_env *env)
-{
-	char	**argv;
-
-	argv = create_argv(cmd, env);
-	if (argv)
-		runsearch(argv[0], argv, env->exported);
-	free_argv(argv);
-	return (0);
 }
