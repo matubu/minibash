@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 09:13:28 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:33:36 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	pid_t	pid;
 
 	pipe(fd);
-	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1])) || fork();
+	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
+	if (!pid)
+		pid = fork();
 	if (pid == 0)
 	{
 		dup2(stdin, 0);
@@ -62,7 +64,6 @@ void	pipe_parse(t_env *env, char *cmd)
 			return ((void)err("syntax error near unexpected token", "|"));
 		}
 	}
-	//redir_split(*subcmds);
 	if (*subcmds && **subcmds)
 		pipe_execute(env, subcmds, 0);
 	free_argv(subcmds);
