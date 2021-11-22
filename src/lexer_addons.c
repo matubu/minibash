@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 10:57:47 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 11:09:00 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:53:10 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,44 @@ int	tokenize(char *s, int (*token)(), void *arg)
 			if (token(s + m, n - m, arg))
 				return (1);
 			s += n + 1;
+			while (is_space(*s))
+				s++;
 			n = 0;
 		}
 	}
 }
+/*
+int	tokenize(char *s, int (*token)(char *s, int n, void *arg),
+		void *arg)
+{
+	int	n;
+	int	m;
+
+	n = 0;
+	while (1)
+	{
+		if (s[n] == '"' || s[n] == '\'')
+		{
+			m = n;
+			while (s[++n] != s[m])
+				if (s[n] == '\0')
+					return (err("syntax error unclosed token", s));
+			n++;
+		}
+		else if (s[n] && s[n] != ' ' && !is_operator(s[n]))
+			while (s[++n] && s[n] != ' ' && !is_operator(s[n]))
+				;
+		if (is_operator(s[n]) || s[n] == ' ' || s[n] == '\0')
+		{
+			if (token(s, n, arg))
+				return (1);
+			if (s[n] == '\0')
+				return (0);
+			if (is_operator(s[n]))
+				if (token(s + n, 1, arg))
+					return (1);
+			s += n + 1;
+			n = 0;
+		}
+	}
+}*/
