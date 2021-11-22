@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 14:32:45 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:49:19 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	redir_process(char *s, int n, t_redirection *arg)
 		arg[1].type = REDIR_LEFT;
 	else
 		arg[1].type = REDIR_RIGHT;
+	arg[1].expanded = 0;
 	arg[2].value = NULL;
 	return (0);
 }
@@ -59,6 +60,9 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 		return (redir_process(s, n, arg));
 	if (*s == '\'' || *s == '"')
 		n++;
+	if (arg->expanded)
+		return (0);
+	printf("size %d\n", n);
 	tmp = malloc((n + ft_strlen(arg->value) + 2) * sizeof(char));
 	i = -1;
 	while (arg->value[++i])
@@ -69,6 +73,8 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	tmp[++i] = '\0';
 	free(arg->value);
 	arg->value = tmp;
+	arg->expanded = 1;
+	printf("Value: %s | Type: %x\n\n", arg->value, arg->type);
 	return (0);
 }
 
@@ -90,11 +96,6 @@ t_redirection	*exec_redirections(char *cmd, t_env *env)
 	{
 		free(redirs);
 		return (0);
-	}
-	while (redirs->value)
-	{
-		printf("Value: %s | Type: %x\n", redirs->value, redirs->type);
-		redirs++;
 	}
 	return (redirs);
 }
