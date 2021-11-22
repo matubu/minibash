@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 10:51:37 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:52:04 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	check_pattern(char *pattern, char *file)
 	return (*file == '\0' && *pattern == '\0');
 }
 
-static void wildcard_process(t_token ***tokens, struct dirent *file,
+static void	wildcard_process(t_token ***tokens, struct dirent *file,
 	int *i, int *count)
 {
 	if ((*count)++)
