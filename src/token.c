@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 14:02:50 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:38:49 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,17 @@ int	free_argv(char **argv)
 	while (argv[++i])
 		free(argv[i]);
 	free(argv);
+	return (0);
+}
+
+int	free_redirections(t_redirection *redir)
+{
+	int	i;
+
+	i = -1;
+	while (redir[++i].value)
+		free(redir[i].value);
+	free(redir);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 19:14:17 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:37:50 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ t_redirection	*exec_redirections(char *cmd, t_env *env)
 	redirs[1].value = NULL;
 	if (tokenize(cmd, (int (*)()) redir_fill, redirs))
 	{
-		len = -1;
-		while (redirs[++len].value)
-			free(redirs[len].value);
-		free(redirs);
+		free_redirections(redirs);
 		return (NULL);
 	}
 	return (redirs);

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 15:54:29 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:39:52 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	pipe(fd);
 	builtin = 1;
-	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
+	printf("->%s\n", redirs->value);
+	pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
 	if (!pid && builtin--)
 		pid = fork();
 	if (pid == 0)
@@ -38,7 +39,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		if (subcmds[1])
 			dup2(fd[1], 1);
 		close(fd[1]);
-		if (exec_tokens(*subcmds, env))
+		if (exec_tokens(redirs->value, env))
 			exit(127);
 		exit(0);
 	}
@@ -54,6 +55,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		waitpid(pid, &g_process.code, 0);
 		g_process.code = WEXITSTATUS(g_process.code);
 	}
+	free_redirections(redirs);
 }
 
 void	pipe_parse(t_env *env, char *cmd)
