@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 08:19:10 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 08:34:06 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		exit(0);
 	}
 	close(fd[1]);
-	if (subcmds[1] && *subcmds[1] == '\0')
-		return ((void)err("syntax error near unexpected token", "|"));
 	if (subcmds[1])
 		pipe_execute(env, subcmds + 1, fd[0]);
 	close(fd[0]);
@@ -50,10 +48,15 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 void	pipe_parse(t_env *env, char *cmd)
 {
 	char	**subcmds;
+	int		i;
 
 	subcmds = pipe_split(cmd);
 	if (subcmds == NULL)
 		return ;
+	i = 0;
+	while (subcmds[i] && subcmds[i + 1])
+		if (*subcmds[++i] == '\0')
+			return ((void)err("syntax error near unexpected token", "|"));
 	redir_split(*subcmds);
 	if (*subcmds && **subcmds)
 		pipe_execute(env, subcmds, 0);
