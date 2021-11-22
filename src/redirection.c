@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 17:32:08 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 08:40:51 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int    isredir(char *s, int n)
+static int	isredir(char *s, int n)
 {
 	return ((n == 1 && (*s == '<' || *s == '>')) || (n == 2
 		&& ((*s == '<' && s[1] == '<' ) || (*s == '>' && s[1] == '>'))));

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 08:34:06 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 08:52:25 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,13 @@ void	pipe_parse(t_env *env, char *cmd)
 		return ;
 	i = 0;
 	while (subcmds[i] && subcmds[i + 1])
+	{
 		if (*subcmds[++i] == '\0')
+		{
+			free_argv(subcmds);
 			return ((void)err("syntax error near unexpected token", "|"));
+		}
+	}
 	redir_split(*subcmds);
 	if (*subcmds && **subcmds)
 		pipe_execute(env, subcmds, 0);

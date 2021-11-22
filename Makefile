@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/19 13:34:29 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/22 08:41:07 by mberger-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC		=	minishell \
 			token \
 			env \
 			env_expand \
-			wildcard
+			wildcard \
+			orand
 
 OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
 
