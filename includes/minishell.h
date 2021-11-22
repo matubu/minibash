@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 15:52:47 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:35:27 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char			*ft_strcat(char *dest, const char *src);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
+char			*ft_substr(char *s, int n);
 
 char			*char_cat(char *dest, const char src);
 char			*char_join(const char *s1, const char c);

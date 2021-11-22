@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 15:52:27 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:36:48 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static int	redir_process(char *s, int n, t_redirection *arg)
 {
 	if (s[n] == '\0')
 		return (err("syntax error near unexpected token", ">"));
-	s[n] = '\0';
-	arg[1].value = ft_strdup(s);
+	arg[1].value = ft_substr(s, n);
 	if (n == 2 && s[1] == '<')
 		arg[1].type = REDIR_HD_LEFT;
 	else if (n == 2 && s[1] == '>')
@@ -49,20 +48,20 @@ static int	redir_process(char *s, int n, t_redirection *arg)
 
 static int	redir_fill(char *s, int n, t_redirection *arg)
 {
-	char	*tmp;
-	int		i;
+	char			*tmp;
+	t_redirection	*start;
+	int				i;
 
+	(void)arg;
 	if (n <= 0)
 		return (0);
+	start = arg;
 	while (arg->value && arg[1].value)
 		arg++;
 	if (isredir(s, n))
 		return (redir_process(s, n, arg));
-	if (*s == '\'' || *s == '"')
-		n++;
 	if (arg->expanded)
-		return (0);
-	printf("size %d\n", n);
+		arg = start;
 	tmp = malloc((n + ft_strlen(arg->value) + 2) * sizeof(char));
 	i = -1;
 	while (arg->value[++i])
