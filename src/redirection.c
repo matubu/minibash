@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 14:06:35 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:29:01 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	redir_process(char *s, int n, t_redirection *arg)
 	if (s[n] == '\0')
 		return (err("syntax error near unexpected token", ">"));
 	s[n] = '\0';
-	printf("TOKEN TROUVE | Size=%d\n", n);
 	arg[1].value = ft_strdup(s);
 	if (n == 2 && s[1] == '<')
 		arg[1].type = REDIR_HD_LEFT;
@@ -63,21 +62,17 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	tmp = malloc((n + ft_strlen(arg->value) + 2) * sizeof(char));
 	i = -1;
 	while (arg->value[++i])
-	{
 		tmp[i] = arg->value[i];
-		printf("%c\n", arg->value[i]);
-	}
 	tmp[i] = ' ';
-	while (n--)
+	while (n-- && *s != ' ')
 		tmp[++i] = *s++;
 	tmp[++i] = '\0';
 	free(arg->value);
 	arg->value = tmp;
-//	arg->type = REDIR_NOT;
 	return (0);
 }
 
-int	exec_redirections(char *cmd, t_env *env)
+t_redirection	*exec_redirections(char *cmd, t_env *env)
 {
 	t_redirection	*redirs;
 	int				len;
@@ -101,5 +96,5 @@ int	exec_redirections(char *cmd, t_env *env)
 		printf("Value: %s | Type: %x\n", redirs->value, redirs->type);
 		redirs++;
 	}
-	return (0);
+	return (redirs);
 }

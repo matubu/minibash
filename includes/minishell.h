@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 14:04:22 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:10:38 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char			*orand(t_env *env, char *s, int exec);
 /* ************************* RUNTIME ************************** */
 int				exec_builtin(char *cmd, t_env *env, int stdout);
 int				exec_tokens(char *cmd, t_env *env);
-int				exec_redirections(char *cmd, t_env *env);
+t_redirection	*exec_redirections(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(t_env *env, char **argv);

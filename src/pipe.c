@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 14:02:59 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:11:55 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ static int	get_fd(char *subcmds, int fd)
 
 static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
-	int			fd[2];
-	pid_t		pid;
-	static int	builtin = 1;
+	t_redirection	*redirs;
+	int				fd[2];
+	pid_t			pid;
+	static int		builtin = 1;
 
-	exec_redirections(*subcmds, env);
+	redirs = exec_redirections(*subcmds, env);
 	pipe(fd);
 	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
 	if (!pid && builtin--)
