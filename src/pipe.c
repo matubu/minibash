@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 11:26:45 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:45:09 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static int	get_fd(char *subcmds, int fd)
 
 static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
-	int		fd[2];
-	pid_t	pid;
+	int			fd[2];
+	pid_t		pid;
+	static int	builtin = 1;
 
 	pipe(fd);
 	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
-	if (!pid)
+	if (!pid && builtin--)
 		pid = fork();
 	if (pid == 0)
 	{
@@ -35,10 +36,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			dup2(fd[1], 1);
 		close(fd[1]);
 		if (exec_tokens(*subcmds, env))
-		{
-			printf("exit 127\n");
 			exit(127);
-		}
 		exit(0);
 	}
 	close(fd[1]);
@@ -48,11 +46,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	g_process.pid = pid;
 	if (subcmds[1])
 		kill(pid, SIGINT);
-	//wait(NULL);
-	wait(&g_process.code);
-	printf("pid: %d\n", pid);
-	waitpid(pid, &g_process.code, 0);
-	printf("code to %d pipe_execute\n", g_process.code);
+	if (!builtin && ++builtin)
+	{
+		waitpid(pid, &g_process.code, 0);
+		g_process.code = WEXITSTATUS(g_process.code);
+	}
 }
 
 void	pipe_parse(t_env *env, char *cmd)
