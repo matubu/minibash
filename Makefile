@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/22 09:10:00 by mberger-         ###   ########.fr        #
+#    Updated: 2021/11/22 10:59:07 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC		=	minishell \
 			builtin \
 			builtin_env \
 			lexer \
+			lexer_addons \
 			token \
 			env \
 			env_expand \

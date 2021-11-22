@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 10:52:56 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:58:55 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,24 @@ char			*ft_strchr(const char *s, int c);
 char			*char_cat(char *dest, const char src);
 char			*char_join(const char *s1, const char c);
 
+int				is_space(char c);
+int				is_operator(char c);
+
 /* *************************** PIPES ************************** */
 void			pipe_parse(t_env *env, char *cmd);
 char			**pipe_split(char *s);
 
 /* *************************** LEXER ************************** */
-int				tokenize(char *s, int (*token)(),
-					void *arg);
+int				tokenize(char *s, int (*token)(), void *arg);
 int				is_operator(char c);
 int				is_space(char c);
 t_token			**create_tokens(char *s);
 int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);
+char			**create_argv(char *cmd, t_env *env);
+char			*pathncat(char *path, int n, char *relative);
+int				runfrompath(char *cmd, char **argv, char **env);
+int				runsearch(char *cmd, char **argv, char **env);
 int				free_argv(char **argv);
 
 /* ******************** ENVIRONEMENT LOCALS ******************* */

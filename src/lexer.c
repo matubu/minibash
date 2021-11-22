@@ -6,57 +6,11 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 10:41:36 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:01:29 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_space(char c)
-{
-	return (c == ' ' || (c >= '\t' && c <= '\f'));
-}
-
-int	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '&');
-}
-
-int	tokenize(char *s, int (*token)(), void *arg)
-{
-	int	n;
-	int	m;
-
-	n = 0;
-	while (1)
-	{
-		if (s[n] == '"' || s[n] == '\'')
-		{
-			m = n;
-			while (s[++n] != s[m])
-				if (s[n] == '\0')
-					return (err("syntax error unclosed token", s));
-			n++;
-		}
-		else if (s[n] && !is_space(s[n]) && !is_operator(s[n]))
-			while (s[++n] && !is_space(s[n]) && !is_operator(s[n]))
-				;
-		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
-		{
-			if (token(s, n, arg))
-				return (1);
-			if (s[n] == '\0')
-				return (0);
-			m = n;
-			while (is_operator(s[n]))
-				n++;
-			if (token(s + m, n - m, arg))
-				return (1);
-			s += n + 1;
-			n = 0;
-		}
-	}
-}
 
 static int	inc(char *s, int n, void *arg)
 {
@@ -118,18 +72,15 @@ static int	fill(char *s, int n, t_token **arg)
 	while (*arg)
 		arg++;
 	len = 1;
-	sub_tokenize(s, n, (void (*)(char *, int, void *))inc, &len);
+	sub_tokenize(s, n, (void (*)()) inc, &len);
 	*arg = malloc(len * sizeof(t_token));
 	if (*arg == NULL)
 		return (0);
 	(*arg)->value = NULL;
-	sub_tokenize(s, n, (void (*)(char *, int, void *))sub_fill, *arg);
+	sub_tokenize(s, n, (void (*)()) sub_fill, *arg);
 	*++arg = NULL;
 	return (0);
 }
-
-// ./a.out      >    "test"  'hello'
-// [[./a.out], [>], ["test", 'hello']]
 
 // TODO: #20 a| b with no space
 t_token	**create_tokens(char *s)
@@ -144,6 +95,6 @@ t_token	**create_tokens(char *s)
 	if (tokens == NULL)
 		return (NULL);
 	*tokens = NULL;
-	tokenize(s, (int (*)(char *, int, void *))fill, tokens);
+	tokenize(s, (int (*)()) fill, tokens);
 	return (tokens);
 }
