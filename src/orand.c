@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 14:30:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:33:13 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ char	*orand(t_env *env, char *s, int exec, int brace)
 		{
 			s = orand(env, s + 1, exec, brace);
 			if (s == NULL || (*s++ != ')'
-						&& err("syntax error unclosed token", "(")))
+					&& err("syntax error unclosed token", "(")))
 				return (NULL);
 		}
 	}
-	if ((brace && *s != ')' && err("syntax error expected token", ")"))
-			|| (!brace && *s == ')' && err("syntax error near unexpected token", ")")))
+	if ((!brace && *s == ')' && err("syntax error near unexpected token", ")"))
+		|| (brace && *s != ')' && err("syntax error expected token", ")")))
 		return (NULL);
 	return (s + brace);
 }
