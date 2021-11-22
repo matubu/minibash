@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 09:08:07 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 09:13:28 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	pipe_parse(t_env *env, char *cmd)
 			return ((void)err("syntax error near unexpected token", "|"));
 		}
 	}
-	redir_split(*subcmds);
+	//redir_split(*subcmds);
 	if (*subcmds && **subcmds)
 		pipe_execute(env, subcmds, 0);
 	free_argv(subcmds);
