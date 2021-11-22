@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 11:54:35 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:22:32 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	error(char *name, char *err, char *info)
 	putstr(2, info);
 	write(2, "\n", 1);
 	g_process.code = 1;
+	printf("code to 1 exec_buildin\n");
 	return (-1);
 }
 

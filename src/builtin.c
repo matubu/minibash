@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 14:48:47 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:27:32 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	cd_builtin(t_env *env, char **argv)
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
+		g_process.code = 0;
 	}
 }
 
@@ -62,6 +63,7 @@ void	echo_builtin(int stdout, char **args)
 	}
 	if (nl)
 		write(stdout, "\n", 1);
+	g_process.code = 0;
 }
 
 /**
@@ -79,10 +81,11 @@ void	pwd_builtin(int stdout, char **argv)
 		if (getcwd(path, PATH_BUF) == NULL)
 		{
 			if (errno == ERANGE)
-				err("pwd", "pathname length exceeds the buffer size");
+				return ((void)err("pwd", "pathname length exceeds the buffer size"));
 		}
 		else
 			println(stdout, path);
+		g_process.code = 0;
 	}
 }
 
@@ -93,6 +96,7 @@ void	env_builtin(int stdout, char **env)
 			println(stdout, *env++);
 	else
 		env++;
+	g_process.code = 0;
 }
 
 void	exit_builtin(int stdout, char **argv)
@@ -101,6 +105,7 @@ void	exit_builtin(int stdout, char **argv)
 	int		neg;
 	char	*nptr;
 
+	g_process.code = 0;
 	write(stdout, "exit\n", 5);
 	if (*argv && argv[1])
 		return ((void)err("exit", "too many arguments"));

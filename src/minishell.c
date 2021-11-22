@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 09:05:12 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 09:35:50 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	main(int argc, char **argv, char **envm)
 		if (*line)
 			add_history(line);
 		show_ctl(1);
-		pipe_parse(&env, line);
+		orand(&env, line);
+		//pipe_parse(&env, line);
 		free(line);
 	}
 	write(1, "exit\n", 5);

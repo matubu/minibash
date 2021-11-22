@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 10:33:36 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:26:45 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		if (subcmds[1])
 			dup2(fd[1], 1);
 		close(fd[1]);
-		exec_tokens(*subcmds, env);
+		if (exec_tokens(*subcmds, env))
+		{
+			printf("exit 127\n");
+			exit(127);
+		}
 		exit(0);
 	}
 	close(fd[1]);
@@ -44,7 +48,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	g_process.pid = pid;
 	if (subcmds[1])
 		kill(pid, SIGINT);
+	//wait(NULL);
 	wait(&g_process.code);
+	printf("pid: %d\n", pid);
+	waitpid(pid, &g_process.code, 0);
+	printf("code to %d pipe_execute\n", g_process.code);
 }
 
 void	pipe_parse(t_env *env, char *cmd)
