@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 14:02:59 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:14:21 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	pipe_parse(t_env *env, char *cmd)
 	char	**subcmds;
 	int		i;
 
+	printf("->%s\n", cmd);
 	subcmds = pipe_split(cmd);
 	if (subcmds == NULL)
 		return ((void)free(cmd));
