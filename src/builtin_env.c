@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:40:02 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:11:10 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 13:31:44 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	export_builtin(char **argv, t_env *env)
 		if (found)
 			env_set(&env->exported, *found);
 	}
+	g_process.code = 0;
 }
 
 void	unset_builtin(char **argv, t_env *env)
@@ -43,12 +44,11 @@ void	unset_builtin(char **argv, t_env *env)
 		if (found)
 			**found = '\0';
 	}
+	g_process.code = 0;
 }
 
-//TODO a=5 echo
 void	set_builtin(char **argv, t_env *env)
 {
-	printf("set %s\n", argv[0]);
 	while (*argv)
 	{
 		env_set(&env->local, *argv);
@@ -56,4 +56,5 @@ void	set_builtin(char **argv, t_env *env)
 			env_set(&env->exported, *argv);
 		argv++;
 	}
+	g_process.code = 0;
 }

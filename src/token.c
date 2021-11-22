@@ -6,7 +6,11 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/22 13:47:12 by acoezard         ###   ########.fr       */
+=======
+/*   Updated: 2021/11/22 11:21:49 by mberger-         ###   ########.fr       */
+>>>>>>> 52dbe24aa66c824f8f3a0bd5f2028cbb9c0d693c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +92,12 @@ int	free_argv(char **argv)
 int	exec_tokens(char *cmd, t_env *env)
 {
 	char	**argv;
+	int		ret;
 
+	ret = 1;
 	argv = create_argv(cmd, env);
 	if (argv)
-		runsearch(argv[0], argv, env->exported);
+		ret = runsearch(argv[0], argv, env->exported);
 	free_argv(argv);
-	return (0);
+	return (ret);
 }

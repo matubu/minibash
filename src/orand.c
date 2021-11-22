@@ -6,12 +6,12 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 08:53:20 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 13:55:33 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
+
 static char	*substr(char *s, int n)
 {
 	char	*out;
@@ -22,10 +22,43 @@ static char	*substr(char *s, int n)
 		out[n] = s[n];
 	return (out);
 }
-*/
-//void	pipe_parse(t_env *env, char *cmd)
-/*
-char	*orand(t_env *env, char *s)
-{
 
-}*/
+char	*orand(t_env *env, char *s, int exec)
+{
+	int	n;
+	int	m;
+
+	while (*s && *s != ')')
+	{
+		while (is_space(*s))
+			s++;
+		n = -1;
+		while (s[++n] && s[n] != '(' && s[n] != ')'
+				&& !(s[n] == '&' && s[n + 1] == '&')
+				&& !(s[n] == '|' && s[n + 1] == '|'))
+		{
+			if (s[n] == '"' || s[n] == '\'')
+			{
+				m = n;
+				while (s[++n] && s[n] != s[m])
+					;
+			}
+		}
+		if (n && exec)
+			pipe_parse(env, substr(s, n));
+		s += n;
+		if ((*s == '&' && s[1] == '&')
+			|| (*s == '|' && s[1] == '|'))
+		{
+			if (((*s == '&' && g_process.code)
+				|| (*s == '|' && !g_process.code)))
+				exec = 0;
+			s += 2;
+		}
+		while (is_space(*s))
+			s++;
+		if (*s == '(')
+			s = orand(env, s + 1, exec) + 1;
+	}
+	return (s);
+}

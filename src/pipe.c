@@ -6,7 +6,11 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/22 12:55:38 by acoezard         ###   ########.fr       */
+=======
+/*   Updated: 2021/11/22 11:54:27 by mberger-         ###   ########.fr       */
+>>>>>>> 52dbe24aa66c824f8f3a0bd5f2028cbb9c0d693c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +25,28 @@ static int	get_fd(char *subcmds, int fd)
 
 static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
-	int		fd[2];
-	pid_t	pid;
+	int			fd[2];
+	pid_t		pid;
+	static int	builtin = 1;
 
 	exec_redirections(*subcmds, env);
 	pipe(fd);
 	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
-	if (!pid)
+	if (!pid && builtin--)
 		pid = fork();
 	if (pid == 0)
 	{
 		dup2(stdin, 0);
 		if (subcmds[1])
 			dup2(fd[1], 1);
+<<<<<<< HEAD
 		exec_tokens(*subcmds, env);
 		close(fd[1]);
+=======
+		close(fd[1]);
+		if (exec_tokens(*subcmds, env))
+			exit(127);
+>>>>>>> 52dbe24aa66c824f8f3a0bd5f2028cbb9c0d693c
 		exit(0);
 	}
 	close(fd[1]);
@@ -45,7 +56,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	g_process.pid = pid;
 	if (subcmds[1])
 		kill(pid, SIGINT);
-	wait(&g_process.code);
+	if (!builtin && ++builtin)
+	{
+		waitpid(pid, &g_process.code, 0);
+		g_process.code = WEXITSTATUS(g_process.code);
+	}
 }
 
 void	pipe_parse(t_env *env, char *cmd)
@@ -55,17 +70,19 @@ void	pipe_parse(t_env *env, char *cmd)
 
 	subcmds = pipe_split(cmd);
 	if (subcmds == NULL)
-		return ;
+		return ((void)free(cmd));
 	i = 0;
 	while (subcmds[i] && subcmds[i + 1])
 	{
 		if (*subcmds[++i] == '\0')
 		{
 			free_argv(subcmds);
+			free(cmd);
 			return ((void)err("syntax error near unexpected token", "|"));
 		}
 	}
 	if (*subcmds && **subcmds)
 		pipe_execute(env, subcmds, 0);
 	free_argv(subcmds);
+	free(cmd);
 }
