@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 11:08:11 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:22:39 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 static int	isredir(char *s, int n)
 {
-	int		cond_1;
-	int		cond_2;
-
-	cond_1 = n == 1 && (*s == '<' || *s == '>');
-	cond_2 = (*s == '<' && s[1] == '<') || (*s == '>' && s[1] == '>');
-	return (cond_1 || (n == 2 && cond_2));
+	if (n == 1 && (*s == '<' || *s == '>'))
+		return (1);
+	if (n == 2 && ((*s == '<' && s[1] == '<') || (*s == '>' && s[1] == '>')))
+		return (1);
+	return (0);
 }
 
 static int	redir_inc(char *s, int n, void *arg)
