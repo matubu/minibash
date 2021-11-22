@@ -82,7 +82,6 @@ static int	fill(char *s, int n, t_token **arg)
 	return (0);
 }
 
-// TODO: #20 a| b with no space
 t_token	**create_tokens(char *s)
 {
 	int		len;

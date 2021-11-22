@@ -61,7 +61,6 @@ void	pipe_parse(t_env *env, char *cmd)
 	char	**subcmds;
 	int		i;
 
-	printf("->%s\n", cmd);
 	subcmds = pipe_split(cmd);
 	if (subcmds == NULL)
 		return ((void)free(cmd));
