@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/19 14:02:10 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 10:51:37 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static t_token	**insert(t_token **tokens, int i, char *filename)
 	int		n;
 	t_token	**res;
 
-	printf("add %s\n", filename);
 	n = -1;
 	while (tokens[++n])
 		;
@@ -54,6 +53,15 @@ static int	check_pattern(char *pattern, char *file)
 	return (*file == '\0' && *pattern == '\0');
 }
 
+static void wildcard_process(t_token ***tokens, struct dirent *file,
+	int *i, int *count)
+{
+	if ((*count)++)
+		*tokens = insert(*tokens, (*i)++, file->d_name);
+	else
+		(*tokens)[*i]->value = ft_strdup(file->d_name);
+}
+
 static void	wildcard_replace(t_token ***tokens, int *i)
 {
 	DIR				*dir;
@@ -73,12 +81,7 @@ static void	wildcard_replace(t_token ***tokens, int *i)
 			break ;
 		if (!(*pattern == '*' && *file->d_name == '.')
 			&& check_pattern(pattern, file->d_name))
-		{
-			if (count++)
-				*tokens = insert(*tokens, (*i)++, file->d_name);
-			else
-				(*tokens)[*i]->value = ft_strdup(file->d_name);
-		}
+			wildcard_process(tokens, file, i, &count);
 	}
 	if (count)
 		free(pattern);
