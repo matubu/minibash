@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 10:33:36 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 12:55:38 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	int		fd[2];
 	pid_t	pid;
 
+	exec_redirections(*subcmds, env);
 	pipe(fd);
 	pid = exec_builtin(*subcmds, env, get_fd(subcmds[1], fd[1]));
 	if (!pid)
@@ -33,8 +34,8 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		dup2(stdin, 0);
 		if (subcmds[1])
 			dup2(fd[1], 1);
-		close(fd[1]);
 		exec_tokens(*subcmds, env);
+		close(fd[1]);
 		exit(0);
 	}
 	close(fd[1]);

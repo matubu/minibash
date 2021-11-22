@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 10:58:55 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 13:53:28 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 # define PS1		"\033[32mminishell$\033[0m "
 # define PATH_BUF	256
 
+# define REDIR_NOT		0b0000
+# define REDIR_LEFT		0b0001
+# define REDIR_RIGHT	0b0010
+# define REDIR_HD_LEFT	0b0100
+# define REDIR_HD_RIGHT	0b1000
+
 /* ************************ STRUCTURES ************************ */
 typedef struct s_token
 {
@@ -51,6 +57,12 @@ typedef struct s_env
 	char	**local;
 	char	**exported;
 }	t_env;
+
+typedef struct s_redirection
+{
+	char	*value;
+	int		type;
+}	t_redirection;
 
 /* ********************** INPUT / OUTPUT ********************** */
 void			putstr(int fd, char *s);
@@ -106,11 +118,11 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
-char			**redir_split(char *s);
 
 /* ************************* RUNTIME ************************** */
 int				exec_builtin(char *cmd, t_env *env, int stdout);
 int				exec_tokens(char *cmd, t_env *env);
+int				exec_redirections(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(t_env *env, char **argv);
