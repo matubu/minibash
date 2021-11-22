@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 11:14:30 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 13:51:34 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void			wildcard_expand(t_token ***tokens);
 char			**redir_split(char *s);
 
 /* ************************ || && () ************************** */
-void			orand(t_env *env, char *s);
+char			*orand(t_env *env, char *s, int exec);
 
 /* ************************* RUNTIME ************************** */
 int				exec_builtin(char *cmd, t_env *env, int stdout);
