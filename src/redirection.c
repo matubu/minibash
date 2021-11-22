@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 08:40:51 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/22 11:08:11 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,28 @@
 
 static int	isredir(char *s, int n)
 {
-	return ((n == 1 && (*s == '<' || *s == '>')) || (n == 2
-		&& ((*s == '<' && s[1] == '<' ) || (*s == '>' && s[1] == '>'))));
+	int		cond_1;
+	int		cond_2;
+
+	cond_1 = n == 1 && (*s == '<' || *s == '>');
+	cond_2 = (*s == '<' && s[1] == '<') || (*s == '>' && s[1] == '>');
+	return (cond_1 || (n == 2 && cond_2));
 }
 
 static int	redir_inc(char *s, int n, void *arg)
 {
 	if (isredir(s, n))
 		(*(int *)arg)++;
+	return (0);
+}
+
+static int	redir_process(char *s, int n, char **arg)
+{
+	if (s[n] == '\0')
+		return (err("syntax error near redirection token", ""));
+	arg[1] = ft_strdup("");
+	arg[2] = NULL;
+	printf("TOKEN TROUVE\n");
 	return (0);
 }
 
@@ -35,14 +49,7 @@ static int	redir_fill(char *s, int n, char **arg)
 	while (*arg && arg[1])
 		arg++;
 	if (isredir(s, n))
-	{
-		if (s[n] == '\0')
-			return (err("syntax error near redirection token", ""));
-		arg[1] = ft_strdup("");
-		arg[2] = NULL;
-		printf("TOKEN TROUVE\n");
-		return (0);
-	}
+		return (redir_process(s, n, arg));
 	if (*s == '\'' || *s == '"')
 		n++;
 	tmp = malloc((n + ft_strlen(*arg) + 2) * sizeof(char));
@@ -71,7 +78,7 @@ char	**redir_split(char *s)
 		return (NULL);
 	*redirections = ft_strdup("");
 	redirections[1] = NULL;
-	if (tokenize(s, (int (*)(char *, int, void *)) redir_fill, redirections))
+	if (tokenize(s, (int (*)()) redir_fill, redirections))
 	{
 		free_argv(redirections);
 		return (NULL);
