@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 13:59:22 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:06:35 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	tmp[++i] = '\0';
 	free(arg->value);
 	arg->value = tmp;
-	arg->type = REDIR_NOT;
+//	arg->type = REDIR_NOT;
 	return (0);
 }
 
