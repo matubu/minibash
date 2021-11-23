@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 11:52:55 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 12:07:35 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,25 @@ static char	*read_heredocs(t_redirection *redir)
 	char	*tmp;
 
 	buffer = ft_strdup("");
-	while (1)
+	line = readline("> ");
+	while (line != NULL && ft_strcmp(redir->value + 1, line))
 	{
-		line = readline("> ");
-		if (ft_strcmp(redir->value + 1, line))
-		{
-			tmp = ft_strjoin(buffer, line);
-			free(buffer);
-			buffer = ft_strjoin(tmp, "\n");
-			free(tmp);
-			free(line);
-			continue ;
-		}
+		tmp = ft_strjoin(buffer, line);
+		free(buffer);
+		buffer = ft_strjoin(tmp, "\n");
+		free(tmp);
 		free(line);
-		break ;
+		line = readline("> ");
 	}
+	if (line != NULL)
+		free(line);
 	return (buffer);
 }
 
-void	exec_heredocs(t_redirection *redirs)
+int	exec_heredocs(t_redirection *redirs)
 {
 	char	*buffer;
+	int		i;
 
 	buffer = ft_strdup("");
 	while (redirs->value)
@@ -51,6 +49,9 @@ void	exec_heredocs(t_redirection *redirs)
 		}
 		redirs++;
 	}
-	printf("%s", buffer);
+	i = -1;
+	while (buffer[++i])
+		write(0, buffer + i, 1);
 	free(buffer);
+	return (0);
 }
