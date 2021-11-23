@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 12:05:42 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 12:18:57 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void			wildcard_expand(t_token ***tokens);
 
 /* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
 t_redirection	*exec_redirections(char *cmd, t_env *env);
-int				exec_heredocs(t_redirection *redirs);
+int				exec_heredocs(t_redirection *redirs, char **buffer);
 int				free_redirections(t_redirection *redir);
 
 /* ************************ || && () ************************** */

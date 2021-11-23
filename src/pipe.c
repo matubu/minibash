@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 11:57:36 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 13:02:39 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,19 @@ int	redirect_out(t_redirection *redirs)
 	return (0);
 }
 
-void	redirect_in(int stdin, t_redirection *redirs)
+void	redirect_in(int stdin, t_redirection *redirs, char *s)
 {
-	int				old;
+	int	i;
+	int	fd[2];
 
 	if (stdin)
 		return ((void)dup2(stdin, 0));
-	old = dup(0);
+	pipe(fd);
+	i = -1;
+	while (s[++i])
+		write(fd[1], s + i, 1);
+	close(fd[1]);
+	free(s);
 	while (redirs->value)
 	{
 		if (*redirs->value && redirs->type == REDIR_LEFT)
@@ -60,8 +66,8 @@ void	redirect_in(int stdin, t_redirection *redirs)
 			redirs->fd = open(redirs->value + 1, O_RDONLY);
 			dup2(redirs->fd, 0);
 		}
-		else if (*redirs->value && redirs->type == REDIR_LEFT)
-			dup2(old, 0);
+		else if (*redirs->value && redirs->type == REDIR_HD_LEFT)
+			dup2(fd[0], 0);
 		redirs++;
 	}
 }
@@ -84,10 +90,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	int				fd[2];
 	pid_t			pid;
 	int				builtin;
+	char			*s;
 
 	redirs = exec_redirections(*subcmds, env);
 	pipe(fd);
-	if (!redirect_out(redirs + 1) && exec_heredocs(redirs))
+	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs, &s))
 	{
 		builtin = 1;
 		pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
@@ -97,7 +104,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			pid = fork();
 		if (pid == 0)
 		{
-			redirect_in(stdin, redirs + 1);
+			redirect_in(stdin, redirs + 1, s);
 			if (subcmds[1])
 				dup2(fd[1], 1);
 			close(fd[1]);

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 12:07:35 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 12:50:43 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,28 @@ static char	*read_heredocs(t_redirection *redir)
 		free(line);
 		line = readline("> ");
 	}
-	if (line != NULL)
-		free(line);
+	if (line == NULL)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	free(line);
 	return (buffer);
 }
 
-int	exec_heredocs(t_redirection *redirs)
+int	exec_heredocs(t_redirection *redirs, char **buffer)
 {
-	char	*buffer;
-	int		i;
-
-	buffer = ft_strdup("");
+	*buffer = ft_strdup("");
 	while (redirs->value)
 	{
 		if (*redirs->value && redirs->type == REDIR_HD_LEFT)
 		{
-			free(buffer);
-			buffer = read_heredocs(redirs);
+			free(*buffer);
+			*buffer = read_heredocs(redirs);
+			if (*buffer == NULL)
+				return (1);
 		}
 		redirs++;
 	}
-	i = -1;
-	while (buffer[++i])
-		write(0, buffer + i, 1);
-	free(buffer);
 	return (0);
 }
