@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 10:42:34 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:01:48 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	int				builtin;
 
 	redirs = exec_redirections(*subcmds, env);
+	exec_heredocs(redirs);
 	pipe(fd);
 	redirect_out(redirs + 1);
 	builtin = 1;

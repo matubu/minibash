@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 10:38:18 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:00:10 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void			env_set(char ***env, char *kv);
 void			wildcard_expand(t_token ***tokens);
 
 /* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
+t_redirection	*exec_redirections(char *cmd, t_env *env);
+void			exec_heredocs(t_redirection *redirs);
 int				free_redirections(t_redirection *redir);
 
 /* ************************ || && () ************************** */
@@ -131,7 +133,6 @@ char			*orand(t_env *env, char *s, int exec, int brace);
 /* ************************* RUNTIME ************************** */
 int				exec_builtin(char *cmd, t_env *env, int stdout);
 int				exec_tokens(char *cmd, t_env *env);
-t_redirection	*exec_redirections(char *cmd, t_env *env);
 
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(t_env *env, char **argv);

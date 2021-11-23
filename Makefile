@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+         #
+#    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/22 10:59:07 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/23 10:58:54 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC		=	minishell \
 			pipe_split \
 			char \
 			redirection \
+			heredocs \
 			string_1 \
 			string_2 \
 			run \

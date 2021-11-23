@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:31 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/17 17:39:16 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:03:24 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,9 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	while ((*s1 || *s2))
-		if (*s1++ != *s2++)
-			return (*(unsigned char *)--s1 - *(unsigned char *)--s2);
-	return (0);
+	while (*s1 && *s2 && *s1 == *s2 && s1++ && s2++)
+		;
+	return (*s1 - *s2);
 }
 
 char	*ft_strdup(char *str)
