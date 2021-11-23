@@ -35,6 +35,7 @@ static int	fill(char *s, int n, char **arg)
 
 	if (n <= 0)
 		return (0);
+	printf("e->%.*s\n", n, s);
 	while (*arg && arg[1])
 		arg++;
 	if (*s == '|')

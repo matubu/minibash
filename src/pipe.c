@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 16:56:37 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:31:07 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,11 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	int				builtin;
 	char			*s;
 
+	printf("exec %s\n", *subcmds);
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
+	printf("realexec %s\n", redirs->value);
 	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs, &s))
 	{
 		pipe(fd);
@@ -80,6 +82,8 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
 		if (!pid && builtin--)
 			pid = fork();
+		if (pid == -1)
+			return ((void)err("fork", "resource temporarily unavailable"));
 		if (pid == 0)
 		{
 			redirect_in(stdin, redirs + 1, s);

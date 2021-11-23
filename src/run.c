@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 15:48:00 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:05:37 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ char	**create_argv(char *cmd, t_env *env)
 		err("command not found", "(null)");
 		return (NULL);
 	}
+	printf("--->%s\n", tokens[0]->value);
 	env_expand(env->local, tokens);
+	printf("--->%s\n", tokens[0]->value);
 	wildcard_expand(&tokens);
 	if (tokens[0]->value == NULL)
 	{
