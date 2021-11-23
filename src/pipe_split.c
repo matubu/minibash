@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 15:35:29 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:40:49 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	fill(char *s, int n, char **arg)
 
 	if (n <= 0)
 		return (0);
-	printf("e->%.*s\n", n, s);
 	while (*arg && arg[1])
 		arg++;
 	if (*s == '|')
@@ -58,7 +57,6 @@ char	**pipe_split(char *s)
 	int		len;
 	char	**pipes;
 
-	printf("-->%s\n", s);
 	len = 2;
 	if (tokenize(s, inc, &len) == -1)
 		return (NULL);

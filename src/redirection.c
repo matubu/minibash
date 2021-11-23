@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 13:28:13 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:41:02 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 
 	if (n <= 0)
 		return (0);
-	printf("redir%.*s\n", n, s);
 	start = arg;
 	while (arg->value && arg[1].value)
 		arg++;

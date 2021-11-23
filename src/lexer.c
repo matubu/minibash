@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 17:05:53 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:40:05 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	sub_tokenize(char *s, int n, void (*sub)(char *s, int n, void *arg),
 
 static void	sub_fill(char *s, int n, t_token *arg)
 {
-	printf("8-->%d:%*.s\n", n, n, s);
 	if (n <= 0)
 		return ;
 	while (arg->value)
@@ -70,7 +69,6 @@ static int	fill(char *s, int n, t_token **arg)
 
 	if (n <= 0)
 		return (0);
-	printf("8->%.*s\n", n, s);
 	while (*arg)
 		arg++;
 	len = 1;
@@ -89,7 +87,6 @@ t_token	**create_tokens(char *s)
 	int		len;
 	t_token	**tokens;
 
-	printf("8>%s\n", s);
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
 		return (NULL);

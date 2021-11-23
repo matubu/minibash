@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 20:14:50 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/23 20:41:24 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	runsearch(char *cmd, char **argv, char **env)
 	int		ret;
 	int		len;
 
-	printf("cmd %s\n", cmd);
 	if (*cmd == '.' || *cmd == '/')
 	{
 		if (runfrompath(cmd, argv, env) == -1)
@@ -92,9 +91,7 @@ char	**create_argv(char *cmd, t_env *env)
 		err("command not found", "(null)");
 		return (NULL);
 	}
-	printf("--->%s\n", tokens[0]->value);
 	env_expand(env->local, tokens);
-	printf("--->%s\n", tokens[0]->value);
 	wildcard_expand(&tokens);
 	if (tokens[0]->value == NULL)
 	{
