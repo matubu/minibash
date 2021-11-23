@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 15:53:16 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:56:37 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,6 @@ static int	get_fd(char *subcmds, int fd)
 	if (subcmds)
 		return (fd);
 	return (1);
-}
-
-static int	get_flag(int type)
-{
-	if (type == REDIR_HD_RIGHT)
-		return (O_CREAT | O_WRONLY | O_APPEND);
-	return (O_CREAT | O_WRONLY | O_TRUNC);
-}
-
-int	redirect_out(t_redirection *redirs)
-{
-	redirs->old = dup(1);
-	while (redirs->value)
-	{
-		if (*redirs->value && (redirs->type == REDIR_RIGHT
-				|| redirs->type == REDIR_HD_RIGHT))
-		{
-			redirs->fd
-				= open(redirs->value + 1, get_flag(redirs->type), S_IRWXU);
-			dup2(redirs->fd, 1);
-		}
-		else if (*redirs->value && redirs->type == REDIR_LEFT
-			&& access(redirs->value + 1, R_OK))
-			return (err(redirs->value + 1, "no such file or directory"));
-		redirs++;
-	}
-	return (0);
 }
 
 void	redirect_in(int stdin, t_redirection *redirs, char *s)
@@ -64,6 +37,11 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 		if (*redirs->value && redirs->type == REDIR_LEFT)
 		{
 			redirs->fd = open(redirs->value + 1, O_RDONLY);
+			if (redirs->fd == -1)
+			{
+				err(redirs->value + 1, "Permission denied");
+				break;
+			}
 			dup2(redirs->fd, 0);
 		}
 		else if (*redirs->value && redirs->type == REDIR_HD_LEFT)
