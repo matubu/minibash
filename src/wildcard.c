@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 10:52:04 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:52:51 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	wildcard_expand(t_token ***tokens)
 	while ((*tokens)[++i])
 	{
 		if ((*tokens)[i][1].value == NULL && (*tokens)[i]->expendable != '"'
-				&& (*tokens)[i]->expendable != '\''
-				&& ft_strchr((*tokens)[i]->value, '*'))
+				&& (*tokens)[i]->expendable != '\'')
+				//&& ft_strchr((*tokens)[i]->value, '*'))
 			wildcard_replace(tokens, &i);
 	}
 }

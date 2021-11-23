@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 13:02:39 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:53:16 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	char			*s;
 
 	redirs = exec_redirections(*subcmds, env);
-	pipe(fd);
+	if (redirs == NULL)
+		return ;
 	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs, &s))
 	{
+		pipe(fd);
 		builtin = 1;
 		pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
-		if (subcmds[1])
-			pipe_execute(env, subcmds + 1, fd[0]);
 		if (!pid && builtin--)
 			pid = fork();
 		if (pid == 0)
@@ -113,6 +113,8 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			exit(0);
 		}
 		close(fd[1]);
+		if (subcmds[1])
+			pipe_execute(env, subcmds + 1, fd[0]);
 		close(fd[0]);
 		g_process.pid = pid;
 		if (subcmds[1])

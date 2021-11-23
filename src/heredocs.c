@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 12:50:43 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:36:34 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ static char	*read_heredocs(t_redirection *redir)
 		free(line);
 		line = readline("> ");
 	}
-	if (line == NULL)
-	{
-		free(buffer);
-		return (NULL);
-	}
 	free(line);
 	return (buffer);
 }
@@ -47,8 +42,6 @@ int	exec_heredocs(t_redirection *redirs, char **buffer)
 		{
 			free(*buffer);
 			*buffer = read_heredocs(redirs);
-			if (*buffer == NULL)
-				return (1);
 		}
 		redirs++;
 	}

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 18:32:18 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:35:29 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	**pipe_split(char *s)
 	int		len;
 	char	**pipes;
 
+	printf("-->%s\n", s);
 	len = 2;
 	if (tokenize(s, inc, &len) == -1)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 11:13:55 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:48:00 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**create_argv(char *cmd, t_env *env)
 	t_token	**tokens;
 
 	tokens = create_tokens(cmd);
-	if (tokens == NULL || *tokens == NULL || (*tokens)->value == '\0')
+	if (tokens == NULL || *tokens == NULL)
 	{
 		free_tokens(tokens);
 		err("command not found", "(null)");
@@ -110,6 +110,8 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 	char	**argv;
 
 	argv = create_argv(cmd, env);
+	if (argv == NULL)
+		return (0);
 	if (isenvdefine(*argv))
 		set_builtin(argv, env);
 	else if (!ft_strcmp(*argv, "echo"))

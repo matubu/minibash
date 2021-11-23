@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/23 11:45:25 by mberger-         ###   ########.fr        #
+#    Updated: 2021/11/23 14:09:06 by mberger-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC		=	minishell \
 OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
 
 FLAGS	=	-Wall -Wextra -Werror -Iincludes
-LINK	=	libreadline.a -lreadline -lncurses# -g# -fsanitize=address
+LINK	=	libreadline.a -lreadline -lncurses -g -fsanitize=address
 
 RED		=	\033[31m
 GRE		=	\033[32m
@@ -47,7 +47,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "⚙️  $(GRE)Compilation de ${NAME}...$(EOC)"
-	@gcc $(OBJ) $(LINK) -o $(NAME)
+	@gcc $(FLAGS) $(OBJ) $(LINK) -o $(NAME)
 
 bin/%.o: src/%.c
 	@echo "🔧 Compilation de $(BLU)${notdir $<}$(EOC)."

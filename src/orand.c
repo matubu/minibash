@@ -6,7 +6,7 @@
 /*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 18:35:56 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 14:25:36 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*orand(t_env *env, char *s, int exec, int brace)
 					;
 			}
 		}
+		if (n == 0 && *s != '(' && err("syntax error near unexpected token", s))
+			return (NULL);
 		if (n && exec)
 			pipe_parse(env, ft_substr(s, n));
 		s += n;

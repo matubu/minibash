@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 19:38:49 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 15:42:53 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ int	exec_tokens(char *cmd, t_env *env)
 
 	ret = 1;
 	argv = create_argv(cmd, env);
-	if (argv)
-		ret = runsearch(argv[0], argv, env->exported);
+	if (argv == NULL)
+		return (1);
+	runsearch(argv[0], argv, env->exported);
 	free_argv(argv);
 	return (ret);
 }

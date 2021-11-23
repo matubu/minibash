@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 10:57:47 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 18:16:46 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 16:24:29 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	tokenize(char *s, int (*token)(), void *arg)
 			n++;
 		}
 		else if (s[n] && !is_space(s[n]) && !is_operator(s[n]))
-			while (s[++n] && !is_space(s[n]) && !is_operator(s[n]))
+			while (s[++n] && !is_space(s[n]) && !is_operator(s[n])
+					&& s[n] != '"' && s[n] != '\'')
 				;
 		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
 		{
