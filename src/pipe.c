@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/22 19:39:52 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:39:23 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,40 @@ static int	get_fd(char *subcmds, int fd)
 	return (1);
 }
 
+static int	get_flag(int type)
+{
+	if (type == REDIR_HD_RIGHT)
+		return (O_CREAT | O_WRONLY | O_APPEND);
+	return (O_CREAT | O_WRONLY | O_TRUNC);
+}
+
+void	redirect_out(t_redirection *redirs)
+{
+	redirs->old = dup(1);
+	while (redirs->value)
+	{
+		if (*redirs->value && (redirs->type == REDIR_RIGHT
+					|| redirs->type == REDIR_HD_RIGHT))
+		{
+			redirs->fd
+				= open(redirs->value + 1, get_flag(redirs->type), S_IRWXU);
+			dup2(redirs->fd, 1);
+		}
+		redirs++;
+	}
+}
+
+void	close_all(t_redirection *redirs)
+{
+	dup2(redirs->old, 1);
+	while (redirs->value)
+	{
+		if (redirs->type == REDIR_RIGHT || redirs->type == REDIR_HD_RIGHT)
+			close(redirs->fd);
+		redirs++;
+	}
+}
+
 static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
 	t_redirection	*redirs;
@@ -28,8 +62,8 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 
 	redirs = exec_redirections(*subcmds, env);
 	pipe(fd);
+	redirect_out(redirs + 1);
 	builtin = 1;
-	printf("->%s\n", redirs->value);
 	pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
 	if (!pid && builtin--)
 		pid = fork();
@@ -55,6 +89,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		waitpid(pid, &g_process.code, 0);
 		g_process.code = WEXITSTATUS(g_process.code);
 	}
+	close_all(redirs + 1);
 	free_redirections(redirs);
 }
 

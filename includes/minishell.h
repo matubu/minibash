@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 19:38:00 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:38:18 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <dirent.h>
+# include <fcntl.h>
 
 /* ************************* DEFINES ************************** */
 # define NAME		"minishell"
@@ -63,6 +64,8 @@ typedef struct s_redirection
 	char	*value;
 	int		type;
 	int		expanded;
+	int		fd;
+	int		old;
 }	t_redirection;
 
 /* ********************** INPUT / OUTPUT ********************** */
