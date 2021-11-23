@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 11:32:32 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:52:55 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *read_heredocs(t_redirection *redir)
+static char	*read_heredocs(t_redirection *redir)
 {
 	char	*buffer;
 	char	*line;
@@ -29,10 +29,10 @@ static char *read_heredocs(t_redirection *redir)
 			buffer = ft_strjoin(tmp, "\n");
 			free(tmp);
 			free(line);
-			continue;
+			continue ;
 		}
 		free(line);
-		break;
+		break ;
 	}
 	return (buffer);
 }

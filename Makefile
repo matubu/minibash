@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/23 10:58:54 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/23 11:45:25 by mberger-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC		=	minishell \
 OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
 
 FLAGS	=	-Wall -Wextra -Werror -Iincludes
-LINK	=	libreadline.a -lreadline -lncurses# -fsanitize=address
+LINK	=	libreadline.a -lreadline -lncurses# -g# -fsanitize=address
 
 RED		=	\033[31m
 GRE		=	\033[32m

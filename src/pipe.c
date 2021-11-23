@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 11:01:48 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 11:57:36 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	get_flag(int type)
 	return (O_CREAT | O_WRONLY | O_TRUNC);
 }
 
-void	redirect_out(t_redirection *redirs)
+int	redirect_out(t_redirection *redirs)
 {
 	redirs->old = dup(1);
 	while (redirs->value)
@@ -38,16 +38,41 @@ void	redirect_out(t_redirection *redirs)
 				= open(redirs->value + 1, get_flag(redirs->type), S_IRWXU);
 			dup2(redirs->fd, 1);
 		}
+		else if (*redirs->value && redirs->type == REDIR_LEFT
+			&& access(redirs->value + 1, R_OK))
+			return (err(redirs->value + 1, "no such file or directory"));
+		redirs++;
+	}
+	return (0);
+}
+
+void	redirect_in(int stdin, t_redirection *redirs)
+{
+	int				old;
+
+	if (stdin)
+		return ((void)dup2(stdin, 0));
+	old = dup(0);
+	while (redirs->value)
+	{
+		if (*redirs->value && redirs->type == REDIR_LEFT)
+		{
+			redirs->fd = open(redirs->value + 1, O_RDONLY);
+			dup2(redirs->fd, 0);
+		}
+		else if (*redirs->value && redirs->type == REDIR_LEFT)
+			dup2(old, 0);
 		redirs++;
 	}
 }
 
-void	close_all(t_redirection *redirs)
+void	unredirect_out(t_redirection *redirs)
 {
 	dup2(redirs->old, 1);
 	while (redirs->value)
 	{
-		if (redirs->type == REDIR_RIGHT || redirs->type == REDIR_HD_RIGHT)
+		if ((redirs->type == REDIR_RIGHT || redirs->type == REDIR_HD_RIGHT
+				|| redirs->type == REDIR_LEFT) && redirs->fd)
 			close(redirs->fd);
 		redirs++;
 	}
@@ -61,36 +86,37 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	int				builtin;
 
 	redirs = exec_redirections(*subcmds, env);
-	exec_heredocs(redirs);
 	pipe(fd);
-	redirect_out(redirs + 1);
-	builtin = 1;
-	pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
-	if (!pid && builtin--)
-		pid = fork();
-	if (pid == 0)
+	if (!redirect_out(redirs + 1) && exec_heredocs(redirs))
 	{
-		dup2(stdin, 0);
+		builtin = 1;
+		pid = exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1]));
 		if (subcmds[1])
-			dup2(fd[1], 1);
+			pipe_execute(env, subcmds + 1, fd[0]);
+		if (!pid && builtin--)
+			pid = fork();
+		if (pid == 0)
+		{
+			redirect_in(stdin, redirs + 1);
+			if (subcmds[1])
+				dup2(fd[1], 1);
+			close(fd[1]);
+			if (exec_tokens(redirs->value, env))
+				exit(127);
+			exit(0);
+		}
 		close(fd[1]);
-		if (exec_tokens(redirs->value, env))
-			exit(127);
-		exit(0);
+		close(fd[0]);
+		g_process.pid = pid;
+		if (subcmds[1])
+			kill(pid, SIGINT);
+		if (!builtin && ++builtin)
+		{
+			waitpid(pid, &g_process.code, 0);
+			g_process.code = WEXITSTATUS(g_process.code);
+		}
 	}
-	close(fd[1]);
-	if (subcmds[1])
-		pipe_execute(env, subcmds + 1, fd[0]);
-	close(fd[0]);
-	g_process.pid = pid;
-	if (subcmds[1])
-		kill(pid, SIGINT);
-	if (!builtin && ++builtin)
-	{
-		waitpid(pid, &g_process.code, 0);
-		g_process.code = WEXITSTATUS(g_process.code);
-	}
-	close_all(redirs + 1);
+	unredirect_out(redirs + 1);
 	free_redirections(redirs);
 }
 
