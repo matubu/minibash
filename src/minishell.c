@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 20:46:00 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/23 21:40:01 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,11 @@ int	main(int argc, char **argv, char **envm)
 		free(line);
 	}
 	write(1, "exit\n", 5);
+
+	int		i = 0;
+	while (++i < 255)
+		if (lseek(i, 0, SEEK_CUR) != -1)
+			printf("\033[31mnot close: %d\n\033[0m", i);
+
 	return (0);
 }
