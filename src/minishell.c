@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 15:13:52 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:46:00 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static void	handle_sigint(int signum)
 	g_process.pid = 0;
 }
 
-// TODO: #14 value=test echo helloworld => will only display helloworld
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
