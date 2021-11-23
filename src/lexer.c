@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 15:56:37 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 17:05:53 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	sub_tokenize(char *s, int n, void (*sub)(char *s, int n, void *arg),
 			len = 0;
 			while (n-- > 0 && s[++len] != *s)
 				;
-			sub(s++, len - 1, arg);
-			s += len;
+			sub(s, len, arg);
+			s += len + 1;
 			n--;
 		}
 		else
@@ -49,12 +49,13 @@ static void	sub_tokenize(char *s, int n, void (*sub)(char *s, int n, void *arg),
 
 static void	sub_fill(char *s, int n, t_token *arg)
 {
+	printf("8-->%d:%*.s\n", n, n, s);
 	if (n <= 0)
 		return ;
 	while (arg->value)
 		arg++;
 	arg->expendable = *s;
-	if (*s == '\'' || *s == '"')
+	if ((*s == '\'' || *s == '"') && n--)
 		s++;
 	arg->value = malloc((n + 1) * sizeof(char));
 	arg->value[n] = '\0';
@@ -69,6 +70,7 @@ static int	fill(char *s, int n, t_token **arg)
 
 	if (n <= 0)
 		return (0);
+	printf("8->%.*s\n", n, s);
 	while (*arg)
 		arg++;
 	len = 1;
@@ -87,6 +89,7 @@ t_token	**create_tokens(char *s)
 	int		len;
 	t_token	**tokens;
 
+	printf("8>%s\n", s);
 	len = 1;
 	if (tokenize(s, inc, &len) == -1)
 		return (NULL);

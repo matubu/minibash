@@ -54,6 +54,7 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 
 	if (n <= 0)
 		return (0);
+	printf("redir%.*s\n", n, s);
 	start = arg;
 	while (arg->value && arg[1].value)
 		arg++;
@@ -66,7 +67,7 @@ static int	redir_fill(char *s, int n, t_redirection *arg)
 	while (arg->value[++i])
 		tmp[i] = arg->value[i];
 	tmp[i] = ' ';
-	while (n-- && *s != ' ')
+	while (n--)
 		tmp[++i] = *s++;
 	tmp[++i] = '\0';
 	free(arg->value);
