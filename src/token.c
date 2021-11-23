@@ -103,6 +103,7 @@ int	exec_tokens(char *cmd, t_env *env)
 
 	ret = 1;
 	argv = create_argv(cmd, env);
+	printf("argv %p\n", argv);
 	if (argv == NULL)
 		return (1);
 	runsearch(argv[0], argv, env->exported);

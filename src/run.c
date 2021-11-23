@@ -44,6 +44,7 @@ int	runfrompath(char *cmd, char **argv, char **env)
 {
 	if (access(cmd, X_OK) == -1)
 		return (-1);
+	printf("found %s\n", cmd);
 	execve(cmd, argv, env);
 	return (0);
 }
@@ -58,6 +59,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 	int		ret;
 	int		len;
 
+	printf("cmd %s\n", cmd);
 	if (*cmd == '.' || *cmd == '/')
 	{
 		if (runfrompath(cmd, argv, env) == -1)
