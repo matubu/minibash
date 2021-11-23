@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 17:05:37 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:14:50 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ char	*pathncat(char *path, int n, char *relative)
 */
 int	runfrompath(char *cmd, char **argv, char **env)
 {
-	if (access(cmd, X_OK) == -1)
+	if (access(cmd, X_OK) == -1 || execve(cmd, argv, env) == -1)
 		return (-1);
-	printf("found %s\n", cmd);
-	execve(cmd, argv, env);
 	return (0);
 }
 
