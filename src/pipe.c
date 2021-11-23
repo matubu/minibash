@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 10:39:23 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:42:34 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	redirect_out(t_redirection *redirs)
 	while (redirs->value)
 	{
 		if (*redirs->value && (redirs->type == REDIR_RIGHT
-					|| redirs->type == REDIR_HD_RIGHT))
+				|| redirs->type == REDIR_HD_RIGHT))
 		{
 			redirs->fd
 				= open(redirs->value + 1, get_flag(redirs->type), S_IRWXU);
