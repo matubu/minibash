@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 17:31:07 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:29:25 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 
 	if (stdin)
 		return ((void)dup2(stdin, 0));
-	pipe(fd);
-	i = -1;
-	while (s[++i])
-		write(fd[1], s + i, 1);
-	close(fd[1]);
-	free(s);
+	if (s)
+	{
+		pipe(fd);
+		i = -1;
+		while (s[++i])
+			write(fd[1], s + i, 1);
+		close(fd[1]);
+		free(s);
+	}
 	while (redirs->value)
 	{
 		if (*redirs->value && redirs->type == REDIR_LEFT)
@@ -44,7 +47,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 			}
 			dup2(redirs->fd, 0);
 		}
-		else if (*redirs->value && redirs->type == REDIR_HD_LEFT)
+		else if (s && *redirs->value && redirs->type == REDIR_HD_LEFT)
 			dup2(fd[0], 0);
 		redirs++;
 	}

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 14:36:34 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/23 20:27:57 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ static char	*read_heredocs(t_redirection *redir)
 
 int	exec_heredocs(t_redirection *redirs, char **buffer)
 {
-	*buffer = ft_strdup("");
+	*buffer = NULL;
 	while (redirs->value)
 	{
 		if (*redirs->value && redirs->type == REDIR_HD_LEFT)
 		{
-			free(*buffer);
+			if (*buffer)
+				free(*buffer);
 			*buffer = read_heredocs(redirs);
 		}
 		redirs++;
