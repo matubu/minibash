@@ -1,2 +1,7 @@
 bin
 minishell
+*.DS_Store
+*.swa
+*.swp
+*.out
+*.swo
