@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 13:43:01 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:07:08 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	echo_builtin(int stdout, char **args)
 	int	nl;
 
 	nl = 1;
-	if (*args && **args == '-' && ft_strisonly(*args + 1, 'n') && args++)
+	while (*args && **args == '-' && ft_strisonly(*args + 1, 'n') && args++)
 		nl = 0;
 	while (*args && **args == '\0')
 		args++;
