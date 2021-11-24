@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 13:59:44 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 17:06:51 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 			if (redirs->fd == -1)
 			{
 				err(redirs->value + 1, "Permission denied");
-				break;
+				break ;
 			}
 			dup2(redirs->fd, 0);
 		}
@@ -52,18 +52,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 	}
 }
 
-void	close_out(t_redirection *redirs)
-{
-	while (redirs->value)
-	{
-		if ((redirs->type == REDIR_RIGHT || redirs->type == REDIR_HD_RIGHT
-				|| redirs->type == REDIR_LEFT) && redirs->fd)
-			close(redirs->fd);
-		redirs++;
-	}
-}
-
-static void	pipe_execute(t_env *env, char **subcmds, int stdin)
+void	pipe_execute(t_env *env, char **subcmds, int stdin)
 {
 	t_redirection	*redirs;
 	int				fd[2];
@@ -74,7 +63,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
-	if (!exec_heredocs(redirs + 1, &s))// && !redirect_out(redirs + 1))
+	if (!exec_heredocs(redirs + 1, &s))
 	{
 		pipe(fd);
 		builtin = 1;
@@ -113,28 +102,4 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			free(s);
 	}
 	free_redirections(redirs);
-}
-
-void	pipe_parse(t_env *env, char *cmd)
-{
-	char	**subcmds;
-	int		i;
-
-	subcmds = pipe_split(cmd);
-	if (subcmds == NULL)
-		return ((void)free(cmd));
-	i = 0;
-	while (subcmds[i] && subcmds[i + 1])
-	{
-		if (*subcmds[++i] == '\0')
-		{
-			free_argv(subcmds);
-			free(cmd);
-			return ((void)err("syntax error near unexpected token", "|"));
-		}
-	}
-	if (*subcmds && **subcmds)
-		pipe_execute(env, subcmds, 0);
-	free_argv(subcmds);
-	free(cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_addons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 10:57:47 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 16:24:29 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:52:20 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	tokenize(char *s, int (*token)(), void *arg)
 		}
 		else if (s[n] && !is_space(s[n]) && !is_operator(s[n]))
 			while (s[++n] && !is_space(s[n]) && !is_operator(s[n])
-					&& s[n] != '"' && s[n] != '\'')
+				&& s[n] != '"' && s[n] != '\'')
 				;
 		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
 		{

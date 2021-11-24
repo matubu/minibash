@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/24 12:03:25 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 16:53:32 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,5 @@ int	main(int argc, char **argv, char **envm)
 		free(line);
 	}
 	write(1, "exit\n", 5);
-
-	int		i = 2;
-	while (++i < 255)
-		if (lseek(i, 0, SEEK_CUR) != -1)
-			printf("\033[31mfd %d not close\n\033[0m", i);
-		else if (close(i) != -1)
-			printf("\033[33mfd %d may not be close: %s\n\033[0m", i, strerror(errno));
-
 	return (0);
 }

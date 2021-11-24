@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 16:01:16 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 15:52:51 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:56:07 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	wildcard_expand(t_token ***tokens)
 	{
 		if ((*tokens)[i][1].value == NULL && (*tokens)[i]->expendable != '"'
 				&& (*tokens)[i]->expendable != '\'')
-				//&& ft_strchr((*tokens)[i]->value, '*'))
 			wildcard_replace(tokens, &i);
 	}
 }
