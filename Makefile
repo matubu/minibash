@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/24 17:39:37 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/24 17:45:41 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRCS	:=	minishell \
 			env/env \
 			env/env_expand \
 			string/string_1 \
-			string/string_2
+			string/string_2 \
+			string/string_3
 
 OBJS	:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 
