@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 20:41:24 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 13:04:04 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	runfrompath(char *cmd, char **argv, char **env)
 */
 int	runsearch(char *cmd, char **argv, char **env)
 {
+	char	**search;
 	char	*path;
 	char	*file;
 	int		ret;
@@ -63,7 +64,10 @@ int	runsearch(char *cmd, char **argv, char **env)
 			return (err(strerror(errno), cmd));
 		return (0);
 	}
-	path = *env_get(env, "PATH");
+	search = env_get(env, "PATH");
+	if (search == NULL || *search == NULL)
+		return (err("command not found (PATH is not set)", cmd));
+	path = *search;
 	while (*path)
 	{
 		len = 0;

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 21:35:15 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 12:25:20 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 	int	fd[2];
 
 	if (stdin)
-		/*return (*/(void)dup2(stdin, 0);//);
+		(void)dup2(stdin, 0);
 	if (s)
 	{
 		pipe(fd);
@@ -33,7 +33,6 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 		while (s[++i])
 			write(fd[1], s + i, 1);
 		close(fd[1]);
-		//free(s);
 	}
 	while (redirs->value)
 	{
@@ -76,7 +75,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
-	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs, &s))
+	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs + 1, &s))
 	{
 		pipe(fd);
 		builtin = 1;
@@ -90,7 +89,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			redirect_in(stdin, redirs + 1, s);
 			if (subcmds[1])
 				dup2(fd[1], 1);
-			close(fd[1]);
+			close(fd[0]);
 			if (exec_tokens(redirs->value, env))
 				exit(127);
 			exit(0);
