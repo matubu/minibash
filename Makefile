@@ -6,16 +6,19 @@
 #    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/24 17:04:43 by acoezard         ###   ########.fr        #
+#    Updated: 2021/11/24 17:31:40 by acoezard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRC		=	minishell \
+SOURCES			:=	./src
+INCLUDES		:=	./includes
+OBJECTS			:=	./bin
+
+SRCS	=	minishell \
 			print \
 			pipe \
-			pipe_addons \
 			pipe_split \
 			char \
 			redirection \
@@ -23,19 +26,20 @@ SRC		=	minishell \
 			string_1 \
 			string_2 \
 			run \
-			run_addons \
 			builtin \
 			builtin_env \
 			lexer \
-			lexer_addons \
 			token \
-			token_addons \
 			env \
 			env_expand \
 			wildcard \
-			orand
+			orand \
+			addons/pipe_addons \
+			addons/lexer_addons \
+			addons/run_addons \
+			addons/token_addons
 
-OBJ		=	$(foreach src,$(SRC),bin/$(src).o)
+OBJS			:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 
 FLAGS	=	-Wall -Wextra -Werror -Iincludes
 LINK	=	libreadline.a -lreadline -lncurses -g -fsanitize=address
@@ -46,20 +50,20 @@ GRA		=	\033[37m
 BLU		=	\033[34m
 EOC		=	\033[0m
 
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@echo "⚙️  $(GRE)Compilation de ${NAME}...$(EOC)"
-	@gcc $(FLAGS) $(OBJ) $(LINK) -o $(NAME)
-
-bin/%.o: src/%.c
+${OBJECTS}/%.o: ${SOURCES}/%.c
 	@echo "🔧 Compilation de $(BLU)${notdir $<}$(EOC)."
-	@mkdir -p bin
+	@mkdir -p $(dir $@)
+
 	@gcc $(FLAGS) $^ -c -o $@
 
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@echo "⚙️  $(GRE)Compilation de ${NAME}...$(EOC)"
+	@gcc $(FLAGS) $(OBJS) $(LINK) -o $(NAME)
 clean:
 	@echo "$(RED)📁 Supression des fichiers binaires (.o)...$(EOC)"
-	@rm -rf bin
+	@rm -rf ${OBJECTS}
 
 fclean: clean
 	@echo "$(RED)⚙️  Supression des executables et librairies...$(EOC)"
