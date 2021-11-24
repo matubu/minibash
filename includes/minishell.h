@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/24 17:13:32 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:22:35 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 /* ************************* DEFINES ************************** */
 # define NAME		"minishell"
-# define PS1		"\033[32mminishell$\033[0m "
+# define PS1		"minishell$ "
 # define PATH_BUF	256
 
 # define REDIR_NOT		0b0000

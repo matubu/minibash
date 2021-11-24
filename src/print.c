@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mberger- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 13:31:53 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:22:05 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*itoa_buf(int n)
 int	error(char *name, char *err, char *info)
 {
 	putstr(2, name);
-	write(2, ": \033[31m", 7);
+	write(2, ": ", 7);
 	putstr(2, err);
-	write(2, "\033[0m: ", 6);
+	write(2, " ", 6);
 	putstr(2, info);
 	write(2, "\n", 1);
 	g_process.code = 1;
