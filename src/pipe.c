@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 13:10:31 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 13:59:44 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 	}
 }
 
-void	unredirect_out(t_redirection *redirs)
+void	close_out(t_redirection *redirs)
 {
-	dup2(redirs->old, 1);
 	while (redirs->value)
 	{
 		if ((redirs->type == REDIR_RIGHT || redirs->type == REDIR_HD_RIGHT
@@ -75,7 +74,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
-	if (!exec_heredocs(redirs + 1, &s) && !redirect_out(redirs + 1))
+	if (!exec_heredocs(redirs + 1, &s))// && !redirect_out(redirs + 1))
 	{
 		pipe(fd);
 		builtin = 1;
@@ -90,8 +89,12 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 			if (subcmds[1])
 				dup2(fd[1], 1);
 			close(fd[0]);
-			if (exec_tokens(redirs->value, env))
+			if (redirect_out(redirs + 1) || exec_tokens(redirs->value, env))
+			{
+				close_out(redirs + 1);
 				exit(127);
+			}
+			close_out(redirs + 1);
 			exit(0);
 		}
 		close(fd[1]);
@@ -109,7 +112,6 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		if (s)
 			free(s);
 	}
-	unredirect_out(redirs + 1);
 	free_redirections(redirs);
 }
 

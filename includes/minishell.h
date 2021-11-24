@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 16:56:04 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:58:35 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_redirection
 	int		type;
 	int		expanded;
 	int		fd;
-	int		old;
 }	t_redirection;
 
 /* ********************** INPUT / OUTPUT ********************** */

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:46:52 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 16:58:48 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:58:30 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	get_flag(int type)
 
 int	redirect_out(t_redirection *redirs)
 {
-	redirs->old = dup(1);
 	while (redirs->value)
 	{
 		if (*redirs->value && (redirs->type == REDIR_RIGHT
