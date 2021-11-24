@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 12:25:20 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/24 13:10:31 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
-	if (!redirect_out(redirs + 1) && !exec_heredocs(redirs + 1, &s))
+	if (!exec_heredocs(redirs + 1, &s) && !redirect_out(redirs + 1))
 	{
 		pipe(fd);
 		builtin = 1;
