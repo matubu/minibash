@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 15:09:22 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 16:58:27 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	get_fd(t_redirection *redirs, char *subcmds, int fd)
 {
-	if (!subcmds)
+	if (subcmds == NULL)
 		fd = 1;
 	while ((++redirs)->value)
 	{

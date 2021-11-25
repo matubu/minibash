@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 15:19:38 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 16:57:46 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 		return (0);
 	if (exec_builtin_argv(argv, env, stdout))
 		return (free_argv(argv));
-	close(stdout);
+	if (stdout != 1)
+		close(stdout);
 	return (free_argv(argv) || 1);
 }
