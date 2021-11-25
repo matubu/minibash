@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 12:03:38 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 13:36:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*orand(t_env *env, char *s, int exec, int brace)
 			&& err("syntax error expected token", s, 258))
 			return (NULL);
 	}
-	if ((!brace && *s == ')' && err("syntax error near unexpected token", ")", 258))
+	if ((!brace && *s == ')'
+			&& err("syntax error near unexpected token", ")", 258))
 		|| (brace && *s != ')' && err("syntax error expected token", ")", 258)))
 		return (NULL);
 	return (s + brace);
