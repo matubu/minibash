@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 11:46:54 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:59:51 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct s_redirection
 void			putstr(int fd, char *s);
 void			println(int fd, char *s);
 char			*itoa_buf(int n);
-int				error(char *name, char *err, char *info);
-int				err(char *err, char *info);
+int				error(char *name, char *err, char *info, int code);
+int				err(char *err, char *info, int code);
 void			rl_replace_line(const char *text, int clear_undo);
 
 /* ************************** STRINGS ************************* */

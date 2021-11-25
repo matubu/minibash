@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 20:40:49 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/25 12:10:02 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	inc(char *s, int n, void *arg)
 static int	check_error(char **arg, int n)
 {
 	if (n != 1 || **arg == '\0')
-		return (err("syntax error near unexpected token", "|"));
+		return (err("syntax error near unexpected token", "|", 258));
 	*++arg = ft_strdup("");
 	*++arg = NULL;
 	return (0);

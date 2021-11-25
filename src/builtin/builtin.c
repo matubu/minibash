@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 11:25:56 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:15:31 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	cd_builtin(t_env *env, char **argv)
 	else
 		status = getenv("HOME");
 	if (chdir(status) == -1)
-		error("cd", strerror(errno), status);
+		error("cd", strerror(errno), status, errno);
 	else
 	{
 		pwd = ft_strjoin("OLD_", *env_get(env->exported, "PWD"));
@@ -74,20 +74,16 @@ void	pwd_builtin(int stdout, char **argv)
 {
 	char	path[PATH_BUF];
 
-	if (*argv)
-		err("usage", "pwd");
-	else
+	(void) argv;
+	if (getcwd(path, PATH_BUF) == NULL)
 	{
-		if (getcwd(path, PATH_BUF) == NULL)
-		{
-			if (errno == ERANGE)
-				return ((void)err("pwd",
-						"pathname length exceeds the buffer size"));
-		}
-		else
-			println(stdout, path);
-		g_process.code = 0;
+		if (errno == ERANGE)
+			return ((void) err("pwd", \
+				"pathname length exceeds the buffer size", 1));
 	}
+	else
+		println(stdout, path);
+	g_process.code = 0;
 }
 
 void	env_builtin(int stdout, char **env)
@@ -107,12 +103,12 @@ void	exit_builtin(int stdout, char **argv)
 	g_process.code = 0;
 	write(stdout, "exit\n", 5);
 	if (*argv && argv[1])
-		return ((void)err("exit", "too many arguments"));
+		return ((void)err("exit", "too many arguments", 1));
 	if (!*argv)
 		exit(0);
 	if (!is_valid_long(*argv, &v))
 	{
-		error("minishell: exit", argv[0], "numeric argument required");
+		error("minishell: exit", argv[0], "numeric argument required", 1);
 		exit(255);
 	}
 	if (v >= 0)

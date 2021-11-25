@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:38:39 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 20:41:02 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/25 12:00:57 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	redir_inc(char *s, int n, void *arg)
 static int	redir_process(char *s, int n, t_redirection *arg)
 {
 	if (s[n] == '\0')
-		return (err("syntax error near unexpected token", s));
+		return (err("syntax error near unexpected token", s, 258));
 	arg[1].value = ft_strdup("");
 	if (n == 2 && s[1] == '<')
 		arg[1].type = REDIR_HD_LEFT;

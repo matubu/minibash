@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 10:57:47 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 18:02:54 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:08:41 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	tokenize_check(char *s, int *n, int *m)
 	*m = *n;
 	while (s[++*n] != s[*m])
 		if (s[*n] == '\0')
-			return (err("syntax error unclosed token", s));
+			return (err("syntax error unclosed token", s, 258));
 	(*n)++;
 	return (0);
 }

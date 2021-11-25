@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 08:40:19 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 10:10:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:03:38 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*orand_exec(t_env *env, char *s, int exec)
 		}
 		if (n && exec)
 			pipe_parse(env, ft_substr(s, n));
-		else if (n == 0 && err("syntax error expected token", s))
+		else if (n == 0 && err("syntax error expected token", s, 258))
 			return (NULL);
 		return (s + n);
 	}
@@ -71,11 +71,11 @@ char	*orand(t_env *env, char *s, int exec, int brace)
 			s += 2;
 		}
 		else if (*s != '\0' && *s != ')'
-			&& err("syntax error expected token", s))
+			&& err("syntax error expected token", s, 258))
 			return (NULL);
 	}
-	if ((!brace && *s == ')' && err("syntax error near unexpected token", ")"))
-		|| (brace && *s != ')' && err("syntax error expected token", ")")))
+	if ((!brace && *s == ')' && err("syntax error near unexpected token", ")", 258))
+		|| (brace && *s != ')' && err("syntax error expected token", ")", 258)))
 		return (NULL);
 	return (s + brace);
 }

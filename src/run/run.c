@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 09:33:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:06:44 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	runfrompath(char *cmd, char **argv, char **env)
 static int	runsearch_return(char *cmd, char **argv, char **env)
 {
 	if (runfrompath(cmd, argv, env) == -1)
-		return (err(strerror(errno), cmd));
+		return (err(strerror(errno), cmd, errno));
 	return (0);
 }
 
@@ -45,7 +45,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 		return (runsearch_return(cmd, argv, env));
 	search = env_get(env, "PATH");
 	if (search == NULL || *search == NULL)
-		return (err("command not found (PATH is not set)", cmd));
+		return (err("command not found (PATH is not set)", cmd, 127));
 	path = *search;
 	while (*path)
 	{
@@ -59,7 +59,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 			return (0);
 		path += len + (path[len] == ':');
 	}
-	return (err("command not found", cmd));
+	return (err("command not found", cmd, 127));
 }
 
 char	**create_argv(char *cmd, t_env *env)
@@ -71,7 +71,7 @@ char	**create_argv(char *cmd, t_env *env)
 	if (tokens == NULL || *tokens == NULL)
 	{
 		free_tokens(tokens);
-		err("command not found", "(null)");
+		err("command not found", "(null)", 127);
 		return (NULL);
 	}
 	env_expand(env->local, tokens);
@@ -79,7 +79,7 @@ char	**create_argv(char *cmd, t_env *env)
 	if (tokens[0]->value == NULL)
 	{
 		free_tokens(tokens);
-		err("command not found", "(null)");
+		err("command not found", "(null)", 127);
 		return (NULL);
 	}
 	argv = token_to_argv(tokens);

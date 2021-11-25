@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 17:06:51 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:09:50 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 			redirs->fd = open(redirs->value + 1, O_RDONLY);
 			if (redirs->fd == -1)
 			{
-				err(redirs->value + 1, "Permission denied");
+				err(redirs->value + 1, "Permission denied", 1);
 				break ;
 			}
 			dup2(redirs->fd, 0);
@@ -71,7 +71,7 @@ void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		if (!pid && builtin--)
 			pid = fork();
 		if (pid == -1)
-			return ((void)err("fork", "resource temporarily unavailable"));
+			return ((void)err("fork", "resource temporarily unavailable", 1));
 		if (pid == 0)
 		{
 			redirect_in(stdin, redirs + 1, s);

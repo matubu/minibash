@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 11:08:08 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:59:29 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*itoa_buf(int n)
 * function that write error in a coherent way
 * name: error: file
 */
-int	error(char *name, char *err, char *info)
+int	error(char *name, char *err, char *info, int code)
 {
 	putstr(2, name);
 	write(2, ": ", 2);
@@ -71,7 +71,7 @@ int	error(char *name, char *err, char *info)
 	write(2, ": ", 2);
 	putstr(2, info);
 	write(2, "\n", 1);
-	g_process.code = 1;
+	g_process.code = code;
 	return (-1);
 }
 
@@ -79,7 +79,7 @@ int	error(char *name, char *err, char *info)
 * function that write minishell error in a coherent way
 * minishell: error: file
 */
-int	err(char *err, char *info)
+int	err(char *err, char *info, int code)
 {
-	return (error(NAME, err, info));
+	return (error(NAME, err, info, code));
 }

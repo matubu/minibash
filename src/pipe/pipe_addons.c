@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:46:52 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/24 17:06:43 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 12:11:08 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	redirect_out(t_redirection *redirs)
 			redirs->fd = open(redirs->value + 1, get_flag(redirs->type), \
 			S_IRWXU);
 			if (redirs->fd == -1)
-				return (err(redirs->value + 1, "permission denied"));
+				return (err(redirs->value + 1, "permission denied", 1));
 			dup2(redirs->fd, 1);
 		}
 		else if (*redirs->value && redirs->type == REDIR_LEFT
 			&& access(redirs->value + 1, R_OK))
-			return (err(redirs->value + 1, "no such file or directory"));
+			return (err(redirs->value + 1, "no such file or directory", 1));
 		redirs++;
 	}
 	return (0);
@@ -66,7 +66,7 @@ void	pipe_parse(t_env *env, char *cmd)
 		{
 			free_argv(subcmds);
 			free(cmd);
-			return ((void)err("syntax error near unexpected token", "|"));
+			return ((void)err("syntax error near unexpected token", "|", 258));
 		}
 	}
 	if (*subcmds && **subcmds)
