@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:46:52 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 12:11:08 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:35:23 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_flag(int type)
+int	get_flag(int type)
 {
 	if (type == REDIR_HD_RIGHT)
 		return (O_CREAT | O_WRONLY | O_APPEND);
@@ -32,9 +32,6 @@ int	redirect_out(t_redirection *redirs)
 				return (err(redirs->value + 1, "permission denied", 1));
 			dup2(redirs->fd, 1);
 		}
-		else if (*redirs->value && redirs->type == REDIR_LEFT
-			&& access(redirs->value + 1, R_OK))
-			return (err(redirs->value + 1, "no such file or directory", 1));
 		redirs++;
 	}
 	return (0);

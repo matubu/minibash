@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 11:59:51 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:35:59 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int				free_redirections(t_redirection *redir);
 int				redirect_out(t_redirection *redirs);
 void			redirect_in(int stdin, t_redirection *redirs, char *s);
 void			unredirect_out(t_redirection *redirs);
+int				get_flag(int type);
 
 /* ************************ || && () ************************** */
 char			*orand(t_env *env, char *s, int exec, int brace);
