@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 15:05:49 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:09:22 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_fd(t_redirection *redirs, char *subcmds, int fd)
 	while ((++redirs)->value)
 	{
 		if (*redirs->value && redirs->type == REDIR_LEFT
-				&& access(redirs->value + 1, R_OK))
+			&& access(redirs->value + 1, R_OK))
 			return (err(redirs->value + 1, strerror(errno), 1));
 		else if (*redirs->value && (redirs->type == REDIR_RIGHT
 				|| redirs->type == REDIR_HD_RIGHT))
@@ -27,7 +27,7 @@ static int	get_fd(t_redirection *redirs, char *subcmds, int fd)
 			if (fd != 1)
 				close(fd);
 			fd = open(redirs->value + 1, get_flag(redirs->type),
-				S_IRWXU);
+					S_IRWXU);
 			if (fd == -1)
 				return (err(redirs->value + 1, "permission denied", 1));
 		}
