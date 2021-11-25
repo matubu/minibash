@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/24 18:22:35 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 09:43:47 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void			pwd_builtin(int stdout, char **argv);
 void			env_builtin(int stdout, char **env);
 void			exit_builtin(int stdout, char **argv);
 void			unset_builtin(char **argv, t_env *env);
-void			export_builtin(char **argv, t_env *env);
+void			export_builtin(int stdout, char **argv, t_env *env);
 void			set_builtin(char **argv, t_env *env);
 
 #endif

@@ -6,16 +6,32 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:40:02 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/22 13:31:44 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 09:40:03 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_builtin(char **argv, t_env *env)
+static void	print_export(int stdout, char *kv)
+{
+	putstr(stdout, "declare -x ");
+	println(stdout, kv);
+}
+
+void	export_builtin(int stdout, char **argv, t_env *env)
 {
 	char	**found;
+	char	**exported;
 
+	if (*argv == NULL)
+	{
+		exported = env->exported;
+		while (*exported)
+			if (**exported)
+				print_export(stdout, *exported++);
+		else
+			exported++;
+	}
 	while (*argv)
 	{
 		if (isenvdefine(*argv))

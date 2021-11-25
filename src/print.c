@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:39 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/24 18:22:05 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 09:44:20 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*itoa_buf(int n)
 int	error(char *name, char *err, char *info)
 {
 	putstr(2, name);
-	write(2, ": ", 7);
+	write(2, ": ", 2);
 	putstr(2, err);
-	write(2, " ", 6);
+	write(2, " ", 1);
 	putstr(2, info);
 	write(2, "\n", 1);
 	g_process.code = 1;
