@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 15:12:12 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:19:38 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,38 +62,8 @@ int	runsearch(char *cmd, char **argv, char **env)
 	return (err("command not found", cmd, 127));
 }
 
-char	**create_argv(char *cmd, t_env *env)
+int	exec_builtin_argv(char **argv, t_env *env, int stdout)
 {
-	char	**argv;
-	t_token	**tokens;
-
-	tokens = create_tokens(cmd);
-	if (tokens == NULL || *tokens == NULL)
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
-	env_expand(env->local, tokens);
-	wildcard_expand(&tokens);
-	if (tokens[0]->value == NULL)
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
-	argv = token_to_argv(tokens);
-	free_tokens(tokens);
-	return (argv);
-}
-
-int	exec_builtin(char *cmd, t_env *env, int stdout)
-{
-	char	**argv;
-
-	if (stdout == -1)
-		return (1);
-	argv = create_argv(cmd, env);
-	if (argv == NULL)
-		return (0);
 	if (isenvdefine(*argv))
 		set_builtin(argv, env);
 	else if (!ft_strcmp(*argv, "echo"))
@@ -111,6 +81,20 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 	else if (!ft_strcmp(*argv, "exit"))
 		exit_builtin(stdout, argv + 1);
 	else
+		return (1);
+	return (0);
+}
+
+int	exec_builtin(char *cmd, t_env *env, int stdout)
+{
+	char	**argv;
+
+	if (stdout == -1)
+		return (1);
+	argv = create_argv(cmd, env);
+	if (argv == NULL)
+		return (0);
+	if (exec_builtin_argv(argv, env, stdout))
 		return (free_argv(argv));
 	close(stdout);
 	return (free_argv(argv) || 1);
