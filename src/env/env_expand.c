@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_expand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 10:21:33 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:46:40 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*env_var(char **env, char *s, int *i)
 	return (env_join(s, ft_strchr(*kv, '='), i, len));
 }
 
-static char	*env_replace(char **env, char *s)
+char	*env_replace(char **env, char *s)
 {
 	int		i;
 

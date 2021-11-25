@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 11:25:09 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:46:54 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void			env_init(t_env *env, char **envm);
 void			env_expand(char **env, t_token **tokens);
 char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
+char			*env_replace(char **env, char *s);
 
 /* ************************* WILDCARDS ************************ */
 void			wildcard_expand(t_token ***tokens);
