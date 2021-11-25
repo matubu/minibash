@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 14:09:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:06:38 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,20 @@ char	**create_argv(char *cmd, t_env *env)
 	return (argv);
 }
 
+static int	ret(char **argv, int stdout, int ret)
+{
+	free_argv(argv);
+	if (stdout != 1)
+		close(stdout);
+	return (ret);
+}
+
 int	exec_builtin(char *cmd, t_env *env, int stdout)
 {
 	char	**argv;
 
+	if (stdout == -1)
+		return (1);
 	argv = create_argv(cmd, env);
 	if (argv == NULL)
 		return (0);
@@ -109,7 +119,6 @@ int	exec_builtin(char *cmd, t_env *env, int stdout)
 	else if (!ft_strcmp(*argv, "exit"))
 		exit_builtin(stdout, argv + 1);
 	else
-		return (free_argv(argv));
-	free_argv(argv);
-	return (1);
+		return (ret(argv, 1, 0));
+	return (ret(argv, stdout, 1));
 }

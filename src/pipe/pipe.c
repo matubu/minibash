@@ -6,17 +6,33 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:33:00 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 13:54:30 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 15:05:49 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_fd(char *subcmds, int fd)
+static int	get_fd(t_redirection *redirs, char *subcmds, int fd)
 {
-	if (subcmds)
-		return (fd);
-	return (1);
+	if (!subcmds)
+		fd = 1;
+	while ((++redirs)->value)
+	{
+		if (*redirs->value && redirs->type == REDIR_LEFT
+				&& access(redirs->value + 1, R_OK))
+			return (err(redirs->value + 1, strerror(errno), 1));
+		else if (*redirs->value && (redirs->type == REDIR_RIGHT
+				|| redirs->type == REDIR_HD_RIGHT))
+		{
+			if (fd != 1)
+				close(fd);
+			fd = open(redirs->value + 1, get_flag(redirs->type),
+				S_IRWXU);
+			if (fd == -1)
+				return (err(redirs->value + 1, "permission denied", 1));
+		}
+	}
+	return (fd);
 }
 
 void	redirect_in(int stdin, t_redirection *redirs, char *s)
@@ -24,7 +40,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 	int	fd[2];
 
 	if (stdin)
-		(void)dup2(stdin, 0);
+		dup2(stdin, 0);
 	if (s)
 	{
 		pipe(fd);
@@ -37,10 +53,7 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 		{
 			redirs->fd = open(redirs->value + 1, O_RDONLY);
 			if (redirs->fd == -1)
-			{
-				err(redirs->value + 1, "Permission denied", 1);
 				break ;
-			}
 			dup2(redirs->fd, 0);
 		}
 		else if (s && *redirs->value && redirs->type == REDIR_HD_LEFT)
@@ -71,7 +84,7 @@ typedef struct s_arg
 	int		stdin;
 }	t_arg;
 
-static int	pipe_(t_arg arg, t_redirection *redirs, int *fd, char *s)
+static int	pipe_not_builtin(t_arg arg, t_redirection *redirs, int *fd, char *s)
 {
 	pid_t	pid;
 
@@ -107,8 +120,8 @@ void	pipe_execute(t_env *env, char **subcmds, int stdin)
 		return ((void)free_redirections(redirs));
 	pipe(fd);
 	pid = 0;
-	if (!exec_builtin(redirs->value, env, get_fd(subcmds[1], fd[1])))
-		pid = pipe_((t_arg){env, subcmds, stdin}, redirs, fd, s);
+	if (!exec_builtin(redirs->value, env, get_fd(redirs, subcmds[1], fd[1])))
+		pid = pipe_not_builtin((t_arg){env, subcmds, stdin}, redirs, fd, s);
 	close(fd[1]);
 	if (subcmds[1])
 		pipe_execute(env, subcmds + 1, fd[0]);
