@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 09:43:47 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:25:09 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char			*char_join(const char *s1, const char c);
 
 int				is_space(char c);
 int				is_operator(char c);
+int				is_valid_long(const char *nptr, long *v);
 
 /* *************************** PIPES ************************** */
 void			pipe_parse(t_env *env, char *cmd);

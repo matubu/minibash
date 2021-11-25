@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/24 13:07:08 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/25 11:25:56 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ void	env_builtin(int stdout, char **env)
 
 void	exit_builtin(int stdout, char **argv)
 {
-	int		v;
-	int		neg;
-	char	*nptr;
+	long	v;
 
 	g_process.code = 0;
 	write(stdout, "exit\n", 5);
@@ -112,19 +110,12 @@ void	exit_builtin(int stdout, char **argv)
 		return ((void)err("exit", "too many arguments"));
 	if (!*argv)
 		exit(0);
-	v = 0;
-	nptr = *argv;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	neg = *nptr == '-';
-	if (*nptr == '-' || *nptr == '+')
-		nptr++;
-	while (*nptr)
-		if (*nptr >= '0' && *nptr <= '9')
-			v = v * 10 - *nptr++ + '0';
-	else if (error("bash: exit", argv[0], "numeric argument required"))
+	if (!is_valid_long(*argv, &v))
+	{
+		error("minishell: exit", argv[0], "numeric argument required");
 		exit(255);
-	if (!neg)
+	}
+	if (v >= 0)
 		return (exit(-v));
 	exit(v);
 }
