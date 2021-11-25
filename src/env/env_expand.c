@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:48:12 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 16:48:24 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/25 10:21:33 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,16 @@ void	env_expand(char **env, t_token **tokens)
 	{
 		i = -1;
 		while ((*tokens)[++i].value)
-			if ((*tokens)[i].expendable != '\'')
-				(*tokens)[i].value = env_replace(env, (*tokens)[i].value);
+			if ((*tokens)[i].expendable != '\''
+					&& (*tokens)[i].expendable != '"'
+					&& *(*tokens)[i].value == '$'
+					&& (*tokens)[i].value[1] == '\0'
+					&& (*tokens)[i + 1].value
+					&& ((*tokens)[i + 1].expendable == '\''
+						|| (*tokens)[i + 1].expendable == '"'))
+				*(*tokens)[i].value = '\0';
+		else if ((*tokens)[i].expendable != '\'')
+			(*tokens)[i].value = env_replace(env, (*tokens)[i].value);
 		tokens++;
 	}
 }
