@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 12:06:44 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/25 14:09:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	**create_argv(char *cmd, t_env *env)
 	if (tokens == NULL || *tokens == NULL)
 	{
 		free_tokens(tokens);
-		err("command not found", "(null)", 127);
 		return (NULL);
 	}
 	env_expand(env->local, tokens);
@@ -79,7 +78,6 @@ char	**create_argv(char *cmd, t_env *env)
 	if (tokens[0]->value == NULL)
 	{
 		free_tokens(tokens);
-		err("command not found", "(null)", 127);
 		return (NULL);
 	}
 	argv = token_to_argv(tokens);

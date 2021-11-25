@@ -1,0 +1,7 @@
+Makefile
+bin
+includes
+libreadline.a
+minishell
+o
+src
