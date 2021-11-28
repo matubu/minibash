@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 10:57:47 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/28 14:47:00 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/28 14:49:33 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,9 @@ int	tokenize(char *s, int (*token)(), void *arg)
 				&& s[n] != '"' && s[n] != '\'')
 				;
 		if (is_operator(s[n]) || is_space(s[n]) || s[n] == '\0')
-		{
 			if (tokenize_callback(&s, &n, token, arg))
 				return (-1);
-			if (*s == '\0')
-				return (0);
-		}
+		if (s[n] == '\0')
+			return (0);
 	}
 }
