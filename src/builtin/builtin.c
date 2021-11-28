@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 12:15:31 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/28 11:45:41 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	pwd_builtin(int stdout, char **argv)
 
 void	env_builtin(int stdout, char **env)
 {
-	while (*env)
+	while (env && *env)
 		if (**env)
 			println(stdout, *env++);
 	else
