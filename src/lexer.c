@@ -6,17 +6,38 @@
 /*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:50 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 20:40:05 by matubu           ###   ########.fr       */
+/*   Updated: 2021/11/29 14:27:43 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	inc(char *s, int n, void *arg)
+int	tokenize(char *s, int (*token)(), void *arg)
 {
-	(void)s;
-	if (n > 0)
-		(*(int *)arg)++;
+	int	n;
+	int	m;
+
+	while (*s)
+	{
+		while (is_space(*s))
+			s++;
+		n = 0;
+		while (s[n] && !is_space(s[n]) && !is_operator(s[n]))
+		{
+			m = n;
+			if (s[m] == '"' || s[m] == '\'')
+				while (s[++n] != s[m])
+					if (s[n] == '\0')
+						return (err("syntax error unclosed token", s, 258));
+			n++;
+		}
+		token(s, n, arg);
+		m = n;
+		while (is_operator(s[m]))
+			m++;
+		token(s + n, m - n, arg);
+		s += m;
+	}
 	return (0);
 }
 
@@ -72,7 +93,7 @@ static int	fill(char *s, int n, t_token **arg)
 	while (*arg)
 		arg++;
 	len = 1;
-	sub_tokenize(s, n, (void (*)()) inc, &len);
+	sub_tokenize(s, n, (void (*)()) basic_inc, &len);
 	*arg = malloc(len * sizeof(t_token));
 	if (*arg == NULL)
 		return (0);
@@ -88,7 +109,7 @@ t_token	**create_tokens(char *s)
 	t_token	**tokens;
 
 	len = 1;
-	if (tokenize(s, inc, &len) == -1)
+	if (tokenize(s, basic_inc, &len) == -1)
 		return (NULL);
 	tokens = malloc(len * sizeof(t_token *));
 	if (tokens == NULL)

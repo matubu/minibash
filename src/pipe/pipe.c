@@ -114,8 +114,7 @@ void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	redirs = exec_redirections(*subcmds, env);
 	if (redirs == NULL)
 		return ;
-	if (exec_heredocs(redirs + 1, &s))
-		return ((void)free_redirections(redirs));
+	exec_heredocs(redirs + 1, &s);
 	pipe(fd);
 	pid = 0;
 	if (!exec_builtin(redirs->value, env, get_fd(redirs, subcmds[1], fd[1])))

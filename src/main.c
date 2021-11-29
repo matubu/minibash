@@ -18,7 +18,7 @@ t_process	g_process = {0, 0};
 * @param	{Bool}	b	if true (1) the terminal will show ^C or ^\ else
 						this will hide them.
 */
-void	show_ctl(int b)
+static void	show_ctl(int b)
 {
 	struct termios	new;
 
@@ -30,42 +30,35 @@ void	show_ctl(int b)
 	tcsetattr(0, TCSANOW, &new);
 }
 
-static void	handle_sigquit(int signum)
+static void	handle_sig(int signum)
 {
-	(void)signum;
+	if (signum == SIGINT)
+		write(1, "\n", 1);
 	if (g_process.pid)
 	{
-		if (kill(g_process.pid, SIGQUIT) == 0)
+		if (kill(g_process.pid, signum) == 0 && signum == SIGQUIT)
 			putstr(1, "Quit: 3\n");
 	}
 	else
 	{
 		rl_on_new_line();
+		if (signum == SIGINT)
+			rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	g_process.pid = 0;
 }
 
-static void	handle_sigint(int signum)
-{
-	(void)signum;
-	write(1, "\n", 1);
-	if (g_process.pid)
-		kill(g_process.pid, SIGINT);
-	else
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	g_process.pid = 0;
-}
-
-static void	set_env_at_start(t_env *env)
+static void	env_init(t_env *env, char **envm)
 {
 	char	path[PATH_BUF];
 	char	*tmp;
 
+	while (*envm)
+	{
+		env_set(&(env->exported), *envm);
+		env_set(&(env->local), *envm++);
+	}
 	if (getcwd(path, PATH_BUF) == NULL)
 	{
 		if (errno == ERANGE)
@@ -86,9 +79,8 @@ int	main(int argc, char **argv, char **envm)
 	(void)argc;
 	(void)argv;
 	env_init(&env, envm);
-	signal(SIGQUIT, handle_sigquit);
-	signal(SIGINT, handle_sigint);
-	set_env_at_start(&env);
+	signal(SIGQUIT, handle_sig);
+	signal(SIGINT, handle_sig);
 	while (1)
 	{
 		g_process.pid = 0;

@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-static int	inc(char *s, int n, void *arg)
-{
-	if (n == 1 && *s == '|')
-		(*(int *)arg)++;
-	return (0);
-}
-
 static int	check_error(char **arg, int n)
 {
 	if (n != 1 || **arg == '\0')
@@ -58,7 +51,7 @@ char	**pipe_split(char *s)
 	char	**pipes;
 
 	len = 2;
-	if (tokenize(s, inc, &len) == -1)
+	if (tokenize(s, basic_inc, &len) == -1)
 		return (NULL);
 	pipes = malloc(len * sizeof(char *));
 	if (pipes == NULL)

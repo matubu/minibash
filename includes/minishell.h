@@ -27,7 +27,7 @@
 # include <dirent.h>
 # include <fcntl.h>
 
-/* ************************* DEFINES ************************** */
+// DEFINES
 # define NAME			"minishell"
 # define PS1			"minishell$ "
 # define PATH_BUF		4096
@@ -38,7 +38,7 @@
 # define REDIR_HD_LEFT	0b0100
 # define REDIR_HD_RIGHT	0b1000
 
-/* ************************ STRUCTURES ************************ */
+// STRUCTS
 typedef struct s_token
 {
 	char	*value;
@@ -67,81 +67,85 @@ typedef struct s_redirection
 	int		fd;
 }	t_redirection;
 
-/* ********************** INPUT / OUTPUT ********************** */
+// PRINT
 void			putstr(int fd, char *s);
 void			println(int fd, char *s);
 char			*itoa_buf(int n);
 int				error(char *name, char *err, char *info, int code);
 int				err(char *err, char *info, int code);
+
+// READLINE
 void			rl_replace_line(const char *text, int clear_undo);
 
-/* ************************** STRINGS ************************* */
+// STR
 int				ft_strlen(const char *s);
-unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
+void			ft_strncpy(char *dst, const char *src, unsigned int size);
 int				ft_strisonly(const char *s, char *charset);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, const char *src);
-char			*ft_strcat(char *dest, const char *src);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(char *str);
 char			*ft_strchr(const char *s, int c);
 char			*ft_substr(char *s, int n);
 
-char			*char_cat(char *dest, const char src);
-char			*char_join(const char *s1, const char c);
-
+// IS
 int				is_space(char c);
 int				is_operator(char c);
+int				is_redir(char *s, int n);
+int				ispartofenv(char c);
+
+// UTILS
+int				basic_inc(char *s, int n, void *arg);
 int				ft_atol(const char *nptr, long *v);
 
-/* *************************** PIPES ************************** */
+// PIPES
 void			pipe_parse(t_env *env, char *cmd);
 char			**pipe_split(char *s);
 void			pipe_execute(t_env *env, char **subcmds, int stdin);
 void			close_out(t_redirection *redirs);
 
-/* *************************** LEXER ************************** */
+// LEXER
 int				tokenize(char *s, int (*token)(), void *arg);
-int				is_operator(char c);
-int				is_space(char c);
 t_token			**create_tokens(char *s);
-int				free_tokens(t_token **tokens);
 char			**token_to_argv(t_token **tokens);
 char			**create_argv(char *cmd, t_env *env);
 char			*pathncat(char *path, int n, char *relative);
 int				runfrompath(char *cmd, char **argv, char **env);
 int				runsearch(char *cmd, char **argv, char **env);
-int				free_argv(char **argv);
 
-/* ******************** ENVIRONEMENT LOCALS ******************* */
-int				ispartofenv(char c);
+// FREE
+int				free_argv(char **argv);
+int				free_tokens(t_token **tokens);
+int				free_redirections(t_redirection *redir);
+
+// ENV
 int				isenvdefine(char *s);
-void			env_init(t_env *env, char **envm);
 void			env_expand(char **env, t_token **tokens);
 char			**env_get(char **env, char *key);
 void			env_set(char ***env, char *kv);
-char			*env_replace(char **env, char *s);
 
-/* ************************* WILDCARDS ************************ */
+// WILDCARDS
 void			wildcard_expand(t_token ***tokens);
 
-/* *********** REDIRECTIONS / HEREDOCS / OPERATIONS *********** */
+// REDIRECTIONS
 t_redirection	*exec_redirections(char *cmd, t_env *env);
-int				exec_heredocs(t_redirection *redirs, char **buffer);
-int				free_redirections(t_redirection *redir);
+
+// HEREDOCS
+void			exec_heredocs(t_redirection *redirs, char **buffer);
+
+// OPERATIONS
 int				redirect_out(t_redirection *redirs);
 void			redirect_in(int stdin, t_redirection *redirs, char *s);
-void			unredirect_out(t_redirection *redirs);
 int				get_flag(int type);
 
-/* ************************ || && () ************************** */
+// BOOLEANS
 char			*orand(t_env *env, char *s, int exec, int brace);
 
-/* ************************* RUNTIME ************************** */
+// RUNTIME
 int				exec_builtin(char *cmd, t_env *env, int stdout);
 int				exec_tokens(char *cmd, t_env *env);
 
-/* ************************ BUILT-INS ************************* */
+// BUILTINS
 void			cd_builtin(t_env *env, char **argv);
 void			echo_builtin(int stdout, char **argv);
 void			pwd_builtin(int stdout, char **argv, t_env *env);

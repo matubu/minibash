@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-char	*ft_strcpy(char *dest, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*out;
@@ -48,26 +34,10 @@ char	*ft_strdup(char *str)
 	char	*s;
 	int		len;
 
-	len = ft_strlen(str) + 1;
-	s = malloc(len * sizeof(char));
-	ft_strlcpy(s, str, len);
+	len = ft_strlen(str);
+	s = malloc((len + 1) * sizeof(char));
+	ft_strncpy(s, str, len);
 	return (s);
-}
-
-char	*ft_strcat(char *dest, const char *src)
-{
-	size_t	i;
-	size_t	j;
-
-	i = ft_strlen(dest);
-	j = 0;
-	while (src[j] != 0)
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = 0;
-	return (dest);
 }
 
 char	*ft_substr(char *s, int n)

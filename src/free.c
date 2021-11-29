@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_addons.c                                     :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 16:56:25 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/25 15:17:38 by mberger-         ###   ########.fr       */
+/*   Created: 2021/11/08 12:13:16 by mberger-          #+#    #+#             */
+/*   Updated: 2021/11/29 14:27:27 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	free_argv(char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
+	return (0);
+}
+
+int	free_redirections(t_redirection *redir)
+{
+	int	i;
+
+	i = -1;
+	while (redir[++i].value)
+		free(redir[i].value);
+	free(redir);
+	return (0);
+}
 
 int	free_tokens(t_token **tokens)
 {
@@ -27,27 +49,4 @@ int	free_tokens(t_token **tokens)
 	}
 	free(tokens);
 	return (1);
-}
-
-char	**create_argv(char *cmd, t_env *env)
-{
-	char	**argv;
-	t_token	**tokens;
-
-	tokens = create_tokens(cmd);
-	if (tokens == NULL || *tokens == NULL)
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
-	env_expand(env->local, tokens);
-	wildcard_expand(&tokens);
-	if (tokens[0]->value == NULL)
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
-	argv = token_to_argv(tokens);
-	free_tokens(tokens);
-	return (argv);
 }

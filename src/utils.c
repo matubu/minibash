@@ -35,3 +35,11 @@ int	ft_atol(const char *nptr, long *v)
 		return (0);
 	return (1);
 }
+
+int	basic_inc(char *s, int n, void *arg)
+{
+	(void)s;
+	if (n > 0)
+		(*(int *)arg)++;
+	return (0);
+}

@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-int	ispartofenv(char c)
-{
-	return ((c >= 'A' && c <= 'Z')
-		|| (c >= 'a' && c <= 'z')
-		|| (c >= '0' && c <= '9')
-		|| (c == '_'));
-}
-
 int	isenvdefine(char *s)
 {
 	if ((*s >= '0' && *s <= '9') || !ispartofenv(*s++))
@@ -29,15 +21,6 @@ int	isenvdefine(char *s)
 	if (*s == '=')
 		return (1);
 	return (0);
-}
-
-void	env_init(t_env *env, char **envm)
-{
-	while (*envm)
-	{
-		env_set(&(env->exported), *envm);
-		env_set(&(env->local), *envm++);
-	}
 }
 
 char	**env_get(char **env, char *kv)

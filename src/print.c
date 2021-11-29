@@ -19,8 +19,12 @@
 */
 void	putstr(int fd, char *s)
 {
-	while (*s)
-		write(fd, s++, 1);
+	int	len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	write(fd, s, len);
 }
 
 /**

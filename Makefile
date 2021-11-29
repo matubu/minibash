@@ -16,30 +16,27 @@ SOURCES	:=	./src
 INCLUDES:=	./includes
 OBJECTS	:=	./bin
 
-SRCS	:=	minishell \
+SRCS	:=	main \
 			print \
-			char \
 			redirection \
 			heredocs \
 			wildcard \
 			orand \
-			run/run \
-			run/run_addons \
-			lexer/lexer \
-			lexer/lexer_addons \
+			run \
+			lexer \
 			pipe/pipe \
 			pipe/pipe_split \
 			pipe/pipe_addons \
 			builtin/builtin \
 			builtin/builtin_env \
-			token/token \
-			token/token_addons \
+			free \
+			token \
 			env/env \
 			env/env_expand \
 			str/mem \
 			str/str \
 			str/is \
-			math
+			utils
 
 OBJS	:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 

@@ -57,28 +57,6 @@ char	**token_to_argv(t_token **tokens)
 	return (argv);
 }
 
-int	free_argv(char **argv)
-{
-	int	i;
-
-	i = -1;
-	while (argv[++i])
-		free(argv[i]);
-	free(argv);
-	return (0);
-}
-
-int	free_redirections(t_redirection *redir)
-{
-	int	i;
-
-	i = -1;
-	while (redir[++i].value)
-		free(redir[i].value);
-	free(redir);
-	return (0);
-}
-
 int	exec_tokens(char *cmd, t_env *env)
 {
 	char	**argv;
@@ -91,4 +69,27 @@ int	exec_tokens(char *cmd, t_env *env)
 	runsearch(argv[0], argv, env->exported);
 	free_argv(argv);
 	return (ret);
+}
+
+char	**create_argv(char *cmd, t_env *env)
+{
+	char	**argv;
+	t_token	**tokens;
+
+	tokens = create_tokens(cmd);
+	if (tokens == NULL || *tokens == NULL)
+	{
+		free_tokens(tokens);
+		return (NULL);
+	}
+	env_expand(env->local, tokens);
+	wildcard_expand(&tokens);
+	if (tokens[0]->value == NULL)
+	{
+		free_tokens(tokens);
+		return (NULL);
+	}
+	argv = token_to_argv(tokens);
+	free_tokens(tokens);
+	return (argv);
 }

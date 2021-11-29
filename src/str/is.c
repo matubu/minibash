@@ -29,3 +29,20 @@ int	ft_strisonly(const char *s, char *charset)
 			return (0);
 	return (1);
 }
+
+int	is_redir(char *s, int n)
+{
+	if (n == 1 && (s[0] == '<' || s[0] == '>'))
+		return (1);
+	if (n == 2 && ((*s == '<' && s[1] == '<') || (*s == '>' && s[1] == '>')))
+		return (1);
+	return (0);
+}
+
+int	ispartofenv(char c)
+{
+	return ((c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9')
+		|| (c == '_'));
+}
