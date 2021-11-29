@@ -51,7 +51,7 @@ void	echo_builtin(int stdout, char **args)
 	int	nl;
 
 	nl = 1;
-	while (*args && **args == '-' && ft_strisonly(*args + 1, 'n') && args++)
+	while (*args && **args == '-' && ft_strisonly(*args + 1, "n") && args++)
 		nl = 0;
 	while (*args && **args == '\0')
 		args++;
@@ -101,7 +101,7 @@ void	exit_builtin(int stdout, char **argv)
 		return ((void)err("exit", "too many arguments", 1));
 	if (!*argv)
 		exit(0);
-	if (!is_valid_long(*argv, &v))
+	if (!ft_atol(*argv, &v))
 	{
 		error("minishell: exit", argv[0], "numeric argument required", 1);
 		exit(255);

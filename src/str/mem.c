@@ -70,17 +70,13 @@ char	*ft_strcat(char *dest, const char *src)
 	return (dest);
 }
 
-unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
+char	*ft_substr(char *s, int n)
 {
-	unsigned int	i;
+	char	*out;
 
-	if (size == 0)
-		return (ft_strlen(src));
-	i = 0;
-	while (--size && *src && ++i)
-		*dst++ = *src++;
-	*dst = '\0';
-	while (*src++)
-		i++;
-	return (i);
+	out = malloc((n + 1) * sizeof(char));
+	out[n] = '\0';
+	while (n--)
+		out[n] = s[n];
+	return (out);
 }

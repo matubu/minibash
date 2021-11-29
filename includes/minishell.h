@@ -78,7 +78,7 @@ void			rl_replace_line(const char *text, int clear_undo);
 /* ************************** STRINGS ************************* */
 int				ft_strlen(const char *s);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
-int				ft_strisonly(const char *s, char c);
+int				ft_strisonly(const char *s, char *charset);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strcat(char *dest, const char *src);
@@ -92,7 +92,7 @@ char			*char_join(const char *s1, const char c);
 
 int				is_space(char c);
 int				is_operator(char c);
-int				is_valid_long(const char *nptr, long *v);
+int				ft_atol(const char *nptr, long *v);
 
 /* *************************** PIPES ************************** */
 void			pipe_parse(t_env *env, char *cmd);

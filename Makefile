@@ -38,7 +38,8 @@ SRCS	:=	minishell \
 			env/env_expand \
 			str/mem \
 			str/str \
-			str/is
+			str/is \
+			math
 
 OBJS	:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_1.c                                         :+:      :+:    :+:   */
+/*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:31 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 15:50:06 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/29 10:18:56 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ char	*ft_strchr(const char *str, int c)
 		if (str[i] == '\0')
 			return (NULL);
 	return ((char *)str + i);
+}
+
+unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
+{
+	unsigned int	i;
+
+	if (size == 0)
+		return (ft_strlen(src));
+	i = 0;
+	while (--size && *src && ++i)
+		*dst++ = *src++;
+	*dst = '\0';
+	while (*src++)
+		i++;
+	return (i);
 }
