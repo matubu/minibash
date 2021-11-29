@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 14:35:59 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:22:02 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int				exec_tokens(char *cmd, t_env *env);
 /* ************************ BUILT-INS ************************* */
 void			cd_builtin(t_env *env, char **argv);
 void			echo_builtin(int stdout, char **argv);
-void			pwd_builtin(int stdout, char **argv);
+void			pwd_builtin(int stdout, char **argv, t_env *env);
 void			env_builtin(int stdout, char **env);
 void			exit_builtin(int stdout, char **argv);
 void			unset_builtin(char **argv, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 14:44:30 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:21:06 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,23 @@ static void	handle_sigint(int signum)
 	g_process.pid = 0;
 }
 
+static void set_env_at_start(t_env *env)
+{
+	char path[PATH_BUF];
+	char *tmp;
+
+	if (getcwd(path, PATH_BUF) == NULL)
+	{
+		if (errno == ERANGE)
+			err("pwd", "pathname length exceeds the buffer size", 1);
+		return ;
+	}
+	tmp = ft_strjoin("PWD=", path);
+	env_set(&env->local, tmp);
+	env_set(&env->exported, tmp);
+	free(tmp);
+}
+
 int	main(int argc, char **argv, char **envm)
 {
 	char			*line;
@@ -71,6 +88,7 @@ int	main(int argc, char **argv, char **envm)
 	env_init(&env, envm);
 	signal(SIGQUIT, handle_sigquit);
 	signal(SIGINT, handle_sigint);
+	set_env_at_start(&env);
 	while (1)
 	{
 		g_process.pid = 0;

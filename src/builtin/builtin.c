@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/28 11:45:41 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:23:26 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,14 @@ void	echo_builtin(int stdout, char **args)
 * @parms argv including pwd
 * will write the cwd to the stdout except if their is two arguments
 */
-void	pwd_builtin(int stdout, char **argv)
+void	pwd_builtin(int stdout, char **argv, t_env *env)
 {
-	char	path[PATH_BUF];
+	char	**path;
 
 	(void) argv;
-	if (getcwd(path, PATH_BUF) == NULL)
-	{
-		if (errno == ERANGE)
-			return ((void) err("pwd", \
-				"pathname length exceeds the buffer size", 1));
-	}
-	else
-		println(stdout, path);
+	path = env_get(env->local, "PWD");
+	if (path != NULL)
+		println(stdout, *path + 4);
 	g_process.code = 0;
 }
 

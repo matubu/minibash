@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/25 16:57:46 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/11/29 09:21:33 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	exec_builtin_argv(char **argv, t_env *env, int stdout)
 	else if (!ft_strcmp(*argv, "cd"))
 		cd_builtin(env, argv + 1);
 	else if (!ft_strcmp(*argv, "pwd"))
-		pwd_builtin(stdout, argv + 1);
+		pwd_builtin(stdout, argv + 1, env);
 	else if (!ft_strcmp(*argv, "export"))
 		export_builtin(stdout, argv + 1, env);
 	else if (!ft_strcmp(*argv, "unset"))
