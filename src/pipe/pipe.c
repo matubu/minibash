@@ -61,14 +61,12 @@ void	redirect_in(int stdin, t_redirection *redirs, char *s)
 	}
 }
 
-static void	pipe_wait(char **subcmds, pid_t pid, char *s,
+static void	pipe_wait(pid_t pid, char *s,
 		t_redirection *redirs)
 {
 	if (pid)
 	{
 		g_process.pid = pid;
-		if (subcmds[1])
-			kill(pid, SIGINT);
 		waitpid(pid, &g_process.code, 0);
 		g_process.code = WEXITSTATUS(g_process.code);
 	}
@@ -126,5 +124,5 @@ void	pipe_execute(t_env *env, char **subcmds, int stdin)
 	if (subcmds[1])
 		pipe_execute(env, subcmds + 1, fd[0]);
 	close(fd[0]);
-	pipe_wait(subcmds, pid, s, redirs);
+	pipe_wait(pid, s, redirs);
 }
