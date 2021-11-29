@@ -106,7 +106,5 @@ void	exit_builtin(int stdout, char **argv)
 		error("minishell: exit", argv[0], "numeric argument required", 1);
 		exit(255);
 	}
-	if (v >= 0)
-		return (exit(-v));
 	exit(v);
 }
