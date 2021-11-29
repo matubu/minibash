@@ -30,7 +30,7 @@ void	cd_builtin(t_env *env, char **argv)
 		error("cd", strerror(errno), status, errno);
 	else
 	{
-		pwd = ft_strjoin("OLD_", *env_get(env->exported, "PWD"));
+		pwd = ft_strjoin("OLD", *env_get(env->exported, "PWD"));
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
