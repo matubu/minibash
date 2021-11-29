@@ -36,9 +36,9 @@ SRCS	:=	minishell \
 			token/token_addons \
 			env/env \
 			env/env_expand \
-			string/string_1 \
-			string/string_2 \
-			string/string_3
+			str/mem \
+			str/str \
+			str/is
 
 OBJS	:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 

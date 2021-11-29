@@ -1,25 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_1.c                                         :+:      :+:    :+:   */
+/*   string_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: acoezard <acoezard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 08:37:31 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/23 15:50:06 by mberger-         ###   ########.fr       */
+/*   Created: 2021/11/15 16:10:31 by acoezard          #+#    #+#             */
+/*   Updated: 2021/11/23 15:51:47 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(const char *s)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (s && s[i])
+	while (src[i])
+	{
+		dest[i] = src[i];
 		i++;
-	return (i);
+	}
+	dest[i] = 0;
+	return (dest);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*out;
+	int		i;
+
+	out = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (out == NULL)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		out[i++] = *s1++;
+	while (*s2)
+		out[i++] = *s2++;
+	out[i] = '\0';
+	return (out);
+}
+
+char	*ft_strdup(char *str)
+{
+	char	*s;
+	int		len;
+
+	len = ft_strlen(str) + 1;
+	s = malloc(len * sizeof(char));
+	ft_strlcpy(s, str, len);
+	return (s);
 }
 
 char	*ft_strcat(char *dest, const char *src)
@@ -51,22 +83,4 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size)
 	while (*src++)
 		i++;
 	return (i);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while (*s1 && *s2 && *s1 == *s2 && s1++ && s2++)
-		;
-	return (*s1 - *s2);
-}
-
-char	*ft_strdup(char *str)
-{
-	char	*s;
-	int		len;
-
-	len = ft_strlen(str) + 1;
-	s = malloc(len * sizeof(char));
-	ft_strlcpy(s, str, len);
-	return (s);
 }

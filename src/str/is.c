@@ -53,3 +53,11 @@ int	is_valid_long(const char *nptr, long *v)
 		return (0);
 	return (1);
 }
+
+int	ft_strisonly(const char *s, char c)
+{
+	while (*s)
+		if (*s++ != c)
+			return (0);
+	return (1);
+}

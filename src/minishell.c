@@ -61,15 +61,15 @@ static void	handle_sigint(int signum)
 	g_process.pid = 0;
 }
 
-static void set_env_at_start(t_env *env)
+static void	set_env_at_start(t_env *env)
 {
-	char path[PATH_BUF];
-	char *tmp;
+	char	path[PATH_BUF];
+	char	*tmp;
 
 	if (getcwd(path, PATH_BUF) == NULL)
 	{
 		if (errno == ERANGE)
-			err("pwd", "pathname length exceeds the buffer size", 1);
+			err("bash", "pathname length exceeds the buffer size", 1);
 		return ;
 	}
 	tmp = ft_strjoin("PWD=", path);

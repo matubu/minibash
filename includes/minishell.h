@@ -28,9 +28,9 @@
 # include <fcntl.h>
 
 /* ************************* DEFINES ************************** */
-# define NAME		"minishell"
-# define PS1		"minishell$ "
-# define PATH_BUF	256
+# define NAME			"minishell"
+# define PS1			"minishell$ "
+# define PATH_BUF		4096
 
 # define REDIR_NOT		0b0000
 # define REDIR_LEFT		0b0001
