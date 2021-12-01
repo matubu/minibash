@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:48:05 by acoezard          #+#    #+#             */
-/*   Updated: 2021/11/23 20:27:57 by matubu           ###   ########.fr       */
+/*   Updated: 2021/12/01 12:26:19 by matubu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	exec_heredocs(t_redirection *redirs, char **buffer)
 				free(*buffer);
 			*buffer = ft_strdup("");
 			line = readline("> ");
-			while (line != NULL && ft_strcmp(redirs->value + 1, line))
+			while (line && ft_strcmp(redirs->value + 1, line))
 			{
 				tmp = ft_strjoin(*buffer, line);
-				free(buffer);
+				free(*buffer);
 				*buffer = ft_strjoin(tmp, "\n");
 				free(tmp);
 				free(line);

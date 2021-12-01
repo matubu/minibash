@@ -6,7 +6,7 @@
 #    By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:41:05 by acoezard          #+#    #+#              #
-#    Updated: 2021/11/25 15:25:05 by acoezard         ###   ########.fr        #
+#    Updated: 2021/12/01 12:24:34 by matubu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS	:=	main \
 OBJS	:=	$(foreach src,$(SRCS),$(OBJECTS)/$(src).o)
 
 FLAGS	:=	-Wall -Wextra -Werror -Iincludes
-LINK	:=	libreadline.a -lreadline -lncurses
+LINK	:=	libreadline.a -lreadline -lncurses -fsanitize=address
 
 RED		:=	\033[31m
 GRE		:=	\033[32m
