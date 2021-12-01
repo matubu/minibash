@@ -1,27 +1,19 @@
-name: C/C++ CI
+name: cpp-linter
 
 on:
   push:
-    branches: [ master ]
+    paths-ignore: "docs/**"
   pull_request:
-    branches: [ master ]
+    paths-ignore: "docs/**"
 
 jobs:
-  build:
-
+  cpp-linter:
     runs-on: ubuntu-latest
-
     steps:
-      - name: C/C++ Lint Action
-        uses: shenxianpeng/cpp-linter-action@v1.3.0
+      - uses: actions/checkout@v2
+      - uses: shenxianpeng/cpp-linter-action@master
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          thread-comments: true
-          style: c,h
-          extensions: c,h
-          tidy-checks: boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-*
-          repo-root: src
-          version: 10
-          verbosity: 10
-          lines-changed-only: false
-          files-changed-only: false
-          ignore: .github
+          style: file
