@@ -19,7 +19,7 @@ jobs:
           style: c,h
           extensions: c,h
           tidy-checks: boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-*
-          repo-root: .
+          repo-root: src
           version: 10
           verbosity: 10
           lines-changed-only: false
