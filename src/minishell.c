@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/12/02 12:31:15 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:45:03 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	main(int argc, char **argv, char **envm)
 			orand(&env, line, 1, 0);
 		free(line);
 	}
-	free(g_process.pwd);
 	write(1, "exit\n", 5);
 	return (0);
 }
