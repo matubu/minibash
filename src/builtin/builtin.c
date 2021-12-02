@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/12/02 12:32:57 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:38:01 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ void	cd_builtin(t_env *env, char **argv)
 		error("cd", strerror(errno), status, errno);
 	else
 	{
-		pwd = ft_strjoin("OLD", g_process.pwd);
+		pwd = ft_strjoin("OLDPWD=", g_process.pwd);
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
 		pwd = ft_strjoin("PWD=", getcwd(buf, PATH_BUF));
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
-		free(g_process.pwd);
 		free(pwd);
+		free(g_process.pwd);
 		g_process.pwd = ft_strdup(getcwd(buf, PATH_BUF));
 		g_process.code = 0;
 	}
@@ -72,12 +72,10 @@ void	echo_builtin(int stdout, char **args)
 * @parms argv including pwd
 * will write the cwd to the stdout except if their is two arguments
 */
-void	pwd_builtin(int stdout, char **argv, t_env *env)
+void	pwd_builtin(int stdout)
 {
 	char	*path;
 
-	(void) env;
-	(void) argv;
 	path = g_process.pwd;
 	if (path != NULL)
 		println(stdout, path);
