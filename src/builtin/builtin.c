@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/29 09:23:26 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:03:14 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,5 @@ void	exit_builtin(int stdout, char **argv)
 		error("minishell: exit", argv[0], "numeric argument required", 1);
 		exit(255);
 	}
-	if (v >= 0)
-		return (exit(-v));
 	exit(v);
 }
