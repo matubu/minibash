@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:23:43 by mberger-          #+#    #+#             */
-/*   Updated: 2021/12/02 12:03:14 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:32:57 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ void	cd_builtin(t_env *env, char **argv)
 		error("cd", strerror(errno), status, errno);
 	else
 	{
-		pwd = ft_strjoin("OLD", *env_get(env->exported, "PWD"));
+		pwd = ft_strjoin("OLD", g_process.pwd);
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
 		free(pwd);
 		pwd = ft_strjoin("PWD=", getcwd(buf, PATH_BUF));
 		env_set(&env->local, pwd);
 		env_set(&env->exported, pwd);
+		free(g_process.pwd);
 		free(pwd);
+		g_process.pwd = ft_strdup(getcwd(buf, PATH_BUF));
 		g_process.code = 0;
 	}
 }
@@ -72,12 +74,13 @@ void	echo_builtin(int stdout, char **args)
 */
 void	pwd_builtin(int stdout, char **argv, t_env *env)
 {
-	char	**path;
+	char	*path;
 
+	(void) env;
 	(void) argv;
-	path = env_get(env->local, "PWD");
+	path = g_process.pwd;
 	if (path != NULL)
-		println(stdout, *path + 4);
+		println(stdout, path);
 	g_process.code = 0;
 }
 

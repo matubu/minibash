@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:42:28 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/29 09:22:02 by acoezard         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:27:58 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ typedef struct s_token
 
 typedef struct s_process
 {
-	int	pid;
-	int	code;
+	int		pid;
+	int		code;
+	char	*pwd;
 }	t_process;
 
 extern t_process	g_process;

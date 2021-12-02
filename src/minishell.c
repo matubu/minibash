@@ -6,13 +6,13 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:44 by mberger-          #+#    #+#             */
-/*   Updated: 2021/11/29 10:08:10 by mberger-         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:31:15 by acoezard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_process	g_process = {0, 0};
+t_process	g_process = {0, 0, NULL};
 
 /**
 * @param	{Bool}	b	if true (1) the terminal will show ^C or ^\ else
@@ -75,6 +75,7 @@ static void	set_env_at_start(t_env *env)
 	tmp = ft_strjoin("PWD=", path);
 	env_set(&env->local, tmp);
 	env_set(&env->exported, tmp);
+	g_process.pwd = ft_strdup(path);
 	free(tmp);
 }
 
@@ -103,6 +104,7 @@ int	main(int argc, char **argv, char **envm)
 			orand(&env, line, 1, 0);
 		free(line);
 	}
+	free(g_process.pwd);
 	write(1, "exit\n", 5);
 	return (0);
 }
