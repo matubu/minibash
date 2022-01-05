@@ -1,1 +1,3 @@
-A simple version of bash
+# minibash
+
+🌵 a simple, mini, imperfect version of bash 
