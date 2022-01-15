@@ -6,7 +6,7 @@
 /*   By: acoezard <acoezard@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:37:38 by mberger-          #+#    #+#             */
-/*   Updated: 2021/12/02 12:38:42 by mberger-         ###   ########.fr       */
+/*   Updated: 2022/01/15 12:43:44 by mberger-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	runsearch(char *cmd, char **argv, char **env)
 	search = env_get(env, "PATH");
 	if (search == NULL || *search == NULL)
 		return (err("command not found (PATH is not set)", cmd, 127));
-	path = *search;
+	path = *search + 5;
 	while (*path)
 	{
 		len = 0;
