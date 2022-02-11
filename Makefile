@@ -53,21 +53,21 @@ BLU		:=	\033[34m
 EOC		:=	\033[0m
 
 ${OBJECTS}/%.o: ${SOURCES}/%.c
-	@echo "🔧 Compilation de $(BLU)${notdir $<}$(EOC)."
+	@echo "$(BLU)● Compiling $^ 🔧$(EOC)"
 	@mkdir -p $(dir $@)
 	@gcc $(FLAGS) $^ -c -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "⚙️  $(GRE)Compilation de ${NAME}...$(EOC)"
+	@echo "$(GRE)● Compiling $(NAME) ⚙️ $(EOC)"
 	@gcc $(FLAGS) $(OBJS) $(LINK) -o $(NAME)
 clean:
-	@echo "$(RED)📁 Supression des fichiers binaires (.o)...$(EOC)"
+	@echo "$(RED)● Removing objects 📁$(EOC)"
 	@rm -rf ${OBJECTS}
 
 fclean: clean
-	@echo "$(RED)⚙️  Supression des executables et librairies...$(EOC)"
+	@echo "$(RED)● Removing binary ⚙️ $(EOC)"
 	@rm -rf $(NAME)
 
 re: fclean all
